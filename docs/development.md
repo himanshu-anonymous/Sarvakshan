@@ -2,7 +2,7 @@
 # Development
 
 ## Overview
-Development on WorldWideView prioritizes modularity, high performance, and strict architectural boundaries between the UI and the 3D rendering context. We adhere to rigorous file size constraints and rely heavily on Vanilla CSS and Zustand slice-patterns to maintain clarity across the large ecosystem.
+Development on Sarvakshan prioritizes modularity, high performance, and strict architectural boundaries between the UI and the 3D rendering context. We adhere to rigorous file size constraints and rely heavily on Vanilla CSS and Zustand slice-patterns to maintain clarity across the large ecosystem.
 
 ## Code Style
 
@@ -18,7 +18,7 @@ Development on WorldWideView prioritizes modularity, high performance, and stric
 
 ### Import Aliases
 - Application core: `@/*` → `./src/*`
-- Plugin SDK: `@worldwideview/wwv-plugin-sdk` → `./packages/wwv-plugin-sdk/src`
+- Plugin SDK: `@Sarvakshan/wwv-plugin-sdk` → `./packages/wwv-plugin-sdk/src`
 - Custom plugins use their respective names configured in `tsconfig.json`.
 
 ## Common Patterns

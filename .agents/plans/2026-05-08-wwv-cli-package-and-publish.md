@@ -186,7 +186,7 @@ export async function publishToNpm() {
         main: "dist/frontend.mjs",
         type: "module",
         files: ["dist", "wwv-manifest.json", "data"],
-        keywords: ["worldwideview", "plugin", manifest.category],
+        keywords: ["Sarvakshan", "plugin", manifest.category],
         author: manifest.author || ""
     };
     
@@ -203,9 +203,9 @@ export async function publishToNpm() {
         fs.unlinkSync(packageJsonPath);
     }
 
-    console.log(`[WWV CLI] Notifying WorldWideView Marketplace...`);
+    console.log(`[WWV CLI] Notifying Sarvakshan Marketplace...`);
     try {
-        const targetUrl = process.env.WWV_MARKETPLACE_URL || "https://marketplace.worldwideview.dev";
+        const targetUrl = process.env.WWV_MARKETPLACE_URL || "https://marketplace.Sarvakshan.dev";
         await fetch(`${targetUrl}/api/webhooks/npm-publish`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -255,12 +255,12 @@ const program = new Command();
 
 program
   .name("wwv")
-  .description("WorldWideView Plugin CLI")
+  .description("Sarvakshan Plugin CLI")
   .version("1.0.0");
 
 program
   .command("create <name>")
-  .description("Scaffold a new WorldWideView plugin")
+  .description("Scaffold a new Sarvakshan plugin")
   .action(async (name) => {
       try {
           await createPlugin(name);
@@ -273,7 +273,7 @@ program
 program
   .command("dev")
   .description("Start the plugin development server with hot-reload")
-  .option("-t, --target <url>", "Target WorldWideView URL", "http://localhost:3000")
+  .option("-t, --target <url>", "Target Sarvakshan URL", "http://localhost:3000")
   .action(async (options) => {
       try {
           await startDevServer(options.target);

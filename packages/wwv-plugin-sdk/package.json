@@ -1,7 +1,7 @@
 {
-  "name": "@worldwideview/wwv-plugin-sdk",
+  "name": "@Sarvakshan/wwv-plugin-sdk",
   "version": "1.5.0",
-  "description": "Plugin SDK — types, interfaces, and utilities for building WorldWideView globe plugins",
+  "description": "Plugin SDK — types, interfaces, and utilities for building Sarvakshan globe plugins",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -12,7 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
-    "worldwideview",
+    "Sarvakshan",
     "wwv-plugin-sdk",
     "globe",
     "cesium",
@@ -21,15 +21,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Aditya and Mankshu/worldwideview.git",
+    "url": "https://github.com/Aditya and Mankshu/Sarvakshan.git",
     "directory": "packages/wwv-plugin-sdk"
   },
-  "homepage": "https://github.com/Aditya and Mankshu/worldwideview#readme",
+  "homepage": "https://github.com/Aditya and Mankshu/Sarvakshan#readme",
   "bugs": {
-    "url": "https://github.com/Aditya and Mankshu/worldwideview/issues"
+    "url": "https://github.com/Aditya and Mankshu/Sarvakshan/issues"
   },
   "license": "ISC",
-  "author": "WorldWideView",
+  "author": "Sarvakshan",
   "peerDependencies": {
     "react": ">=18"
   },

@@ -11,7 +11,7 @@ import path from "path";
 /**
  * Vite plugin that auto-generates a WorldPlugin class for static plugins.
  *
- * If the plugin's package.json has `worldwideview.format: "static"` and
+ * If the plugin's package.json has `Sarvakshan.format: "static"` and
  * no `src/index.ts` exists, this plugin injects a virtual module that:
  * - Fetches GeoJSON data from the CDN at runtime
  * - Converts features into GeoEntity objects
@@ -32,7 +32,7 @@ export function wwvStaticCompiler(): any {
             if (!fs.existsSync(pkgPath)) return;
 
             const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-            manifest = pkg.worldwideview || null;
+            manifest = pkg.Sarvakshan || null;
             if (!manifest) return;
 
             manifest._packageName = pkg.name;
@@ -112,7 +112,7 @@ function generateStaticPluginSource(manifest: any): string {
 
     return `
 import { ${icon} } from "lucide-react";
-import { createSvgIconUrl } from "@worldwideview/wwv-plugin-sdk";
+import { createSvgIconUrl } from "@Sarvakshan/wwv-plugin-sdk";
 import dataRaw from "../data/${dataFileName}?raw";
 
 function representativePoint(geom) {

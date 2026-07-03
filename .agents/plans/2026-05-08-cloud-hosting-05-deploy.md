@@ -22,7 +22,7 @@
 # deploy/cloud/docker-compose.yml
 services:
   wwv-cloud:
-    image: ghcr.io/Aditya and Mankshu/worldwideview:latest
+    image: ghcr.io/Aditya and Mankshu/Sarvakshan:latest
     restart: always
     environment:
       NEXT_PUBLIC_WWV_EDITION: cloud
@@ -32,7 +32,7 @@ services:
       SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.wwv.rule=HostRegexp(`{user:[a-z0-9-]+}.app.worldwideview.dev`) || Host(`app.worldwideview.dev`)"
+      - "traefik.http.routers.wwv.rule=HostRegexp(`{user:[a-z0-9-]+}.app.Sarvakshan.dev`) || Host(`app.Sarvakshan.dev`)"
       - "traefik.http.routers.wwv.entrypoints=websecure"
       - "traefik.http.routers.wwv.tls.certresolver=letsencrypt"
 

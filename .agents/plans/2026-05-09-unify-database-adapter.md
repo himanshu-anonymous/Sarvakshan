@@ -466,7 +466,7 @@ With:
 # PostgreSQL connection string.
 # For local dev: run `npx prisma dev` and use the URL it prints.
 # For production: set to your Supabase/Postgres connection string.
-# DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/worldwideview
+# DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/Sarvakshan
 ```
 
 > **Important:** The default is now commented out. The `.env.local` file (or `npx prisma dev`) must provide the actual value. This forces contributors to explicitly set up their database rather than silently falling back to a potentially broken SQLite path.
@@ -486,7 +486,7 @@ In `package.json`, the `predev` script currently runs `npx prisma migrate deploy
 Replace the entire contents of `local-dev.ps1`:
 
 ```powershell
-Write-Host "[*] Setting up WorldWideView for Local Development..."
+Write-Host "[*] Setting up Sarvakshan for Local Development..."
 
 # Check for pnpm
 try {
@@ -513,7 +513,7 @@ if (-not (Test-Path "../wwv-data-engine")) {
     Write-Host "[!] NOTICE: Local Data Engine not found at ../wwv-data-engine" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "Frontend-Only Mode: You are developing the frontend UI." -ForegroundColor Green
-    Write-Host "WorldWideView will automatically stream data from the Cloud Engine." -ForegroundColor Green
+    Write-Host "Sarvakshan will automatically stream data from the Cloud Engine." -ForegroundColor Green
     Write-Host ""
     Write-Host "Full-Stack Mode: If you want to develop backend data seeders, you" -ForegroundColor Cyan
     Write-Host "must clone the open-source data engine as a sibling directory:" -ForegroundColor Cyan
@@ -527,7 +527,7 @@ Write-Host ""
 Write-Host "=====================================================================" -ForegroundColor Cyan
 Write-Host "[!] DATABASE SETUP REQUIRED" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "WorldWideView uses PostgreSQL. Choose one option:" -ForegroundColor White
+Write-Host "Sarvakshan uses PostgreSQL. Choose one option:" -ForegroundColor White
 Write-Host ""
 Write-Host "  Option A (Easiest): Run Prisma's built-in local database:" -ForegroundColor Green
 Write-Host "    npx prisma dev" -ForegroundColor Yellow
@@ -609,7 +609,7 @@ When merging the cloud-hosting-core branch back into main, the `src/core/adapter
 
 Add a note to the release changelog:
 
-> **Breaking Change:** WorldWideView now requires a PostgreSQL database. SQLite is no longer supported.
+> **Breaking Change:** Sarvakshan now requires a PostgreSQL database. SQLite is no longer supported.
 > Self-hosted users must provide a `DATABASE_URL` environment variable pointing to a PostgreSQL instance.
 > The easiest option is a free Supabase project, or run `docker run -d -p 5432:5432 -e POSTGRES_PASSWORD=pass postgres:17-alpine` alongside your WWV container.
 

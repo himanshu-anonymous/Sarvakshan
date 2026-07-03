@@ -2,7 +2,7 @@
 # Build System
 
 ## Overview
-WorldWideView uses a pnpm monorepo workspace for managing both the main application and its associated SDK and plugin packages. The primary build system relies on Next.js 16 with custom Webpack optimizations, specifically designed to output a standalone trace for highly efficient Docker containerization.
+Sarvakshan uses a pnpm monorepo workspace for managing both the main application and its associated SDK and plugin packages. The primary build system relies on Next.js 16 with custom Webpack optimizations, specifically designed to output a standalone trace for highly efficient Docker containerization.
 
 The core build configuration resides in `package.json` and `next.config.ts`. A custom standalone tracer strips unnecessary CLI dependencies (`prisma`, `dotenv`) from the final build to prevent fatal container runtime crashes.
 

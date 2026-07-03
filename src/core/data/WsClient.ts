@@ -4,7 +4,7 @@
  */
 
 import { dataBus } from "./DataBus";
-import type { WsStreamPayload, GeoEntity } from "@worldwideview/wwv-plugin-sdk";
+import type { WsStreamPayload, GeoEntity } from "@Sarvakshan/wwv-plugin-sdk";
 import { pluginManager } from "../plugins/PluginManager";
 import { useStore } from "../state/store";
 

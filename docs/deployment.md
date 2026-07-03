@@ -2,7 +2,7 @@
 # Deployment
 
 ## Overview
-WorldWideView utilizes a containerized deployment strategy based on Docker's multi-stage builds. To minimize the footprint of the Next.js runtime, it leverages the Next.js `standalone` output trace, effectively dropping unnecessary development dependencies and generating a highly optimized Node.js artifact.
+Sarvakshan utilizes a containerized deployment strategy based on Docker's multi-stage builds. To minimize the footprint of the Next.js runtime, it leverages the Next.js `standalone` output trace, effectively dropping unnecessary development dependencies and generating a highly optimized Node.js artifact.
 
 ## Package Types
 
@@ -16,7 +16,7 @@ WorldWideView utilizes a containerized deployment strategy based on Docker's mul
 ## Platform Deployment
 
 ### Coolify Integration
-WorldWideView deploys optimally to Coolify using a Dockerfile builder.
+Sarvakshan deploys optimally to Coolify using a Dockerfile builder.
 - **Environment Variables:** Must be explicitly mapped in the Coolify UI (e.g., `DATABASE_URL`, `AUTH_SECRET`).
 - **Persistent Storage:** PostgreSQL databases must be hosted externally or mounted via persistent volumes to ensure the frontend registry (installed plugins, user configs) survives container rebuilds.
 - **Seeder Deployment:** The generic `wwv-data-engine` runner is deployed as a Coolify service, reading plugin seeders dynamically from a volume-mounted directory. Seeders are pulled from private/community repositories via GitHub releases.
@@ -27,7 +27,7 @@ WorldWideView deploys optimally to Coolify using a Dockerfile builder.
 
 ## Reverse Proxies (Nginx Proxy Manager)
 
-When deploying WorldWideView behind a reverse proxy like Nginx Proxy Manager (NPM), you must configure both the proxy and the container environment correctly to prevent NextAuth from hanging during login, and to allow the real-time Cesium data stream to function.
+When deploying Sarvakshan behind a reverse proxy like Nginx Proxy Manager (NPM), you must configure both the proxy and the container environment correctly to prevent NextAuth from hanging during login, and to allow the real-time Cesium data stream to function.
 
 ### Container Environment Variables
 NextAuth v5 requires strict host trust when placed behind a proxy. Add the following to your Docker `.env` file or Coolify environment variables:
@@ -41,7 +41,7 @@ NEXTAUTH_URL=https://your-domain.com
 ```
 
 ### Nginx Proxy Manager Configuration
-In the NPM UI for your WorldWideView Proxy Host:
+In the NPM UI for your Sarvakshan Proxy Host:
 1. **Details Tab:** Ensure **Websockets Support** is toggled **ON** (Required for the live `/stream` telemetry).
 2. **Details Tab:** Ensure **Force SSL** is toggled **ON**. NextAuth will often refuse authentication flows over plain HTTP.
 3. **Advanced Tab:** Nginx Proxy Manager sometimes fails to pass the correct host headers required by Next.js. Add the following to the Custom Nginx Configuration box:

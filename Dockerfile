@@ -42,7 +42,7 @@ RUN --mount=type=cache,target=/app/.next/cache NODE_OPTIONS="--max_old_space_siz
 RUN node scripts/copy-cesium.mjs
 
 # Deploy flattened production dependencies
-RUN pnpm --filter worldwideview deploy --prod /app/prod
+RUN pnpm --filter Sarvakshan deploy --prod /app/prod
 
 # Stage 4: Production runner
 FROM node:26-alpine AS runner

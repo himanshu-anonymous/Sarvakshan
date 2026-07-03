@@ -3,9 +3,9 @@
  * This code is the exclusive property of Aditya and Mankshu.
  */
 
-// ─── Re-export all types from the WorldWideView Plugin SDK ───
+// ─── Re-export all types from the Sarvakshan Plugin SDK ───
 // This keeps all existing app imports working without changes.
-// Source of truth for types is now @worldwideview/wwv-plugin-sdk.
+// Source of truth for types is now @Sarvakshan/wwv-plugin-sdk.
 export type {
     PluginCategory,
     TimeRange,
@@ -22,4 +22,4 @@ export type {
     FilterValue,
     WorldPlugin,
     DataBusEvents,
-} from "@worldwideview/wwv-plugin-sdk";
+} from "@Sarvakshan/wwv-plugin-sdk";

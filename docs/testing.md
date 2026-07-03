@@ -2,7 +2,7 @@
 # Testing
 
 ## Overview
-WorldWideView utilizes Vitest alongside a `jsdom` environment and the React Testing Library to ensure high reliability across core application logic, server APIs, and plugin loaders. Test coverage is strategically focused on shared libraries, core state logic, and the plugin ecosystem mechanisms.
+Sarvakshan utilizes Vitest alongside a `jsdom` environment and the React Testing Library to ensure high reliability across core application logic, server APIs, and plugin loaders. Test coverage is strategically focused on shared libraries, core state logic, and the plugin ecosystem mechanisms.
 
 ## Test Types
 
@@ -24,7 +24,7 @@ Focused on ensuring module interaction, such as the event bus properly interacti
 
 ## Running Tests
 
-Execute the following commands from the root `worldwideview` directory:
+Execute the following commands from the root `Sarvakshan` directory:
 
 - **Run all tests once:**
   ```bash

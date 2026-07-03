@@ -1,8 +1,8 @@
-# WorldWideView CLI Implementation Plan
+# Sarvakshan CLI Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build `@worldwideview/cli`, a standalone CLI tool that scaffolds, hot-reloads, and packages WWV plugins using the Chrome Extension model, completely decoupled from the main monorepo build pipeline.
+**Goal:** Build `@Sarvakshan/cli`, a standalone CLI tool that scaffolds, hot-reloads, and packages WWV plugins using the Chrome Extension model, completely decoupled from the main monorepo build pipeline.
 
 **Architecture:** A Node.js CLI built with `commander`. It uses `vite` programmatically to serve and build plugins. For dev mode, it attaches a `ws` WebSocket server to the Vite dev server to broadcast hot-reload events to the running WWV web app, and communicates with `/api/dev/load-unpacked` to inject the plugin. Publishing creates a `.wwvpkg` ZIP archive via `archiver`.
 
@@ -46,7 +46,7 @@ Expected: FAIL (File not found or missing package.json setup)
 ```json
 // packages/wwv-cli/package.json
 {
-  "name": "@worldwideview/cli",
+  "name": "@Sarvakshan/cli",
   "version": "1.0.0",
   "bin": { "wwv": "./bin/wwv.js" },
   "scripts": {
@@ -95,7 +95,7 @@ const program = new Command();
 
 program
   .name("wwv")
-  .description("WorldWideView Plugin CLI")
+  .description("Sarvakshan Plugin CLI")
   .version("1.0.0");
 
 program.parse();
@@ -175,7 +175,7 @@ export async function createPlugin(name: string, basePath: string = process.cwd(
         id: name,
         name: name,
         version: "1.0.0",
-        description: "A WorldWideView plugin",
+        description: "A Sarvakshan plugin",
         type: "data-layer",
         category: "custom",
         icon: "Box",
@@ -230,7 +230,7 @@ import { createPlugin } from "./commands/create";
 
 program
   .command("create <name>")
-  .description("Scaffold a new WorldWideView plugin")
+  .description("Scaffold a new Sarvakshan plugin")
   .action(async (name) => {
       try {
           await createPlugin(name);
@@ -345,11 +345,11 @@ export async function startDevServer(targetUrl: string = "http://localhost:3000"
     const wss = new WebSocketServer({ server: vite.httpServer as any, path: "/__wwv_dev__" });
     
     wss.on("connection", (ws) => {
-        console.log(`[WWV CLI] Connected to WorldWideView instance`);
+        console.log(`[WWV CLI] Connected to Sarvakshan instance`);
         ws.send(JSON.stringify({ type: "plugin:added", manifest }));
     });
 
-    // Notify WorldWideView via API
+    // Notify Sarvakshan via API
     try {
         const fetch = (await import('node-fetch')).default || globalThis.fetch;
         await fetch(`${targetUrl}/api/dev/load-unpacked`, {
@@ -360,10 +360,10 @@ export async function startDevServer(targetUrl: string = "http://localhost:3000"
                 entry: `http://localhost:${port}/${manifest.dev_entry || "src/index.ts"}`
             })
         });
-        console.log(`[WWV CLI] Registered with WorldWideView at ${targetUrl}`);
+        console.log(`[WWV CLI] Registered with Sarvakshan at ${targetUrl}`);
     } catch (err: any) {
         console.error(`[WWV CLI] Failed to connect to ${targetUrl}: ${err.message}`);
-        console.log(`Waiting for WorldWideView to connect via WebSocket...`);
+        console.log(`Waiting for Sarvakshan to connect via WebSocket...`);
     }
 
     console.log(`\n🚀 Dev server running on http://localhost:${port}`);
@@ -378,7 +378,7 @@ import { startDevServer } from "./commands/dev";
 program
   .command("dev")
   .description("Start the plugin development server with hot-reload")
-  .option("-t, --target <url>", "Target WorldWideView URL", "http://localhost:3000")
+  .option("-t, --target <url>", "Target Sarvakshan URL", "http://localhost:3000")
   .action(async (options) => {
       try {
           await startDevServer(options.target);
@@ -499,7 +499,7 @@ export async function buildPackage() {
     });
 
     console.log(`\n🎉 Success! Package created at ${outputPath}`);
-    console.log(`You can now upload this file to the WorldWideView Marketplace.`);
+    console.log(`You can now upload this file to the Sarvakshan Marketplace.`);
 }
 ```
 

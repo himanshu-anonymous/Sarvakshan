@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Migrate the WorldWideView plugin architecture from compile-time hardcoded imports to a dynamic, runtime-loaded ecosystem where external developers can build, host, and distribute plugins without touching the core repository.
+**Goal:** Migrate the Sarvakshan plugin architecture from compile-time hardcoded imports to a dynamic, runtime-loaded ecosystem where external developers can build, host, and distribute plugins without touching the core repository.
 
 **Architecture:** We will introduce a bundler (`tsup`) to the SDK to compile `bundle` plugins into browser-ready ECMAScript Modules (ESM). We will expose shared dependencies (`react`, `cesium`, `lucide-react`) via a global `window.__WWV_SHARED__` object. Finally, we will refactor `AppShell.tsx` to dynamically load all plugins at runtime via `import(/* webpackIgnore: true */)`, removing the hardcoded imports, and we will update `loadPluginFromManifest.ts` to seamlessly handle the global dependency injection.
 
@@ -28,8 +28,8 @@
 ### Task 1: Initialize Global Shared Dependencies
 
 **Files:**
-- Modify: `c:\dev\worldwideview\src\components\layout\AppShell.tsx`
-- Create: `c:\dev\worldwideview\src\core\plugins\PluginGlobals.ts`
+- Modify: `c:\dev\Sarvakshan\src\components\layout\AppShell.tsx`
+- Create: `c:\dev\Sarvakshan\src\core\plugins\PluginGlobals.ts`
 
 - [ ] **Step 1: Create the PluginGlobals initializer**
 
@@ -39,7 +39,7 @@ import ReactDOM from "react-dom";
 import * as ReactDomServer from "react-dom/server";
 import { Plane, Ship, Camera, Shield, Flame, Map, Swords, Atom, Landmark, Mountain, PlaneTakeoff, Anchor, Lamp, Rocket, SunMoon, Cable, Pickaxe, ShieldAlert, Crosshair, SatelliteDish, Hand, Radar, Scale } from "lucide-react";
 import * as Cesium from "cesium";
-import * as WWVPluginSDK from "@worldwideview/wwv-plugin-sdk";
+import * as WWVPluginSDK from "@Sarvakshan/wwv-plugin-sdk";
 
 export function initPluginGlobals() {
     if (typeof window === "undefined") return;
@@ -56,7 +56,7 @@ export function initPluginGlobals() {
         "react-dom": ReactDOM,
         "react-dom/server": ReactDomServer,
         "cesium": Cesium,
-        "@worldwideview/wwv-plugin-sdk": WWVPluginSDK,
+        "@Sarvakshan/wwv-plugin-sdk": WWVPluginSDK,
         "lucide-react": lucideIcons
     };
 }
@@ -80,12 +80,12 @@ if (typeof window !== "undefined") {
 ### Task 2: Configure SDK Build Tool (`tsup`)
 
 **Files:**
-- Modify: `c:\dev\worldwideview\packages\wwv-plugin-sdk\package.json`
-- Create: `c:\dev\worldwideview\packages\wwv-plugin-sdk\bin\wwv-plugin-build.js`
+- Modify: `c:\dev\Sarvakshan\packages\wwv-plugin-sdk\package.json`
+- Create: `c:\dev\Sarvakshan\packages\wwv-plugin-sdk\bin\wwv-plugin-build.js`
 
 - [ ] **Step 1: Add tsup dependency**
 
-Run: `pnpm --filter @worldwideview/wwv-plugin-sdk add -D tsup`
+Run: `pnpm --filter @Sarvakshan/wwv-plugin-sdk add -D tsup`
 
 - [ ] **Step 2: Create the wwv-plugin-build CLI wrapper**
 
@@ -108,12 +108,12 @@ async function run() {
         minify: false,
         sourcemap: true,
         // Mark all these as externals so they aren't bundled
-        external: ["react", "react-dom", "cesium", "@worldwideview/wwv-plugin-sdk", "lucide-react"],
+        external: ["react", "react-dom", "cesium", "@Sarvakshan/wwv-plugin-sdk", "lucide-react"],
         // Provide a shim that converts bare imports into global lookups
         esbuildPlugins: [{
             name: "wwv-globals",
             setup(build) {
-                build.onResolve({ filter: /^(react|react-dom|cesium|@worldwideview\/wwv-plugin-sdk|lucide-react)$/ }, args => {
+                build.onResolve({ filter: /^(react|react-dom|cesium|@Sarvakshan\/wwv-plugin-sdk|lucide-react)$/ }, args => {
                     return { path: args.path, namespace: "wwv-global" };
                 });
                 build.onLoad({ filter: /.*/, namespace: "wwv-global" }, args => {
@@ -172,8 +172,8 @@ run();
 ### Task 4: Dynamic Initial Loader
 
 **Files:**
-- Modify: `c:\dev\worldwideview\src\components\layout\AppShell.tsx`
-- Modify: `c:\dev\worldwideview\package.json`
+- Modify: `c:\dev\Sarvakshan\src\components\layout\AppShell.tsx`
+- Modify: `c:\dev\Sarvakshan\package.json`
 
 - [ ] **Step 1: Remove Hardcoded Plugins**
 

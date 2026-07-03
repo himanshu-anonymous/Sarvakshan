@@ -1,4 +1,4 @@
-Write-Host "[*] Setting up WorldWideView for Local Development..."
+Write-Host "[*] Setting up Sarvakshan for Local Development..."
 
 # Check for pnpm
 try {
@@ -25,7 +25,7 @@ if (-not (Test-Path "../wwv-data-engine")) {
     Write-Host "[!] NOTICE: Local Data Engine not found at ../wwv-data-engine" -ForegroundColor Yellow
     Write-Host ""
     Write-Host "Frontend-Only Mode: You are developing the frontend UI." -ForegroundColor Green
-    Write-Host "WorldWideView will automatically stream data from the Cloud Engine." -ForegroundColor Green
+    Write-Host "Sarvakshan will automatically stream data from the Cloud Engine." -ForegroundColor Green
     Write-Host ""
     Write-Host "Full-Stack Mode: If you want to develop backend data seeders, you" -ForegroundColor Cyan
     Write-Host "must clone the open-source data engine as a sibling directory:" -ForegroundColor Cyan
@@ -39,7 +39,7 @@ Write-Host ""
 Write-Host "=====================================================================" -ForegroundColor Cyan
 Write-Host "[!] DATABASE SETUP REQUIRED" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "WorldWideView uses PostgreSQL. Choose one option:" -ForegroundColor White
+Write-Host "Sarvakshan uses PostgreSQL. Choose one option:" -ForegroundColor White
 Write-Host ""
 Write-Host "  Option A (Easiest): Run Prisma's built-in local database:" -ForegroundColor Green
 Write-Host "    npx prisma dev" -ForegroundColor Yellow

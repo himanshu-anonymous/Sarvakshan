@@ -1,9 +1,9 @@
 <!-- Generated: 2026-04-23 06:11:00 UTC -->
 # Project Overview
 
-WorldWideView is a real-time geospatial intelligence engine that visualizes live global data on an interactive 3D globe. It leverages a modern frontend stack to render high-density datasets synchronously, including aircraft, maritime vessels, conflict events, satellites, and environmental data.
+Sarvakshan is a real-time geospatial intelligence engine that visualizes live global data on an interactive 3D globe. It leverages a modern frontend stack to render high-density datasets synchronously, including aircraft, maritime vessels, conflict events, satellites, and environmental data.
 
-The core value proposition of WorldWideView is mapping diverse, decoupled intelligence streams onto a central geographic interface using a dynamically loaded plugin architecture. Data sources operate completely decoupled from the display platform, streaming observations via WebSockets for sub-second visual updates. The ecosystem consists of multiple repositories, including the main app (`worldwideview`), the plugin marketplace (`worldwideview-marketplace`), and the WebSocket push server (`wwv-data-engine`).
+The core value proposition of Sarvakshan is mapping diverse, decoupled intelligence streams onto a central geographic interface using a dynamically loaded plugin architecture. Data sources operate completely decoupled from the display platform, streaming observations via WebSockets for sub-second visual updates. The ecosystem consists of multiple repositories, including the main app (`Sarvakshan`), the plugin marketplace (`Sarvakshan-marketplace`), and the WebSocket push server (`wwv-data-engine`).
 
 ## Key Files
 - `package.json` (Lines 1-76) - Core dependencies and project metadata for the monorepo workspace.

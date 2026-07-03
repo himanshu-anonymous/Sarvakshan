@@ -1,7 +1,7 @@
 <!-- Generated: 2026-04-23 20:29:00 UTC -->
 # End-to-End Tutorial: Building a Real-Time ISS Tracking Plugin
 
-Welcome! This tutorial is designed for complete beginners. If you have never built a WorldWideView plugin before, you are in the right place. 
+Welcome! This tutorial is designed for complete beginners. If you have never built a Sarvakshan plugin before, you are in the right place. 
 
 By following these steps exactly, you will build a complete, real-time International Space Station (ISS) tracker from scratch. You will learn how to set up your environment, stream live data using a backend seeder, render it in 3D on the globe, and publish your work to the world.
 
@@ -11,7 +11,7 @@ Let's get started.
 
 ## Step 1: Setting up your Workspace
 
-Before we write any code, we need to prepare your computer. We will install the required tools and download the two main repositories that make up the WorldWideView platform.
+Before we write any code, we need to prepare your computer. We will install the required tools and download the two main repositories that make up the Sarvakshan platform.
 
 ### 1.1 Install Prerequisites
 
@@ -25,26 +25,26 @@ Ensure you have the following installed on your machine:
 
 ### 1.2 Clone the Repository
 
-You only need the main WorldWideView application. The data engine backend will run automatically via Docker. Open your terminal and navigate to the folder where you want to store your code (e.g., `C:\dev`).
+You only need the main Sarvakshan application. The data engine backend will run automatically via Docker. Open your terminal and navigate to the folder where you want to store your code (e.g., `C:\dev`).
 
 Run this command to download the code:
 ```bash
-git clone https://github.com/Aditya and Mankshu/worldwideview.git
+git clone https://github.com/Aditya and Mankshu/Sarvakshan.git
 ```
 
 ### 1.3 Install Dependencies
 
-Next, install dependencies for the main WorldWideView application:
+Next, install dependencies for the main Sarvakshan application:
 ```bash
-cd worldwideview
+cd Sarvakshan
 pnpm install
 ```
 
 ### 1.4 Setup Environment Variables
 
-WorldWideView needs a few basic configuration keys to run. 
+Sarvakshan needs a few basic configuration keys to run. 
 
-While still in the `worldwideview` folder, run the automated setup script. This will generate a `.env.local` file with the necessary secrets:
+While still in the `Sarvakshan` folder, run the automated setup script. This will generate a `.env.local` file with the necessary secrets:
 ```bash
 pnpm run setup
 ```
@@ -59,8 +59,8 @@ The ISS moves incredibly fast. If our frontend tries to ask for its location eve
 
 ### 2.1 Create the Seeder Directory and File
 
-Navigate to your `worldwideview` repository. Inside the `local-seeders` folder, create a new folder named `community/iss`. Inside that folder, create a file named `seeder.mjs`:
-`c:\dev\worldwideview\local-seeders\community\iss\seeder.mjs`
+Navigate to your `Sarvakshan` repository. Inside the `local-seeders` folder, create a new folder named `community/iss`. Inside that folder, create a file named `seeder.mjs`:
+`c:\dev\Sarvakshan\local-seeders\community\iss\seeder.mjs`
 
 > [!NOTE]
 > **Dependency Management:** You do *not* need to create a `package.json` or manually install standard dependencies (like `axios`) for your seeder. The `wwv-data-engine` runner dynamically resolves these via the pnpm workspace, keeping your seeder lightweight.
@@ -122,7 +122,7 @@ Before we build the frontend, let's prove that our backend is actually fetching 
 
 ### 3.1 Start the Engine
 
-In your terminal, navigate to the `worldwideview` folder and start the entire stack using Docker Compose:
+In your terminal, navigate to the `Sarvakshan` folder and start the entire stack using Docker Compose:
 ```bash
 pnpm dev:all
 ```
@@ -130,13 +130,13 @@ Wait for the Data Engine Docker container to start. You should see `[ISS] Poll O
 
 ---
 
-## Step 4: Creating the WorldWideView Plugin (Frontend)
+## Step 4: Creating the Sarvakshan Plugin (Frontend)
 
 Now we will build the visual part of the plugin that connects to our backend stream and draws the ISS on the 3D globe.
 
 ### 4.1 Scaffold the Plugin
 
-In your terminal, navigate to your main `worldwideview` folder. We will use the workspace CLI tool to generate a blank plugin template in the local sandboxes folder. Run:
+In your terminal, navigate to your main `Sarvakshan` folder. We will use the workspace CLI tool to generate a blank plugin template in the local sandboxes folder. Run:
 
 ```bash
 node packages/wwv-cli/dist/index.js create wwv-plugin-iss --local
@@ -147,10 +147,10 @@ This creates your plugin at `local-plugins/wwv-plugin-iss` and automatically reg
 
 ### 4.2 Write the Plugin Logic
 
-Open `c:\dev\worldwideview\local-plugins\wwv-plugin-iss\src\index.ts` in your text editor. Replace everything in the file with this code:
+Open `c:\dev\Sarvakshan\local-plugins\wwv-plugin-iss\src\index.ts` in your text editor. Replace everything in the file with this code:
 
 ```typescript
-import type { WorldPlugin, GeoEntity, PluginContext, LayerConfig, CesiumEntityOptions } from "@worldwideview/wwv-plugin-sdk";
+import type { WorldPlugin, GeoEntity, PluginContext, LayerConfig, CesiumEntityOptions } from "@Sarvakshan/wwv-plugin-sdk";
 
 export class IssPlugin implements WorldPlugin {
   // The ID MUST match the namespace we used in the backend ('iss')
@@ -203,7 +203,7 @@ export class IssPlugin implements WorldPlugin {
 
 ## Step 5: Connecting and Testing Everything
 
-Now we will link your new plugin to your local WorldWideView application to see it in action.
+Now we will link your new plugin to your local Sarvakshan application to see it in action.
 
 ### 5.1 Develop Your Plugin
 
@@ -233,14 +233,14 @@ You've built it, now share it with the world!
 
 ### 6.1 Update package.json
 
-Open `c:\dev\worldwideview\local-plugins\wwv-plugin-iss\package.json`. You must add a `"worldwideview"` metadata block so the marketplace knows how to read your plugin. Ensure your file looks like this:
+Open `c:\dev\Sarvakshan\local-plugins\wwv-plugin-iss\package.json`. You must add a `"Sarvakshan"` metadata block so the marketplace knows how to read your plugin. Ensure your file looks like this:
 
 ```json
 {
   "name": "wwv-plugin-iss",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "worldwideview": {
+  "Sarvakshan": {
     "id": "iss",
     "name": "ISS Live Tracker",
     "version": "1.0.0",
@@ -261,8 +261,8 @@ npm publish --access public
 
 ### 6.3 Submit to the Marketplace
 
-1. Go to the official marketplace at `https://marketplace.worldwideview.dev/submit`.
+1. Go to the official marketplace at `https://marketplace.Sarvakshan.dev/submit`.
 2. Type in your package name (`wwv-plugin-iss`) and click submit.
-3. The system will automatically verify your code. Once approved, any WorldWideView user on the planet can click "Install" to add your ISS tracker to their globe.
+3. The system will automatically verify your code. Once approved, any Sarvakshan user on the planet can click "Install" to add your ISS tracker to their globe.
 
 **Congratulations!** You have successfully navigated the entire stack, from API polling and WebSockets to 3D rendering and global publishing.

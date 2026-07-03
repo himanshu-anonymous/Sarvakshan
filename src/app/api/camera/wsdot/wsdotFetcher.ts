@@ -93,7 +93,7 @@ export async function fetchWsdotCameras(): Promise<GdotCameraFeature[]> {
 
     const url = `${WSDOT_BASE}?AccessCode=${encodeURIComponent(key)}`;
     const res = await fetch(url, {
-        headers: { "User-Agent": "WorldWideView/1.0" },
+        headers: { "User-Agent": "Sarvakshan/1.0" },
     });
     if (!res.ok) throw new Error(`WSDOT API returned ${res.status}`);
 

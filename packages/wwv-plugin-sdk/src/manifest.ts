@@ -75,7 +75,7 @@ export interface PluginManifest {
     capabilities: PluginCapability[];
     category: PluginCategory | string;
     icon?: string;
-    compatibility?: { worldwideview: string };
+    compatibility?: { Sarvakshan: string };
     requires?: { envVars?: string[] };
     dataSource?: DataSourceConfig;
     fieldMapping?: FieldMapping;

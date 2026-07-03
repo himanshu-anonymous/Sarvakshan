@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Refactor all WorldWideView plugin classes to derive their `version` property dynamically from their local `package.json` file rather than hardcoding string literals.
+**Goal:** Refactor all Sarvakshan plugin classes to derive their `version` property dynamically from their local `package.json` file rather than hardcoding string literals.
 
 **Architecture:** We will replace the hardcoded `version = "x.y.z"` strings in the core `WorldPlugin` interface implementations across all monorepo packages. We will utilize TypeScript's JSON module resolution feature to `import pkg from "../package.json"` and map `version = pkg.version`. This ensures that `pnpm version patch` is the single source of truth and eliminates the double-bookkeeping that previously made CI fixes tedious.
 

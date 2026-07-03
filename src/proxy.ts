@@ -19,7 +19,7 @@ async function resolveWorkspace(subdomain: string) {
         const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || `http://127.0.0.1:${process.env.PORT || "3000"}`;
         const url = new URL(`/api/internal/workspace/${subdomain}`, appUrl);
         const res = await fetch(url.toString(), {
-            headers: { "User-Agent": "WorldWideView-Middleware" }
+            headers: { "User-Agent": "Sarvakshan-Middleware" }
         });
         
         if (res.ok) {
@@ -50,9 +50,9 @@ export default async function proxy(req: NextRequest) {
     const isCloudDeploy = process.env.NEXT_PUBLIC_WWV_EDITION === "cloud";
     
     if (isCloudDeploy) {
-        const isApp = hostname.includes(".app.worldwideview.dev") || hostname.includes(".localhost");
+        const isApp = hostname.includes(".app.Sarvakshan.dev") || hostname.includes(".localhost");
         if (isApp) {
-            const subdomain = hostname.replace(".app.worldwideview.dev", "").replace(".localhost", "").split(":")[0];
+            const subdomain = hostname.replace(".app.Sarvakshan.dev", "").replace(".localhost", "").split(":")[0];
             if (subdomain && subdomain !== "app" && subdomain !== "localhost") {
                 tenantSubdomain = subdomain;
             }
@@ -104,7 +104,7 @@ export default async function proxy(req: NextRequest) {
     if (isCloudDeploy && !tenantSubdomain) {
         // Redirect apex app domain to the external marketing/hub site
         if (path === "/" || path === "/register" || path === "/dashboard" || path === "/create-workspace") {
-            return NextResponse.redirect("https://worldwideview.dev/hub");
+            return NextResponse.redirect("https://Sarvakshan.dev/hub");
         }
     }
 
@@ -137,7 +137,7 @@ export default async function proxy(req: NextRequest) {
         const url = new URL("/api/auth/setup-status", appUrl);
         const res = await fetch(url.toString(), {
             headers: {
-                "User-Agent": "WorldWideView-Middleware",
+                "User-Agent": "Sarvakshan-Middleware",
             }
         });
         const data = await res.json();

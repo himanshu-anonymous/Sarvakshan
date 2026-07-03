@@ -18,7 +18,7 @@ Strict rules for operating within the `pnpm` monorepo workspace environment stru
 ## Critical Workspace Rule
 
 > [!IMPORTANT]
-> Because plugins use internal workspace references, you MUST strictly use `"workspace:*"` instead of `"*"` in `package.json` dependencies (e.g. `"@worldwideview/wwv-plugin-sdk": "workspace:*"`). Using `"*"` can cause pnpm to eagerly resolve cached registry versions instead of strictly linking your local code, resulting in opaque TypeScript and compilation errors.
+> Because plugins use internal workspace references, you MUST strictly use `"workspace:*"` instead of `"*"` in `package.json` dependencies (e.g. `"@Sarvakshan/wwv-plugin-sdk": "workspace:*"`). Using `"*"` can cause pnpm to eagerly resolve cached registry versions instead of strictly linking your local code, resulting in opaque TypeScript and compilation errors.
 > **Whenever you add a new plugin package or adjust the SDK, you MUST run `pnpm install` then `pnpm build` from the project ROOT directory to propagate TS types properly.**
 
 ## Start/Exec Flow

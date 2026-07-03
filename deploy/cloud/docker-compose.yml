@@ -26,7 +26,7 @@ services:
       - "3001:3000"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.wwv.rule=HostRegexp(`{user:[a-z0-9-]+}.app.worldwideview.dev`) || Host(`app.worldwideview.dev`) || Host(`localhost`) || HostRegexp(`{user:[a-z0-9-]+}.localhost`)"
+      - "traefik.http.routers.wwv.rule=HostRegexp(`{user:[a-z0-9-]+}.app.Sarvakshan.dev`) || Host(`app.Sarvakshan.dev`) || Host(`localhost`) || HostRegexp(`{user:[a-z0-9-]+}.localhost`)"
       - "traefik.http.routers.wwv.entrypoints=web,websecure"
       # - "traefik.http.routers.wwv.tls.certresolver=letsencrypt"
       - "traefik.http.services.wwv.loadbalancer.server.port=3000"

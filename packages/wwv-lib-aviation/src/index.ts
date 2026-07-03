@@ -13,7 +13,7 @@ import type {
     SelectionBehavior, 
     ServerPluginConfig, 
     FilterDefinition 
-} from "@worldwideview/wwv-plugin-sdk";
+} from "@Sarvakshan/wwv-plugin-sdk";
 
 /**
  * Base abstraction for aviation-based plugins.

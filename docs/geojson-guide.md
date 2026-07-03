@@ -1,6 +1,6 @@
 # GeoJSON Data Guide
 
-WorldWideView supports visualizing external datasets and local static files by interpreting GeoJSON files. When using the built-in GeoJSON parser (for instance, via declarative configs, static plugins, or user-uploaded files), the data is automatically normalized into our internal `GeoEntity` format so it seamlessly displays on the globe and the UI's detail panels.
+Sarvakshan supports visualizing external datasets and local static files by interpreting GeoJSON files. When using the built-in GeoJSON parser (for instance, via declarative configs, static plugins, or user-uploaded files), the data is automatically normalized into our internal `GeoEntity` format so it seamlessly displays on the globe and the UI's detail panels.
 
 This guide outlines exactly what structures are supported, what isn't, and how you can map your data into the UI.
 
@@ -21,7 +21,7 @@ The root of your JSON document must be a `FeatureCollection`. It must contain a 
 ```
 
 ### 2. Supported Geometry: Points
-WorldWideView's declarative parser strictly supports **Point** geometries. Your coordinates must be a flat array of numbers: `[longitude, latitude]` or optionally `[longitude, latitude, altitude]`.
+Sarvakshan's declarative parser strictly supports **Point** geometries. Your coordinates must be a flat array of numbers: `[longitude, latitude]` or optionally `[longitude, latitude, altitude]`.
 
 ```json
 "geometry": {
@@ -47,7 +47,7 @@ You can include any arbitrary metadata inside the `properties` object. The parse
 ```
 
 #### Field Mapping
-When configuring your data source, you can define how your GeoJSON properties map to standard WorldWideView `GeoEntity` fields. This is done via dot-notation:
+When configuring your data source, you can define how your GeoJSON properties map to standard Sarvakshan `GeoEntity` fields. This is done via dot-notation:
 
 | GeoEntity Field | Description | Example Path |
 | --- | --- | --- |
@@ -82,7 +82,7 @@ If you need to render borders, heatmaps, or route lines, you must build a **Code
 A single isolated `Feature` object at the root of the document will not be parsed. The data must be wrapped in a `FeatureCollection`.
 
 ### 3. Non-Standard Coordinate Orders
-Cesium and GeoJSON strictly require `[longitude, latitude]`. If your system outputs `[latitude, longitude]`, you must transform the data before passing it to WorldWideView.
+Cesium and GeoJSON strictly require `[longitude, latitude]`. If your system outputs `[latitude, longitude]`, you must transform the data before passing it to Sarvakshan.
 
 ---
 
@@ -113,4 +113,4 @@ Here is a fully supported and optimized example demonstrating cameras mounted gl
 }
 ```
 
-By ensuring your data matches this structure, WorldWideView can effortlessly stream, render, and display your intelligence layers on the interactive 3D globe.
+By ensuring your data matches this structure, Sarvakshan can effortlessly stream, render, and display your intelligence layers on the interactive 3D globe.

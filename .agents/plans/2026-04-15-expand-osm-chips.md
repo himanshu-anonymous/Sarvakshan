@@ -13,7 +13,7 @@
 ### Task 1: Update Pre-Loaded COMMON_TAGS
 
 **Files:**
-- Modify: `c:\dev\worldwideview\packages\wwv-plugin-osm-search\src\components\OSMSidebar.tsx:6-11`
+- Modify: `c:\dev\Sarvakshan\packages\wwv-plugin-osm-search\src\components\OSMSidebar.tsx:6-11`
 
 - [ ] **Step 1: Replace existing COMMON_TAGS array**
 
@@ -46,7 +46,7 @@ git commit -m "feat(osm-search): expand quick preset tags with OSINT categories"
 ### Task 2: Implement Taginfo Dynamic Autocomplete
 
 **Files:**
-- Modify: `c:\dev\worldwideview\packages\wwv-plugin-osm-search\src\components\OSMSidebar.tsx`
+- Modify: `c:\dev\Sarvakshan\packages\wwv-plugin-osm-search\src\components\OSMSidebar.tsx`
 
 - [ ] **Step 1: Add state and debounced fetch logic inside OSMSidebar component**
 

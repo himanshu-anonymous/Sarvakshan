@@ -86,7 +86,7 @@ export async function GET(req: NextRequest) {
 
     try {
         const upstream = await fetch(targetUrl, {
-            headers: { "User-Agent": "WorldWideView/1.0" },
+            headers: { "User-Agent": "Sarvakshan/1.0" },
             signal: AbortSignal.timeout(MAX_STREAM_DURATION_MS),
         });
 

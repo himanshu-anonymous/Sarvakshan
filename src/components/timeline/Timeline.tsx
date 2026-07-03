@@ -72,7 +72,7 @@ export function Timeline() {
                         <span className="timeline__history-unavailable-icon">🔒</span>
                         History unavailable on demo —{" "}
                         <a
-                            href="https://worldwideview.app"
+                            href="https://Sarvakshan.app"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="timeline__history-unavailable-link"

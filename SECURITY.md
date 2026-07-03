@@ -20,7 +20,7 @@ If you believe you have found a security vulnerability in this project, please r
 
 ### How to Report
 
-1. **Email us directly:** Send your report to **[support@worldwideview.dev]**.
+1. **Email us directly:** Send your report to **[support@Sarvakshan.dev]**.
 2. **GitHub Security Advisories:** Alternatively, if this repository has Private Vulnerability Reporting enabled, you can click on the `Security` tab -> `Advisories` -> `Report a vulnerability`.
 
 ### What to Include

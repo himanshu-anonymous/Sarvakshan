@@ -69,7 +69,7 @@ export async function fetch511NyCameras(): Promise<GdotCameraFeature[]> {
     const url = `${NY511_BASE}?key=${encodeURIComponent(key)}&format=json`;
 
     const res = await fetch(url, {
-        headers: { "User-Agent": "WorldWideView/1.0" },
+        headers: { "User-Agent": "Sarvakshan/1.0" },
     });
     if (!res.ok) throw new Error(`511NY API returned ${res.status}`);
 

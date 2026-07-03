@@ -22,7 +22,7 @@ export async function OPTIONS() {
 /**
  * POST /api/dev/load-unpacked
  *
- * Called by the `@worldwideview/cli` dev server when it starts.
+ * Called by the `@Sarvakshan/cli` dev server when it starts.
  * It sends the `wwv-manifest.json` + `devUrl` (the CLI dev server URL).
  */
 export async function POST(request: Request) {

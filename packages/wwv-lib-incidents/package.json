@@ -1,21 +1,21 @@
 {
-  "name": "@worldwideview/wwv-lib-incidents",
+  "name": "@Sarvakshan/wwv-lib-incidents",
   "version": "1.0.1",
-  "description": "Shared abstract base classes for WorldWideView incident plugins (earthquakes, wildfires, conflicts)",
+  "description": "Shared abstract base classes for Sarvakshan incident plugins (earthquakes, wildfires, conflicts)",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "files": [
     "src"
   ],
   "keywords": [
-    "worldwideview",
+    "Sarvakshan",
     "incident",
     "disaster",
     "base-plugin"
   ],
-  "author": "WorldWideView",
+  "author": "Sarvakshan",
   "license": "ISC",
   "peerDependencies": {
-    "@worldwideview/wwv-plugin-sdk": "^1.4.10"
+    "@Sarvakshan/wwv-plugin-sdk": "^1.4.10"
   }
 }

@@ -1,11 +1,11 @@
-# @worldwideview/wwv-plugin-sdk
+# @Sarvakshan/wwv-plugin-sdk
 
-Plugin SDK for building [WorldWideView](https://github.com/Aditya and Mankshu/worldwideview) globe plugins. Provides TypeScript types, interfaces, and utilities that all plugins depend on.
+Plugin SDK for building [Sarvakshan](https://github.com/Aditya and Mankshu/Sarvakshan) globe plugins. Provides TypeScript types, interfaces, and utilities that all plugins depend on.
 
 ## Installation
 
 ```bash
-npm install @worldwideview/wwv-plugin-sdk
+npm install @Sarvakshan/wwv-plugin-sdk
 ```
 
 ## Core Interfaces
@@ -24,12 +24,12 @@ npm install @worldwideview/wwv-plugin-sdk
 ## Quick Example
 
 ```ts
-import type { WorldPlugin, GeoEntity, TimeRange, PluginContext, LayerConfig, CesiumEntityOptions } from "@worldwideview/wwv-plugin-sdk";
+import type { WorldPlugin, GeoEntity, TimeRange, PluginContext, LayerConfig, CesiumEntityOptions } from "@Sarvakshan/wwv-plugin-sdk";
 
 export class MyPlugin implements WorldPlugin {
   id = "my-plugin";
   name = "My Plugin";
-  description = "A custom WorldWideView plugin";
+  description = "A custom Sarvakshan plugin";
   icon = "🌍";
   category = "custom";
   version = "1.0.0";

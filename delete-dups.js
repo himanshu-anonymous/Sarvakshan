@@ -38,7 +38,7 @@ const uuidsToDelete = [
 ];
 
 const token = "1|vPZPgvB8vVi8ZD5ZKS8lrCrwNlPofVv4I8Tjmqmyd01f92d2";
-const baseUrl = "https://coolify.worldwideview.dev/api/v1";
+const baseUrl = "https://coolify.Sarvakshan.dev/api/v1";
 const appUuid = "nmn55t4io3myfubs72worn7k";
 
 async function run() {

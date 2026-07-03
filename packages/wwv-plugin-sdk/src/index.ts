@@ -3,9 +3,9 @@
  * This code is the exclusive property of Aditya and Mankshu.
  */
 
-// ─── WorldWideView Plugin SDK ─────────────────────────────────
-// The public API for building WorldWideView plugins.
-// Import from "@worldwideview/wwv-plugin-sdk" in your plugin.
+// ─── Sarvakshan Plugin SDK ─────────────────────────────────
+// The public API for building Sarvakshan plugins.
+// Import from "@Sarvakshan/wwv-plugin-sdk" in your plugin.
 
 import type { ComponentType } from "react";
 import { createElement } from "react";

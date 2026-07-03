@@ -7,8 +7,8 @@ import { SignJWT, jwtVerify } from "jose";
 import { randomUUID } from "crypto";
 
 const SCOPE = "marketplace";
-const ISSUER = "worldwideview";
-const AUDIENCE = "worldwideview-marketplace";
+const ISSUER = "Sarvakshan";
+const AUDIENCE = "Sarvakshan-marketplace";
 const EXPIRY = "4h";
 
 // Simple in-memory revocation list for JWT tokens (resets on restart)

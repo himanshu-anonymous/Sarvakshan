@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "🌍 Setting up WorldWideView for Local Development..."
+echo "🌍 Setting up Sarvakshan for Local Development..."
 
 # Check for pnpm
 if ! command -v pnpm &> /dev/null; then
@@ -23,7 +23,7 @@ if [ ! -d "../wwv-data-engine" ]; then
     echo "⚠️  NOTICE: Local Data Engine not found at ../wwv-data-engine"
     echo ""
     echo "Frontend-Only Mode: You are developing the frontend UI."
-    echo "WorldWideView will automatically stream data from the Cloud Engine."
+    echo "Sarvakshan will automatically stream data from the Cloud Engine."
     echo ""
     echo "Full-Stack Mode: If you want to develop backend data seeders, you"
     echo "must clone the open-source data engine as a sibling directory:"

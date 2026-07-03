@@ -53,7 +53,7 @@ function toGeoJsonFeature(raw: any): GdotCameraFeature | null {
 /** Fetch all TfL JamCams. */
 export async function fetchTflCameras(): Promise<GdotCameraFeature[]> {
     const res = await fetch(TFL_URL, {
-        headers: { "User-Agent": "WorldWideView/1.0" },
+        headers: { "User-Agent": "Sarvakshan/1.0" },
     });
 
     if (!res.ok) throw new Error(`TfL API returned ${res.status}`);

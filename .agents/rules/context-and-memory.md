@@ -9,10 +9,10 @@ This specification ensures that any agent maintains persistent, accurate project
 
 ## 2. Synchronization Target
 The agent MUST orient itself by immediately reading:
-1. `c:\dev\worldwideview\AGENTS.md` (The root index of all technical stack details)
-2. `c:\dev\worldwideview\.agents\context\01-platform-overview.md` (The high-level platform goals)
+1. `c:\dev\Sarvakshan\AGENTS.md` (The root index of all technical stack details)
+2. `c:\dev\Sarvakshan\.agents\context\01-platform-overview.md` (The high-level platform goals)
 
-If deep technical rules are required for a specific domain (e.g., UI state, Map Rendering, Monorepo management), the agent MUST consult the relevant file in `c:\dev\worldwideview\.agents\rules\`.
+If deep technical rules are required for a specific domain (e.g., UI state, Map Rendering, Monorepo management), the agent MUST consult the relevant file in `c:\dev\Sarvakshan\.agents\rules\`.
 
 ## 3. Reflecting Changes
 If the architecture fundamentally changes (e.g., migrating off Zustand, or removing Cesium), the agent MUST proactively update the `AGENTS.md` and relevant files in `.agents/rules/` to reflect this new reality.

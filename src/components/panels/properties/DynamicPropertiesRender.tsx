@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { GeoEntity } from '@worldwideview/wwv-plugin-sdk';
+import { GeoEntity } from '@Sarvakshan/wwv-plugin-sdk';
 import { ImageProperty } from './ImageProperty';
 import { UrlProperty } from './UrlProperty';
 import { LongTextProperty } from './LongTextProperty';

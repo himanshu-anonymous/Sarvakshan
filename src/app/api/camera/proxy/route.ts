@@ -93,7 +93,7 @@ export async function GET(req: NextRequest) {
     try {
         const response = await fetch(targetUrl, {
             headers: {
-                "User-Agent": "WorldWideView/1.0",
+                "User-Agent": "Sarvakshan/1.0",
                 "Accept": "application/json, text/plain, */*",
             },
         });

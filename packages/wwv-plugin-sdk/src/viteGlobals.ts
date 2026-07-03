@@ -24,7 +24,7 @@ export function wwvPluginGlobals(): any {
         "cesium": "Cesium",
         "resium": "Resium",
         // zustand is also part of WWVHostGlobals or maybe not? Wait. I should check hostGlobals.ts!
-        "@worldwideview/wwv-plugin-sdk": "WWVPluginSDK",
+        "@Sarvakshan/wwv-plugin-sdk": "WWVPluginSDK",
         "@/core/state/store": "useStore",
         "@/core/plugins/PluginManager": "pluginManager",
         "@/components/video/CameraStream": "CameraStream"
@@ -81,7 +81,7 @@ export function wwvPluginGlobals(): any {
                     export const { Entity, PointGraphics, BillboardGraphics, CustomDataSource, Camera, PolygonGraphics, PolylineGraphics, EllipseGraphics, LabelGraphics, ModelGraphics, PathGraphics, BoxGraphics, GeoJsonDataSource, ScreenSpaceEventHandler, ScreenSpaceEvent } = Resium;
                 `;
             }
-            if (originalId === "@worldwideview/wwv-plugin-sdk") {
+            if (originalId === "@Sarvakshan/wwv-plugin-sdk") {
                 return `
                     const SDK = globalThis.__WWV_HOST__.WWVPluginSDK;
                     export default SDK;

@@ -52,7 +52,7 @@ export async function POST(request: Request) {
         // Fetch from marketplace if manifest is missing (e.g. from in-app update)
         let finalManifest = manifest;
         if (!finalManifest) {
-            const MARKETPLACE_URL = process.env.NEXT_PUBLIC_MARKETPLACE_URL || "https://marketplace.worldwideview.dev";
+            const MARKETPLACE_URL = process.env.NEXT_PUBLIC_MARKETPLACE_URL || "https://marketplace.Sarvakshan.dev";
             try {
                 const res = await fetch(`${MARKETPLACE_URL}/api/plugins/${pluginId}`);
                 if (res.ok) {

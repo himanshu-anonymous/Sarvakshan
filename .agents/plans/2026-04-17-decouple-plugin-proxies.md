@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Strip out hardcoded proxy endpoints from the `worldwideview` core repository to enforce a fully decoupled plugin ecosystem, replacing them with direct browser fetching or a universal CORS proxy.
+**Goal:** Strip out hardcoded proxy endpoints from the `Sarvakshan` core repository to enforce a fully decoupled plugin ecosystem, replacing them with direct browser fetching or a universal CORS proxy.
 
-**Architecture:** Remove preferential API routes (`/api/earthquake`, `/api/undersea-cables`, `/api/camera/*`) from the `worldwideview` core app. Promote the existing camera proxy to a universal `/api/proxy` with strict SSRF defenses. Provide direct browser-fetch code for the `wwv-plugin-earthquakes` where CORS permits, and migrate traffic camera fetchers directly into the `wwv-plugin-camera` package to fetch via the universal proxy.
+**Architecture:** Remove preferential API routes (`/api/earthquake`, `/api/undersea-cables`, `/api/camera/*`) from the `Sarvakshan` core app. Promote the existing camera proxy to a universal `/api/proxy` with strict SSRF defenses. Provide direct browser-fetch code for the `wwv-plugin-earthquakes` where CORS permits, and migrate traffic camera fetchers directly into the `wwv-plugin-camera` package to fetch via the universal proxy.
 
 **Tech Stack:** Next.js 16 (App Router), TypeScript, pnpm workspace
 
@@ -60,11 +60,11 @@ git commit -m "refactor: promote camera proxy to universal proxy"
 Run: `rm -rf src/app/api/earthquake`
 Run: `rm -rf src/app/api/undersea-cables`
 
-**WAIT**: For `src/app/api/camera`, we must physically copy the fetchers into `worldwideview-plugins` before we delete them.
+**WAIT**: For `src/app/api/camera`, we must physically copy the fetchers into `Sarvakshan-plugins` before we delete them.
 
-Run: `cp -r src/app/api/camera/caltrans ../worldwideview-plugins/packages/wwv-plugin-camera/src/`
-Run: `cp -r src/app/api/camera/gdot ../worldwideview-plugins/packages/wwv-plugin-camera/src/`
-Run: `cp -r src/app/api/camera/tfl ../worldwideview-plugins/packages/wwv-plugin-camera/src/`
+Run: `cp -r src/app/api/camera/caltrans ../Sarvakshan-plugins/packages/wwv-plugin-camera/src/`
+Run: `cp -r src/app/api/camera/gdot ../Sarvakshan-plugins/packages/wwv-plugin-camera/src/`
+Run: `cp -r src/app/api/camera/tfl ../Sarvakshan-plugins/packages/wwv-plugin-camera/src/`
 Run: `rm -rf src/app/api/camera`
 
 - [ ] **Step 2: Commit the deleted API routes**
@@ -77,12 +77,12 @@ git commit -m "refactor!: strip preferential plugin APIs from core"
 ### Task 3: Migrate Earthquakes and Undersea Cables Plugins
 
 **Files:**
-- Modify: `../worldwideview-plugins/packages/wwv-plugin-earthquakes/src/index.ts`
-- Modify: `../worldwideview-plugins/packages/wwv-plugin-undersea-cables/src/index.ts`
+- Modify: `../Sarvakshan-plugins/packages/wwv-plugin-earthquakes/src/index.ts`
+- Modify: `../Sarvakshan-plugins/packages/wwv-plugin-undersea-cables/src/index.ts`
 
 - [ ] **Step 1: Update Earthquakes plugin to direct browser fetch (Option A)**
 
-In `../worldwideview-plugins/packages/wwv-plugin-earthquakes/src/index.ts`, replace the `/api/earthquake` fetch with the USGS direct URL.
+In `../Sarvakshan-plugins/packages/wwv-plugin-earthquakes/src/index.ts`, replace the `/api/earthquake` fetch with the USGS direct URL.
 
 ```json
 {
@@ -106,7 +106,7 @@ In `../worldwideview-plugins/packages/wwv-plugin-earthquakes/src/index.ts`, repl
 
 - [ ] **Step 2: Update Undersea Cables plugin to use Universal Proxy (Option B)**
 
-In `../worldwideview-plugins/packages/wwv-plugin-undersea-cables/src/index.ts`:
+In `../Sarvakshan-plugins/packages/wwv-plugin-undersea-cables/src/index.ts`:
 
 ```json
 {
@@ -125,27 +125,27 @@ In `../worldwideview-plugins/packages/wwv-plugin-undersea-cables/src/index.ts`:
 - [ ] **Step 3: Commit the plugin migrations**
 
 ```bash
-cd ../worldwideview-plugins
+cd ../Sarvakshan-plugins
 git add packages/wwv-plugin-earthquakes/src/index.ts packages/wwv-plugin-undersea-cables/src/index.ts
 git commit -m "refactor: transition earthquake and undersea cables to decoupled fetching"
-cd ../worldwideview
+cd ../Sarvakshan
 ```
 
 ### Task 4: Refactor Camera Plugin to Fetch Natively
 
 **Files:**
-- Modify: `../worldwideview-plugins/packages/wwv-plugin-camera/src/index.ts`
+- Modify: `../Sarvakshan-plugins/packages/wwv-plugin-camera/src/index.ts`
 - Delete: `caltrans`, `gdot`, `tfl` previously copied components (combine into `trafficFetchers.ts`)
 
 - [ ] **Step 1: Consolidate the camera fetchers**
 
-Create `../worldwideview-plugins/packages/wwv-plugin-camera/src/trafficFetchers.ts`.
+Create `../Sarvakshan-plugins/packages/wwv-plugin-camera/src/trafficFetchers.ts`.
 Migrate the code from the `caltransFetcher.ts`, `gdotFetcher.ts`, and `tflFetcher.ts` files that we copied in Task 2.
 Crucially, when doing `fetch(...)` in these fetchers, if the endpoint doesn't support CORS, wrap it in `/api/proxy?url=${encodeURIComponent(...) }` so the browser can fetch it. Ensure the data models align.
 
 - [ ] **Step 2: Update `wwv-plugin-camera/src/index.ts` to call the fetchers natively**
 
-In `../worldwideview-plugins/packages/wwv-plugin-camera/src/index.ts` function `loadTrafficCameras()`:
+In `../Sarvakshan-plugins/packages/wwv-plugin-camera/src/index.ts` function `loadTrafficCameras()`:
 
 ```json
 {
@@ -163,15 +163,15 @@ In `../worldwideview-plugins/packages/wwv-plugin-camera/src/index.ts` function `
 
 - [ ] **Step 3: Remove the extra node API files from the plugin source tree**
 
-Run: `rm -rf ../worldwideview-plugins/packages/wwv-plugin-camera/src/caltrans`
-Run: `rm -rf ../worldwideview-plugins/packages/wwv-plugin-camera/src/gdot`
-Run: `rm -rf ../worldwideview-plugins/packages/wwv-plugin-camera/src/tfl`
+Run: `rm -rf ../Sarvakshan-plugins/packages/wwv-plugin-camera/src/caltrans`
+Run: `rm -rf ../Sarvakshan-plugins/packages/wwv-plugin-camera/src/gdot`
+Run: `rm -rf ../Sarvakshan-plugins/packages/wwv-plugin-camera/src/tfl`
 
 - [ ] **Step 4: Commit Camera plugin refactoring**
 
 ```bash
-cd ../worldwideview-plugins
+cd ../Sarvakshan-plugins
 git add packages/wwv-plugin-camera/src
 git commit -m "feat: migrate traffic camera fetchers to client-side plugin bundle"
-cd ../worldwideview
+cd ../Sarvakshan
 ```

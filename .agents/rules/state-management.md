@@ -1,16 +1,16 @@
 ---
 trigger: glob
-description: Guidelines on managing the single source of truth across WorldWideView using Zustand, avoiding prop-drilling, and isolating UI rerenders.
+description: Guidelines on managing the single source of truth across Sarvakshan using Zustand, avoiding prop-drilling, and isolating UI rerenders.
 globs: "src/core/state/**/*, src/components/**/*"
 ---
 
 # Zustand State Management
 
 ## Purpose
-Guidelines on managing the single source of truth across WorldWideView using Zustand, avoiding prop-drilling, and isolating UI rerenders.
+Guidelines on managing the single source of truth across Sarvakshan using Zustand, avoiding prop-drilling, and isolating UI rerenders.
 
 ## Single Centralized State
-WorldWideView utilizes a monolithic Zustand store located at `src/core/state/store.ts`. It is broken down into exactly 9 semantic slices.
+Sarvakshan utilizes a monolithic Zustand store located at `src/core/state/store.ts`. It is broken down into exactly 9 semantic slices.
 
 | Slice Name | Purpose | Example State |
 |---|---|---|

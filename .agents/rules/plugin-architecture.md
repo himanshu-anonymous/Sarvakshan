@@ -10,7 +10,7 @@ The standard operating procedure for instantiating, modifying, and registering a
 
 ## The WorldPlugin Contract
 
-All data ingest flows through `WorldPlugin` (defined entirely within `@worldwideview/wwv-plugin-sdk`).
+All data ingest flows through `WorldPlugin` (defined entirely within `@Sarvakshan/wwv-plugin-sdk`).
 A valid plugin class MUST provide:
 1. `id` and `version` (The `version` MUST be dynamically imported via `import pkg from "../package.json"` to prevent duplicate tracking during CI/releases for built-in plugins).
 2. `fetch(timeRange)` method logic.
@@ -31,13 +31,13 @@ No matter the source, the engine evaluates it by directly loading the `entry` fi
 
 ## Package Metadata (`package.json`)
 
-All plugins MUST define their identity and compatibility via a `"worldwideview"` block in their `package.json`. This acts as the source-of-truth for generating the `PluginManifest` for the registry. If a plugin does not define `"type"`, validation functions will reject the manifest entirely or rely on legacy fallbacks.
+All plugins MUST define their identity and compatibility via a `"Sarvakshan"` block in their `package.json`. This acts as the source-of-truth for generating the `PluginManifest` for the registry. If a plugin does not define `"type"`, validation functions will reject the manifest entirely or rely on legacy fallbacks.
 
 ```json
 {
-  "name": "@worldwideview/wwv-plugin-myplugin",
+  "name": "@Sarvakshan/wwv-plugin-myplugin",
   "version": "1.0.0",
-  "worldwideview": {
+  "Sarvakshan": {
     "id": "myplugin",                      // REQUIRED: Must match the directory name & API routes.
     "type": "data-layer",                  // REQUIRED: "data-layer" or "extension"
     "format": "bundle",                    // REQUIRED: "bundle", "declarative", or "static"

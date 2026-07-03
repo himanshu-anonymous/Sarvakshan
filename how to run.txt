@@ -1,0 +1,71 @@
+============================================================
+Sarvakshan - Professional Setup & Execution Guide
+============================================================
+
+This guide contains all the necessary instructions and functions to setup, run, and manage the Sarvakshan Geospatial Intelligence Engine.
+
+--- 1. SYSTEM REQUIREMENTS ---
+• Node.js (v18 or higher)
+• pnpm (v9 or higher) - Package manager used across the monorepo
+• Docker & Docker Compose - For backend services (Redis, PostgreSQL)
+• Git - For version control and fetching the repository
+
+--- 2. ENVIRONMENT CONFIGURATION ---
+Before running, you must configure the environment variables:
+1. Copy the example file to a local environment file:
+   $ cp .env.example .env.local
+
+2. Generate a secure authentication secret:
+   $ openssl rand -hex 32
+   Paste this value into AUTH_SECRET in `.env.local`.
+
+3. [NOTE ON PAID API KEYS]
+   The `.env.local` file contains endpoints and API Keys (e.g., Cesium ION, Bing Maps, Supabase, OpenSky Network, ACLED).
+   Please note: These are PAID KEYS and some have a limited, random amount of tokens. Use them conservatively in local development.
+
+--- 3. INSTALLATION & SETUP ---
+Install all monorepo dependencies from the project root:
+$ pnpm install
+
+Run the automated setup script to finalize database schema configurations and prepare the environment:
+$ pnpm run setup
+
+--- 4. CORE COMMANDS & FUNCTIONS ---
+The project provides several NPM scripts located in the root package.json:
+
+• Start Development Environment:
+  $ pnpm run dev:all
+  This command concurrently starts the Next.js UI, local plugins, and background Docker services (wwv-data-engine and Redis).
+
+• Build for Production:
+  $ pnpm run build
+  Compiles the Next.js application into an optimized standalone production build.
+
+• Start Production Server:
+  $ pnpm run start
+  Starts the compiled Next.js application.
+
+• Run Automated Tests:
+  $ pnpm run test
+  Executes the Vitest test suites.
+
+• Database Management:
+  $ pnpm run db:reset    # Resets the Prisma PostgreSQL database (WARNING: Data Loss)
+  $ pnpm run generate    # Regenerates the Prisma Client after schema changes
+
+--- 5. REPOSITORY ARCHITECTURE & FUNCTIONS ---
+• src/app/              : Next.js routing and backend API endpoints.
+• src/core/globe/       : WebGL/CesiumJS entity renderers, stack managers, and animation loops.
+• src/core/plugins/     : Dynamic plugin loader, registry, and manifest validation.
+• src/core/data/        : DataBus WebSocket client, state caching, and live streams.
+• src/plugins/          : Native plugins included within the core repository (e.g., GeoJSON Importers).
+• packages/wwv-plugin-sdk: The Software Development Kit for writing third-party extensions.
+
+--- 6. DEPLOYMENT (DOCKER) ---
+To self-host the platform in a production environment:
+1. Build the Docker container using the provided multi-stage Dockerfile:
+   $ docker build -t sarvakshan-app .
+2. Deploy via docker-compose (found in self-host/docker-compose.yml):
+   $ docker compose up -d
+
+If you face any issues during execution, ensure that your Docker daemon is running and ports 3000 (UI) and 5432 (Postgres) are available.

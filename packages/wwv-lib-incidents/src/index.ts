@@ -14,7 +14,7 @@ import {
     type ServerPluginConfig, 
     type FilterDefinition,
     type PluginCategory
-} from "@worldwideview/wwv-plugin-sdk";
+} from "@Sarvakshan/wwv-plugin-sdk";
 
 export abstract class BaseIncidentPlugin implements WorldPlugin {
     abstract id: string;

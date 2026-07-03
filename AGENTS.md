@@ -1,8 +1,8 @@
-# WorldWideView — Agent Rules
+# Sarvakshan — Agent Rules
 
 ## 1. Project Identity
 
-WorldWideView is a **real-time geospatial intelligence engine** that visualizes live global data on an interactive 3D globe. Built with **Next.js 16**, **CesiumJS**, **React 19**, and **Zustand**, it renders everything from live aircraft and maritime vessels to conflict events, satellites, and environmental data — all through a modular plugin architecture.
+Sarvakshan is a **real-time geospatial intelligence engine** that visualizes live global data on an interactive 3D globe. Built with **Next.js 16**, **CesiumJS**, **React 19**, and **Zustand**, it renders everything from live aircraft and maritime vessels to conflict events, satellites, and environmental data — all through a modular plugin architecture.
 
 ### Target Inspiration
 Our primary design, feature-set, and operational layout goal is to mimic the structure and capabilities of `www.worldmonitor.app`.
@@ -31,7 +31,7 @@ Our primary design, feature-set, and operational layout goal is to mimic the str
 ## 3. Directory Structure
 
 ```
-worldwideview/
+Sarvakshan/
 ├── src/
 │   ├── app/               # Next.js App Router (pages, API routes, layouts)
 │   │   ├── api/           # Server-side API routes (auth, aviation, camera, etc.)
@@ -90,7 +90,7 @@ worldwideview/
 
 ### 4.1 Plugin System (Core Abstraction)
 
-Every data source is a **plugin** implementing the `WorldPlugin` interface from `@worldwideview/wwv-plugin-sdk`. The lifecycle utilizes a real-time WebSocket Firehose pipeline:
+Every data source is a **plugin** implementing the `WorldPlugin` interface from `@Sarvakshan/wwv-plugin-sdk`. The lifecycle utilizes a real-time WebSocket Firehose pipeline:
 
 ```text
 PluginRegistry.register() → PluginManager.registerPlugin()
@@ -110,7 +110,7 @@ Four plugin architectures exist (All-Bundle Model):
 
 All plugins are now dynamically imported at runtime as ES module bundles via `loadPluginFromManifest` utilizing `import(/* webpackIgnore: true */ entry)`. The legacy `StaticDataPlugin` and `DeclarativePlugin` runtimes are fully deprecated.
 
-Plugin types are re-exported from SDK through `src/core/plugins/PluginTypes.ts` and `PluginManifest.ts` — **source of truth is always `@worldwideview/wwv-plugin-sdk`**.
+Plugin types are re-exported from SDK through `src/core/plugins/PluginTypes.ts` and `PluginManifest.ts` — **source of truth is always `@Sarvakshan/wwv-plugin-sdk`**.
 
 ### 4.2 State Management
 
@@ -138,7 +138,7 @@ The data engine is a **content-agnostic runner** (`wwv-data-engine`, public) tha
 
 - **Local Dev**: Engine runs via Docker Compose on port 5000, reading seeders dynamically from `local-seeders/`.
 - **Production**: Engine container on Coolify, seeders are volume-mounted from the `wwv-seeders` (private) repository.
-- **Split-routing**: `resolveEngineUrl` checks `localhost:5000/manifest` for local seeders, falls back to `dataengine.worldwideview.dev` for cloud-hosted ones.
+- **Split-routing**: `resolveEngineUrl` checks `localhost:5000/manifest` for local seeders, falls back to `dataengine.Sarvakshan.dev` for cloud-hosted ones.
 
 ### 4.4 Rendering Pipeline
 
@@ -168,7 +168,7 @@ Feature flags derived from edition in `src/core/edition.ts`.
 ### 5.2 Import Aliases
 
 - `@/*` → `./src/*`
-- `@worldwideview/wwv-plugin-sdk` → `./packages/wwv-plugin-sdk/src`
+- `@Sarvakshan/wwv-plugin-sdk` → `./packages/wwv-plugin-sdk/src`
 - Each plugin has its own alias in `tsconfig.json`
 
 ### 5.3 CSS Rules
@@ -296,12 +296,12 @@ Configured in `next.config.ts` `headers()`:
 
 | Repo | Purpose |
 |---|---|
-| `worldwideview` | Main application (this repo) |
+| `Sarvakshan` | Main application (this repo) |
 | `wwv-data-engine` | Generic data engine runner (PUBLIC, runs via Docker) |
 | `wwv-seeders` | Proprietary seeder scripts (PRIVATE, volume-mounted in prod) |
-| `worldwideview-marketplace` | Plugin marketplace web app |
-| `worldwideview-plugins` | Published npm plugin packages |
-| `worldwideview-web` | Marketing / landing page |
+| `Sarvakshan-marketplace` | Plugin marketplace web app |
+| `Sarvakshan-plugins` | Published npm plugin packages |
+| `Sarvakshan-web` | Marketing / landing page |
 
 ---
 
@@ -350,7 +350,7 @@ Refer to these skill documents for specialized tasks:
 
 | Skill | When to Use |
 |---|---|
-| `worldwideview-plugin-creation` | **Use when creating any plugin** — strict architectural checklist |
+| `Sarvakshan-plugin-creation` | **Use when creating any plugin** — strict architectural checklist |
 | `plugin-creation-master-guide.md` | Decision matrix for choosing plugin architecture |
 | `osm-static-plugin-creation.md` | Creating static GeoJSON plugins from OpenStreetMap |
 | `microservice-plugin-creation.md` | Legacy guide for standalone Fastify microservices |

@@ -17,7 +17,7 @@ interface CacheEntry {
  */
 class CacheLayer {
     private memoryCache: Map<string, CacheEntry> = new Map();
-    private dbName = "worldwideview-cache";
+    private dbName = "Sarvakshan-cache";
     private storeName = "entities";
     private db: IDBDatabase | null = null;
 

@@ -2,7 +2,7 @@
 # Files Catalog
 
 ## Overview
-WorldWideView is structured as a pnpm monorepo. The primary application resides in the root `src/` directory, while external dependencies, plugins, and the core Plugin SDK are abstracted into the `packages/` directory.
+Sarvakshan is structured as a pnpm monorepo. The primary application resides in the root `src/` directory, while external dependencies, plugins, and the core Plugin SDK are abstracted into the `packages/` directory.
 
 The system is highly modularized to separate React UI rendering from heavy CesiumJS 3D operations and high-frequency real-time WebSocket state management.
 
@@ -29,5 +29,5 @@ The system is highly modularized to separate React UI rendering from heavy Cesiu
 - `public/` - Static assets, plugin icons, and compiled Cesium workers.
 
 ## Reference
-- **Plugins Directory:** All frontend plugins conform to the `@worldwideview/wwv-plugin-sdk` interface and are developed inside `packages/wwv-plugin-<name>/` or `local-plugins/<name>/`.
+- **Plugins Directory:** All frontend plugins conform to the `@Sarvakshan/wwv-plugin-sdk` interface and are developed inside `packages/wwv-plugin-<name>/` or `local-plugins/<name>/`.
 - **Seeders Directory:** Backend telemetry scripts are developed in the `local-seeders/community/<name>/` or `local-seeders/private/<name>/` directories and are mounted directly into the data engine at runtime.

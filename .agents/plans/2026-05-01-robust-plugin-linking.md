@@ -13,7 +13,7 @@
 ### Task 1: Create the Dev-Link API Route
 
 **Files:**
-- Create: `c:\dev\worldwideview\src\app\api\plugins\dev-link\route.ts`
+- Create: `c:\dev\Sarvakshan\src\app\api\plugins\dev-link\route.ts`
 
 - [ ] **Step 1: Write the API Route**
 
@@ -68,7 +68,7 @@ git commit -m "feat(api): add dev-link route to sync local plugin manifests"
 ### Task 2: Update the CLI Link Command
 
 **Files:**
-- Modify: `c:\dev\worldwideview-plugins\packages\wwv-cli\src\commands\link.ts`
+- Modify: `c:\dev\Sarvakshan-plugins\packages\wwv-cli\src\commands\link.ts`
 
 - [ ] **Step 1: Add the sync request to linkCommand**
 
@@ -119,7 +119,7 @@ git commit -m "feat(cli): auto-sync local plugin manifests with engine database 
 Run the updated sync command in the plugins repo to verify it pushes the manifest properly to the API.
 
 ```bash
-cd c:\dev\worldwideview-plugins
+cd c:\dev\Sarvakshan-plugins
 pnpm run sync:all
 ```
 
@@ -128,5 +128,5 @@ pnpm run sync:all
 Expected output in the plugins terminal should include:
 `[wwv-plugin-osm-search] ✅ Database successfully synced to point to local files.`
 
-Expected output in the main WorldWideView terminal should include:
+Expected output in the main Sarvakshan terminal should include:
 `[Dev-Link] Successfully synced local plugin config for: osm-search`

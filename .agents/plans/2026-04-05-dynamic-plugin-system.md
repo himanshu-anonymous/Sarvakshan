@@ -57,7 +57,7 @@ Key changes from current schema:
 - [ ] **Step 2: Run the migration**
 
 ```bash
-cd c:\dev\worldwideview
+cd c:\dev\Sarvakshan
 pnpm exec prisma migrate dev --name plugin_schema_v2
 ```
 
@@ -258,7 +258,7 @@ git commit -m "feat(plugins): expose React on globalThis for dynamic plugin load
 In `next.config.ts` line 47, update the `script-src` directive to include `https://cdn.jsdelivr.net`:
 
 ```ts
-"script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://cdn.jsdelivr.net https://analytics.worldwideview.dev https://va.vercel-scripts.com https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com",
+"script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://cdn.jsdelivr.net https://analytics.Sarvakshan.dev https://va.vercel-scripts.com https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com",
 ```
 
 No change needed for `connect-src` (already allows `http: https:`).
@@ -274,7 +274,7 @@ git commit -m "feat(csp): allow jsdelivr CDN for dynamic plugin loading"
 
 ## Phase 3: Plugin Build Toolkit
 
-### Task 5: Create the `@worldwideview/create-plugin` scaffold package
+### Task 5: Create the `@Sarvakshan/create-plugin` scaffold package
 
 **Files:**
 - Create: `packages/create-wwv-plugin/package.json`
@@ -292,9 +292,9 @@ Create `packages/create-wwv-plugin/package.json`:
 
 ```json
 {
-  "name": "@worldwideview/create-plugin",
+  "name": "@Sarvakshan/create-plugin",
   "version": "0.1.0",
-  "description": "Scaffold a new WorldWideView plugin",
+  "description": "Scaffold a new Sarvakshan plugin",
   "type": "module",
   "bin": {
     "create-wwv-plugin": "./dist/index.mjs"
@@ -319,7 +319,7 @@ import { scaffold } from "./scaffold.js";
 
 const name = process.argv[2];
 if (!name) {
-    console.error("Usage: npx @worldwideview/create-plugin <plugin-name>");
+    console.error("Usage: npx @Sarvakshan/create-plugin <plugin-name>");
     process.exit(1);
 }
 
@@ -341,7 +341,7 @@ export function scaffold(name: string): void {
     const slug = name.toLowerCase().replace(/[^a-z0-9-]/g, "-");
     const dir = resolve(process.cwd(), slug);
 
-    console.log(`\n🌍 Creating WorldWideView plugin: ${slug}\n`);
+    console.log(`\n🌍 Creating Sarvakshan plugin: ${slug}\n`);
     mkdirSync(join(dir, "src"), { recursive: true });
 
     const templateDir = join(__dirname, "..", "templates");
@@ -382,7 +382,7 @@ Create `packages/create-wwv-plugin/templates/package.json.tpl`:
 {
   "name": "wwv-plugin-{{SLUG}}",
   "version": "1.0.0",
-  "description": "WorldWideView plugin: {{NAME}}",
+  "description": "Sarvakshan plugin: {{NAME}}",
   "type": "module",
   "module": "dist/index.mjs",
   "files": ["dist"],
@@ -391,7 +391,7 @@ Create `packages/create-wwv-plugin/templates/package.json.tpl`:
     "dev": "vite build --watch"
   },
   "devDependencies": {
-    "@worldwideview/wwv-plugin-sdk": "*",
+    "@Sarvakshan/wwv-plugin-sdk": "*",
     "vite": "^6.0.0",
     "rollup-plugin-external-globals": "^0.12.0",
     "typescript": "^5.0.0"
@@ -452,7 +452,7 @@ Create `packages/create-wwv-plugin/templates/index.ts.tpl`:
 
 ```ts
 /**
- * {{NAME}} — WorldWideView Plugin
+ * {{NAME}} — Sarvakshan Plugin
  *
  * Build with: npm run build
  * Publish with: npm publish
@@ -466,12 +466,12 @@ import type {
     LayerConfig,
     CesiumEntityOptions,
     PluginCategory,
-} from "@worldwideview/wwv-plugin-sdk";
+} from "@Sarvakshan/wwv-plugin-sdk";
 
 export default class {{NAME}}Plugin implements WorldPlugin {
     readonly id = "{{SLUG}}";
     readonly name = "{{NAME}}";
-    readonly description = "A custom WorldWideView plugin";
+    readonly description = "A custom Sarvakshan plugin";
     readonly icon = "📍";
     readonly category: PluginCategory = "custom";
     readonly version = "1.0.0";
@@ -508,7 +508,7 @@ Create `packages/create-wwv-plugin/templates/plugin.json.tpl`:
   "id": "{{SLUG}}",
   "name": "{{NAME}}",
   "version": "1.0.0",
-  "description": "A custom WorldWideView plugin",
+  "description": "A custom Sarvakshan plugin",
   "type": "data-layer",
   "format": "bundle",
   "trust": "unverified",
@@ -522,7 +522,7 @@ Create `packages/create-wwv-plugin/templates/plugin.json.tpl`:
 - [ ] **Step 5: Install deps and build**
 
 ```bash
-cd c:\dev\worldwideview
+cd c:\dev\Sarvakshan
 pnpm install
 cd packages/create-wwv-plugin
 pnpm build
@@ -532,7 +532,7 @@ pnpm build
 
 ```bash
 git add packages/create-wwv-plugin/
-git commit -m "feat(sdk): create @worldwideview/create-plugin scaffold CLI"
+git commit -m "feat(sdk): create @Sarvakshan/create-plugin scaffold CLI"
 ```
 
 ---
@@ -971,7 +971,7 @@ export function PluginsTab() {
 function BrowseLink() {
     return (
         <a
-            href="https://marketplace.worldwideview.dev"
+            href="https://marketplace.Sarvakshan.dev"
             target="_blank"
             rel="noopener noreferrer"
             className="plugins-tab__browse"
@@ -1045,7 +1045,7 @@ git commit -m "feat(ui): add Plugins tab to LayerPanel sidebar"
 - [ ] **Step 1: Run the full test suite**
 
 ```bash
-cd c:\dev\worldwideview
+cd c:\dev\Sarvakshan
 pnpm test
 ```
 
@@ -1082,7 +1082,7 @@ rmdir /s /q test-plugin
 - [ ] **Step 4: Production build verification**
 
 ```bash
-cd c:\dev\worldwideview
+cd c:\dev\Sarvakshan
 pnpm build
 ```
 

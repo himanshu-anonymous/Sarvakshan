@@ -8,11 +8,11 @@
 
 *A modular situational awareness platform designed to ingest live data streams and render them as interactive, cinematic layers on a high-fidelity CesiumJS 3D globe.*
 
-[![CI Build](https://github.com/Aditya and Mankshu/worldwideview/actions/workflows/ci.yml/badge.svg)](https://github.com/Aditya and Mankshu/worldwideview/actions/workflows/ci.yml)
-[![Codecov](https://img.shields.io/codecov/c/github/Aditya and Mankshu/worldwideview.svg)](https://codecov.io/gh/Aditya and Mankshu/worldwideview)
-[![NPM Version](https://img.shields.io/npm/v/@worldwideview/wwv-plugin-sdk.svg)](https://www.npmjs.com/package/@worldwideview/wwv-plugin-sdk)
-[![GitHub Release](https://img.shields.io/github/v/release/Aditya and Mankshu/worldwideview?sort=semver)](https://github.com/Aditya and Mankshu/worldwideview/releases)
-[![Contributors](https://img.shields.io/github/contributors/Aditya and Mankshu/worldwideview.svg)](https://github.com/Aditya and Mankshu/worldwideview/graphs/contributors)
+[![CI Build](https://github.com/Aditya and Mankshu/Sarvakshan/actions/workflows/ci.yml/badge.svg)](https://github.com/Aditya and Mankshu/Sarvakshan/actions/workflows/ci.yml)
+[![Codecov](https://img.shields.io/codecov/c/github/Aditya and Mankshu/Sarvakshan.svg)](https://codecov.io/gh/Aditya and Mankshu/Sarvakshan)
+[![NPM Version](https://img.shields.io/npm/v/@Sarvakshan/wwv-plugin-sdk.svg)](https://www.npmjs.com/package/@Sarvakshan/wwv-plugin-sdk)
+[![GitHub Release](https://img.shields.io/github/v/release/Aditya and Mankshu/Sarvakshan?sort=semver)](https://github.com/Aditya and Mankshu/Sarvakshan/releases)
+[![Contributors](https://img.shields.io/github/contributors/Aditya and Mankshu/Sarvakshan.svg)](https://github.com/Aditya and Mankshu/Sarvakshan/graphs/contributors)
 <br>
 [![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![CesiumJS](https://img.shields.io/badge/Cesium-JS-4272D0)](https://cesium.com/)
@@ -48,7 +48,7 @@ Sarvakshan is a real-time geospatial engine visualizing live global data on an i
 
 ## Project Architecture
 
-WorldWideView separates the data acquisition layer from the frontend rendering loop, using a real-time event bus to bridge them.
+Sarvakshan separates the data acquisition layer from the frontend rendering loop, using a real-time event bus to bridge them.
 
 ```mermaid
 flowchart TD
@@ -81,18 +81,18 @@ Before running the application, ensure you have the following installed:
 
 ## Quick Start (Self-Hosting)
 
-WorldWideView uses a multi-stage Dockerfile designed for standalone output. To deploy instantly on your own server:
+Sarvakshan uses a multi-stage Dockerfile designed for standalone output. To deploy instantly on your own server:
 
 **Mac/Linux:**
 ```bash
-mkdir worldwideview && cd worldwideview
-curl -fsSL https://raw.githubusercontent.com/Aditya and Mankshu/worldwideview/main/setup.sh | bash
+mkdir Sarvakshan && cd Sarvakshan
+curl -fsSL https://raw.githubusercontent.com/Aditya and Mankshu/Sarvakshan/main/setup.sh | bash
 ```
 
 **Windows (PowerShell):**
 ```powershell
-mkdir worldwideview; cd worldwideview
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/Aditya and Mankshu/worldwideview/main/setup.ps1 -UseBasicParsing | Invoke-Expression
+mkdir Sarvakshan; cd Sarvakshan
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/Aditya and Mankshu/Sarvakshan/main/setup.ps1 -UseBasicParsing | Invoke-Expression
 ```
 
 > [!NOTE]
@@ -103,8 +103,8 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/Aditya and Mankshu/worl
 To run the source code locally for contributing or developing:
 
 ```bash
-git clone https://github.com/Aditya and Mankshu/worldwideview.git
-cd worldwideview
+git clone https://github.com/Aditya and Mankshu/Sarvakshan.git
+cd Sarvakshan
 pnpm install
 pnpm run setup   # generates .env.local with AUTH_SECRET
 pnpm run dev:all # boots the UI, cache layers, and the data engine
@@ -116,7 +116,7 @@ Visit `http://localhost:3000` to see the live globe.
 The codebase utilizes a `pnpm` monorepo configuration:
 
 ```text
-worldwideview/
+Sarvakshan/
 ├── src/                  # Core frontend app
 │   ├── app/              # Next.js App Router (pages, API routes)
 │   ├── components/       # Shared UI, Globe panels, and 3D layouts
@@ -131,20 +131,20 @@ worldwideview/
 
 ## Plugin Ecosystem
 
-WorldWideView operates on an open-core philosophy. The platform itself is data-agnostic; all data sources are dynamically imported as plugins at runtime.
+Sarvakshan operates on an open-core philosophy. The platform itself is data-agnostic; all data sources are dynamically imported as plugins at runtime.
 
-- **[Plugin Quickstart Guide](docs/plugin-quickstart.md)**: Learn how to scaffold and link your first plugin using the `@worldwideview/cli`.
+- **[Plugin Quickstart Guide](docs/plugin-quickstart.md)**: Learn how to scaffold and link your first plugin using the `@Sarvakshan/cli`.
 - **[Advanced Plugin Guide](docs/plugin-advanced.md)**: Deep dive into microservice data seeders, WebSockets, complex 3D rendering, and Marketplace publishing.
 
 ## Repository Ecosystem
 
-WorldWideView is distributed across several specialized repositories:
+Sarvakshan is distributed across several specialized repositories:
 
-1. **`worldwideview`** (This Repo): Main frontend, CesiumJS rendering engine, and core plugin framework.
+1. **`Sarvakshan`** (This Repo): Main frontend, CesiumJS rendering engine, and core plugin framework.
 2. **`wwv-data-engine`**: Open-source community data backend for polling public APIs.
-3. **`worldwideview-plugins`**: First-party maintained plugins.
-4. **`worldwideview-marketplace`**: The web application driving the plugin directory.
-5. **`worldwideview-web`**: Marketing and landing site.
+3. **`Sarvakshan-plugins`**: First-party maintained plugins.
+4. **`Sarvakshan-marketplace`**: The web application driving the plugin directory.
+5. **`Sarvakshan-web`**: Marketing and landing site.
 
 ## Development & Workflow
 

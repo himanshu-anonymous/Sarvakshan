@@ -4,7 +4,7 @@
 
 **Goal:** Implement single-container multi-tenancy using PostgreSQL Row-Level Security (RLS) and Next.js middleware to resolve subdomains.
 
-**Architecture:** Middleware extracts the subdomain (e.g., `acme.app.worldwideview.dev`) and sets an `x-tenant-id` header. Prisma extension wraps all queries to `SET LOCAL app.tenant_id = '...'` to enforce RLS in PostgreSQL.
+**Architecture:** Middleware extracts the subdomain (e.g., `acme.app.Sarvakshan.dev`) and sets an `x-tenant-id` header. Prisma extension wraps all queries to `SET LOCAL app.tenant_id = '...'` to enforce RLS in PostgreSQL.
 
 **Tech Stack:** Next.js Middleware, Prisma Client Extensions, PostgreSQL RLS.
 
@@ -74,9 +74,9 @@ export function middleware(req: NextRequest) {
     
     // Extract subdomain if on cloud
     if (process.env.NEXT_PUBLIC_WWV_EDITION === "cloud") {
-        const isApp = hostname.includes(".app.worldwideview.dev");
+        const isApp = hostname.includes(".app.Sarvakshan.dev");
         if (isApp) {
-            const subdomain = hostname.replace(".app.worldwideview.dev", "");
+            const subdomain = hostname.replace(".app.Sarvakshan.dev", "");
             if (subdomain && subdomain !== "app") {
                 const res = NextResponse.next();
                 res.headers.set("x-tenant-subdomain", subdomain);

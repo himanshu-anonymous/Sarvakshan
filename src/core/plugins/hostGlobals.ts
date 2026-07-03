@@ -10,7 +10,7 @@
 import React from "react";
 import * as ReactDOM from "react-dom";
 import * as jsxRuntime from "react/jsx-runtime";
-import * as WWVPluginSDK from "@worldwideview/wwv-plugin-sdk";
+import * as WWVPluginSDK from "@Sarvakshan/wwv-plugin-sdk";
 import * as Cesium from "cesium";
 import * as Resium from "resium";
 import * as zustand from "zustand";
@@ -64,11 +64,11 @@ export async function injectHostGlobals(): Promise<void> {
         (globalThis as any).__WWV_ENGINE_URL__ = envDataEngine;
     } else {
         // ALWAYS default to the cloud engine unless explicitly told otherwise via env var
-        (globalThis as any).__WWV_ENGINE_URL__ = 'https://dataengine.worldwideview.dev';
+        (globalThis as any).__WWV_ENGINE_URL__ = 'https://dataengine.Sarvakshan.dev';
     }
 
     // WebSocket Engine URL
-    const fallbackWs = envDataEngine ? envDataEngine.replace(/^http/, "ws") + "/stream" : 'wss://dataengine.worldwideview.dev/stream';
+    const fallbackWs = envDataEngine ? envDataEngine.replace(/^http/, "ws") + "/stream" : 'wss://dataengine.Sarvakshan.dev/stream';
     (globalThis as any).__WWV_WS_ENGINE_URL__ = fallbackWs;
 
     console.log("[HostGlobals] React and SDK injected for dynamic plugins");

@@ -15,7 +15,7 @@ import { getRequestOrigin } from "@/lib/origin";
 const ALLOWED_REDIRECT_HOSTS = new Set([
     "localhost",
     "127.0.0.1",
-    "worldwideview.dev",
+    "Sarvakshan.dev",
 ]);
 
 function isSafeRedirect(url: string): boolean {
@@ -23,7 +23,7 @@ function isSafeRedirect(url: string): boolean {
         const parsed = new URL(url);
         return (
             ALLOWED_REDIRECT_HOSTS.has(parsed.hostname) ||
-            parsed.hostname.endsWith(".worldwideview.dev")
+            parsed.hostname.endsWith(".Sarvakshan.dev")
         );
     } catch {
         return false;

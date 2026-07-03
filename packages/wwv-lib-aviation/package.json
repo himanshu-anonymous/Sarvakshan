@@ -1,21 +1,21 @@
 {
-  "name": "@worldwideview/wwv-lib-aviation",
+  "name": "@Sarvakshan/wwv-lib-aviation",
   "version": "1.0.1",
-  "description": "Shared abstract base classes for WorldWideView aviation plugins (commercial, military, specialized)",
+  "description": "Shared abstract base classes for Sarvakshan aviation plugins (commercial, military, specialized)",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "files": [
     "src"
   ],
   "keywords": [
-    "worldwideview",
+    "Sarvakshan",
     "aviation",
     "aircraft",
     "base-plugin"
   ],
-  "author": "WorldWideView",
+  "author": "Sarvakshan",
   "license": "ISC",
   "peerDependencies": {
-    "@worldwideview/wwv-plugin-sdk": "^1.4.10"
+    "@Sarvakshan/wwv-plugin-sdk": "^1.4.10"
   }
 }

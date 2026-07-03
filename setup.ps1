@@ -1,4 +1,4 @@
-Write-Host "[*] Setting up WorldWideView for local self-hosting..."
+Write-Host "[*] Setting up Sarvakshan for local self-hosting..."
 
 # Check Docker
 try {
@@ -21,7 +21,7 @@ try {
 
 # Generate docker-compose.yml
 Write-Host "[*] Downloading docker-compose.yml..."
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Aditya and Mankshu/worldwideview/main/self-host/docker-compose.yml" -OutFile docker-compose.yml
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Aditya and Mankshu/Sarvakshan/main/self-host/docker-compose.yml" -OutFile docker-compose.yml
 
 # Generate .env
 if (-Not (Test-Path .env)) {
@@ -30,7 +30,7 @@ if (-Not (Test-Path .env)) {
     [System.Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
     $secret = -join ($bytes | ForEach-Object { $_.ToString("x2") })
     Write-Host "[*] Downloading .env template..."
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Aditya and Mankshu/worldwideview/main/.env.example" -OutFile .env
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Aditya and Mankshu/Sarvakshan/main/.env.example" -OutFile .env
     
     $envContent = Get-Content .env -Raw
     $envContent = $envContent -replace "(?m)^AUTH_SECRET=.*", "AUTH_SECRET=$secret"
@@ -45,7 +45,7 @@ docker compose pull
 Write-Host "[*] Starting Docker container..."
 docker compose up -d
 
-Write-Host "`n[Success] WorldWideView is running at http://localhost:3000"
+Write-Host "`n[Success] Sarvakshan is running at http://localhost:3000"
 Write-Host "   Data is persisted in Docker volume 'wwv-data'"
 Write-Host "   Auth secret is saved in .env (don't delete this file)`n"
 Write-Host "To stop the server: docker compose down"

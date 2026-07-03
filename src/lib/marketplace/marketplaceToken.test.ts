@@ -30,8 +30,8 @@ describe("marketplaceToken", () => {
             const payload = await verifyMarketplaceToken(token);
             expect(payload.scope).toBe("marketplace");
             expect(payload.sub).toBe(TEST_USER_ID);
-            expect(payload.iss).toBe("worldwideview");
-            expect(payload.aud).toBe("worldwideview-marketplace");
+            expect(payload.iss).toBe("Sarvakshan");
+            expect(payload.aud).toBe("Sarvakshan-marketplace");
         });
 
         it("throws on a tampered token", async () => {
@@ -53,8 +53,8 @@ describe("marketplaceToken", () => {
             const wrongScopeToken = await new SignJWT({ scope: "admin" })
                 .setProtectedHeader({ alg: "HS256" })
                 .setSubject(TEST_USER_ID)
-                .setIssuer("worldwideview")
-                .setAudience("worldwideview-marketplace")
+                .setIssuer("Sarvakshan")
+                .setAudience("Sarvakshan-marketplace")
                 .setIssuedAt()
                 .setExpirationTime("1d")
                 .sign(secret);
@@ -68,7 +68,7 @@ describe("marketplaceToken", () => {
                 .setProtectedHeader({ alg: "HS256" })
                 .setSubject(TEST_USER_ID)
                 .setIssuer("evil-issuer")
-                .setAudience("worldwideview-marketplace")
+                .setAudience("Sarvakshan-marketplace")
                 .setIssuedAt()
                 .setExpirationTime("1d")
                 .sign(secret);
@@ -81,7 +81,7 @@ describe("marketplaceToken", () => {
             const badAudience = await new SignJWT({ scope: "marketplace" })
                 .setProtectedHeader({ alg: "HS256" })
                 .setSubject(TEST_USER_ID)
-                .setIssuer("worldwideview")
+                .setIssuer("Sarvakshan")
                 .setAudience("wrong-audience")
                 .setIssuedAt()
                 .setExpirationTime("1d")
@@ -94,8 +94,8 @@ describe("marketplaceToken", () => {
             const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
             const noSub = await new SignJWT({ scope: "marketplace" })
                 .setProtectedHeader({ alg: "HS256" })
-                .setIssuer("worldwideview")
-                .setAudience("worldwideview-marketplace")
+                .setIssuer("Sarvakshan")
+                .setAudience("Sarvakshan-marketplace")
                 .setIssuedAt()
                 .setExpirationTime("1d")
                 .sign(secret);

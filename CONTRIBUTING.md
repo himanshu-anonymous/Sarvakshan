@@ -1,6 +1,6 @@
-# Contributing to WorldWideView
+# Contributing to Sarvakshan
 
-Thank you for your interest in contributing to **WorldWideView** — a modular, real-time geospatial intelligence engine!
+Thank you for your interest in contributing to **Sarvakshan** — a modular, real-time geospatial intelligence engine!
 
 This project is licensed under the [Elastic License 2.0](./LICENSE). By submitting a contribution, you agree that your code will be made available under those same terms.
 
@@ -25,8 +25,8 @@ This project is licensed under the [Elastic License 2.0](./LICENSE). By submitti
 1. **Fork** the repository on GitHub.
 2. **Clone** your fork locally:
    ```bash
-   git clone https://github.com/<your-username>/worldwideview.git
-   cd worldwideview
+   git clone https://github.com/<your-username>/Sarvakshan.git
+   cd Sarvakshan
    ```
 3. **Install dependencies**:
    ```bash
@@ -75,7 +75,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for a deep dive into the rend
 
 Ways you can help:
 
-- 🐛 **Bug fixes** — Check the [issue tracker](https://github.com/Aditya and Mankshu/worldwideview/issues)
+- 🐛 **Bug fixes** — Check the [issue tracker](https://github.com/Aditya and Mankshu/Sarvakshan/issues)
 - 🧩 **New plugins** — Add a new data source layer (see below)
 - 📖 **Documentation** — Improve guides or add examples
 - ⚡ **Performance** — Cesium primitive optimizations, GPU stall reduction
@@ -87,7 +87,7 @@ For large features, **open an issue first** to discuss the design before writing
 
 ## Plugin Contributions
 
-The core extension point of WorldWideView is its **plugin system**. Each plugin is a self-contained data layer that:
+The core extension point of Sarvakshan is its **plugin system**. Each plugin is a self-contained data layer that:
 
 1. Fetches or subscribes to a data source
 2. Transforms raw data into Cesium-ready primitives

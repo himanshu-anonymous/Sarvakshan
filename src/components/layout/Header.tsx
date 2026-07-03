@@ -87,7 +87,7 @@ export function Header() {
             <>
             <header className="header header--mobile glass-panel">
                 <div className="header__brand">
-                    <a href="https://worldwideview.dev/" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "inherit" }}>
+                    <a href="https://Sarvakshan.dev/" target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none", color: "inherit" }}>
                         <img src="/logo/logo-icon.svg" alt="Logo" style={{ width: 20, height: 20, objectFit: "contain" }} />
                         <div className="header__logo header__logo--compact">SRV</div>
                     </a>
@@ -172,7 +172,7 @@ export function Header() {
         <>
         <header className="header glass-panel">
             <div className="header__brand">
-                <a href="https://worldwideview.dev/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
+                <a href="https://Sarvakshan.dev/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit", cursor: "pointer" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                         <img src="/logo/logo-icon.svg" alt="Logo" style={{ width: 22, height: 22, objectFit: "contain" }} />
                         <div className="header__logo">SARVAKSHAN</div>

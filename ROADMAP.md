@@ -1,4 +1,4 @@
-# WorldWideView — Implementation Roadmap
+# Sarvakshan — Implementation Roadmap
 
 Each stage is **self-contained and demo-able**. Any stage can be shipped independently.
 
@@ -11,14 +11,14 @@ Each stage is **self-contained and demo-able**. Any stage can be shipped indepen
 - [x] Manifest validation logic (`validateManifest()`)
 - [x] `type` field on `WorldPlugin` interface (`"data-layer" | "extension"`)
 - [x] `capabilities` field on `WorldPlugin` interface
-- [x] `@worldwideview/wwv-plugin-sdk` npm package — shared types published to npm
+- [x] `@Sarvakshan/wwv-plugin-sdk` npm package — shared types published to npm
 
 ---
 
 ## Stage 2: Marketplace Browse UI (Static Catalog) ✅
 **Demo:** "Open the marketplace, see all available plugins with categories and search."
 
-- [x] `worldwideview-marketplace` repo (Next.js)
+- [x] `Sarvakshan-marketplace` repo (Next.js)
 - [x] Browse page — grid of plugin cards with icons, descriptions, categories
 - [x] Search + category filter
 - [x] Plugin detail page (readme, version history, install count)
@@ -49,7 +49,7 @@ Each stage is **self-contained and demo-able**. Any stage can be shipped indepen
 - [x] `src/lib/marketplace/auth.ts` — `validateMarketplaceAuth()` (session → JWT → legacy token)
 - [x] `src/lib/marketplace/registryClient.ts` — Ed25519 registry verification + 5-min cache
 - [x] Marketplace: `InstanceConfig`, `InstallButton`, `useInstalledPlugins`, `InstalledPluginCard`, Manage page
-- [x] NPM-driven submission: Admin enters package name → marketplace fetches + parses `"worldwideview"` block from `package.json`
+- [x] NPM-driven submission: Admin enters package name → marketplace fetches + parses `"Sarvakshan"` block from `package.json`
 - [x] `NpmCache` table — decouples marketplace from live NPM registry
 
 ---
@@ -79,9 +79,9 @@ Each stage is **self-contained and demo-able**. Any stage can be shipped indepen
 ---
 
 ## Stage 7: Cloud Platform & Accounts
-**Demo:** "User registers, gets [user].app.worldwideview.dev, installs plugins from marketplace."
+**Demo:** "User registers, gets [user].app.Sarvakshan.dev, installs plugins from marketplace."
 
-- [ ] `app.worldwideview.dev` — auth/register/dashboard
+- [ ] `app.Sarvakshan.dev` — auth/register/dashboard
 - [ ] Auto-provisioning on signup (tenant DB row → instance live immediately)
 - [ ] RLS tenant isolation in PostgreSQL
 - [ ] Cloud edition adapters (`auth.ts`, `storage.ts`, `tenant.ts`)
@@ -89,15 +89,15 @@ Each stage is **self-contained and demo-able**. Any stage can be shipped indepen
 - [ ] License key validation with RSA public key
 - [ ] Tier gating (free/pro/enterprise feature flags)
 - [ ] Cloudflare Turnstile + nginx rate limiting for bot prevention
-- [ ] SSO: marketplace redirects to `app.worldwideview.dev` for login
+- [ ] SSO: marketplace redirects to `app.Sarvakshan.dev` for login
 
 ---
 
 ## Stage 8: Built-In Data Services
-**Demo:** "Aviation and maritime data with full history, served from api.worldwideview.dev."
+**Demo:** "Aviation and maritime data with full history, served from api.Sarvakshan.dev."
 
-- [ ] `api.worldwideview.dev` — aviation/maritime polling + persistence
-- [ ] Redesign aviation as declarative plugin pointing to `api.worldwideview.dev`
+- [ ] `api.Sarvakshan.dev` — aviation/maritime polling + persistence
+- [ ] Redesign aviation as declarative plugin pointing to `api.Sarvakshan.dev`
 - [ ] Redesign maritime the same way
 - [ ] History/timeline with `%t` parameter substitution
 - [ ] Snapshot capture (pro tier — counts toward storage quota)
@@ -131,7 +131,7 @@ Each stage is **self-contained and demo-able**. Any stage can be shipped indepen
 - [ ] Stripe Checkout for license purchase
 - [ ] Storage quota enforcement (cloud only)
 - [ ] Stripe Connect for marketplace revenue split on paid plugins
-- [ ] Cloudflare R2 as CDN for plugin bundles (`cdn.worldwideview.dev`)
+- [ ] Cloudflare R2 as CDN for plugin bundles (`cdn.Sarvakshan.dev`)
 
 ---
 
@@ -139,8 +139,8 @@ Each stage is **self-contained and demo-able**. Any stage can be shipped indepen
 
 | Decision | Resolution |
 |---|---|
-| **License** | EL2.0 for WorldWideView core; Open Source for marketplace |
-| **Shared types** | `@worldwideview/plugin-sdk` npm package (MIT) |
+| **License** | EL2.0 for Sarvakshan core; Open Source for marketplace |
+| **Shared types** | `@Sarvakshan/plugin-sdk` npm package (MIT) |
 | **Hosting** | Coolify (ThinkPad T480s). Landing page on Vercel (static export) |
 | **Database** | PostgreSQL, Prisma ORM |
 | **Tenant isolation** | Row-Level Security (RLS) in shared PostgreSQL |
@@ -149,13 +149,13 @@ Each stage is **self-contained and demo-able**. Any stage can be shipped indepen
 | **Plugin execution** | Client-side (browser), not server-side |
 | **Plugin architecture** | VS Code model — activation events, contribution points, namespaces |
 | **Server-side compute** | Not supported — third-party backends handle compute |
-| **Auth** | Auth.js on `app.worldwideview.dev`. `Credentials` (local), `@auth/supabase-adapter` (cloud). Marketplace uses SSO redirect |
+| **Auth** | Auth.js on `app.Sarvakshan.dev`. `Credentials` (local), `@auth/supabase-adapter` (cloud). Marketplace uses SSO redirect |
 | **Instance provisioning** | Auto-provision on signup — just a DB row insert |
 | **API proxy** | `apikey` plugins routed through cached proxy, per-tenant-per-plugin rate limits |
 | **History** | Third-party `historyUrl` with `%t` (all tiers), WWV snapshot capture (pro only) |
-| **Built-in data** | Aviation/maritime → declarative plugins → `api.worldwideview.dev` |
+| **Built-in data** | Aviation/maritime → declarative plugins → `api.Sarvakshan.dev` |
 | **CI/CD** | GitHub Actions → GHCR → Coolify webhook |
 | **Plugin trust registry** | Ed25519-signed JSON, public key hardcoded in WWV, trust stamped server-side at install |
 | **Package manager** | pnpm workspaces (migrated from npm) |
-| **NPM submission flow** | Admin enters package name → marketplace infers manifest from `"worldwideview"` block in `package.json` |
+| **NPM submission flow** | Admin enters package name → marketplace infers manifest from `"Sarvakshan"` block in `package.json` |
 | **NPM caching** | `NpmCache` table decouples marketplace from live NPM registry |

@@ -1,18 +1,18 @@
 <!-- Generated: 2026-04-23 06:11:00 UTC -->
 # Advanced Plugin Guide
 
-This guide covers complex architectures, real-time telemetry streaming, and the deployment lifecycle for WorldWideView plugins. If you haven't built a basic plugin yet, start with the **[Quickstart](plugin-quickstart.md)**.
+This guide covers complex architectures, real-time telemetry streaming, and the deployment lifecycle for Sarvakshan plugins. If you haven't built a basic plugin yet, start with the **[Quickstart](plugin-quickstart.md)**.
 
 ## Architecture Paradigm: The All-Bundle Model
 
-WorldWideView operates on a strict **Dynamic CDN Loaded (Bundle)** architecture. 
+Sarvakshan operates on a strict **Dynamic CDN Loaded (Bundle)** architecture. 
 
 > [!WARNING]
 > **Deprecation Notice:** The legacy `StaticDataPlugin` (GeoJSON loaders) and `DeclarativePlugin` runtimes are fully deprecated. All new plugins must be dynamically imported at runtime as ES module bundles via `import(/* webpackIgnore: true */ entry)`.
 
 ### How Plugins Load
 1. A user clicks "Install" in the **Marketplace**.
-2. The marketplace sends the plugin manifest (containing an ES Module CDN URL, like `unpkg.com`) to the WorldWideView database.
+2. The marketplace sends the plugin manifest (containing an ES Module CDN URL, like `unpkg.com`) to the Sarvakshan database.
 3. At runtime, the `InstalledPluginsLoader` dynamically fetches the JavaScript bundle.
 4. The plugin is instantiated, and its `initialize(ctx)` method is invoked.
 
@@ -23,7 +23,7 @@ Relying on the frontend `fetch()` method is insufficient for high-frequency real
 ### Data Engine Seeder Architecture
 Instead of the frontend fetching data, you write a lightweight seeder script that connects to an upstream source, normalizes the data, and is executed by the central `wwv-data-engine` runner.
 
-1. **Create a Seeder Directory:** Inside your WorldWideView project, create a folder under `local-seeders/` (e.g., `local-seeders/my-plugin/`).
+1. **Create a Seeder Directory:** Inside your Sarvakshan project, create a folder under `local-seeders/` (e.g., `local-seeders/my-plugin/`).
 2. **Write the Seeder Script:** Create a `seeder.mjs` file that exports a `fetch(ctx)` function.
 3. **Engine Auto-Discovery:** The local Docker-based `wwv-data-engine` automatically mounts this directory, discovers your script, and runs it on the defined interval.
 4. **WebSocket Delivery:** The central `wwv-data-engine` immediately broadcasts your returned updates over WebSockets to all connected clients.
@@ -31,20 +31,20 @@ Instead of the frontend fetching data, you write a lightweight seeder script tha
 ### Dependency Management & Monorepo Hoisting
 Seeders within `local-seeders/` are strictly orchestrated within the pnpm workspace. They are executed by the central runner, not as standalone applications.
 - **Keep `package.json` clean**: Do not include bulky `dependencies` in your seeder's local `package.json` (unless it's an exceptional, bespoke library).
-- **Workspace Resolution**: Standard packages (e.g., `axios`, `ioredis`, `@worldwideview/wwv-plugin-sdk`) are provided by the engine. At runtime, the `wwv-data-engine` leverages native Node.js module resolution to fetch the required dependencies directly from the root workspace or its own containerized runtime. 
+- **Workspace Resolution**: Standard packages (e.g., `axios`, `ioredis`, `@Sarvakshan/wwv-plugin-sdk`) are provided by the engine. At runtime, the `wwv-data-engine` leverages native Node.js module resolution to fetch the required dependencies directly from the root workspace or its own containerized runtime. 
 - **Lightweight by Design**: This dependency orchestration guarantees that seeders remain extremely lightweight, hot-reloading takes milliseconds, and Docker container size stays optimized.
 
 > [!TIP]
 > **Debugging WebSockets:** If your frontend isn't receiving data from your backend seeder:
 > 1. Check the `wwv-data-engine` logs to ensure your seeder is publishing to Redis successfully.
-> 2. Verify the frontend is connected to the correct WebSocket endpoint. Local instances default to `ws://localhost:5000/stream`, while unrecognized seeders fall back to the cloud at `wss://dataengine.worldwideview.dev/stream`.
+> 2. Verify the frontend is connected to the correct WebSocket endpoint. Local instances default to `ws://localhost:5000/stream`, while unrecognized seeders fall back to the cloud at `wss://dataengine.Sarvakshan.dev/stream`.
 
 ## Advanced Cesium Rendering
 
 When returning `CesiumEntityOptions` in `renderEntity(entity)`, you have direct access to the 3D engine's capabilities.
 
 ### 3D Models vs. Billboards (LOD Strategy)
-To maintain 60 FPS with tens of thousands of entities, use WorldWideView's Level of Detail (LOD) promotion system.
+To maintain 60 FPS with tens of thousands of entities, use Sarvakshan's Level of Detail (LOD) promotion system.
 - Render distant entities as simple `billboard` or `point` primitives.
 - When the camera gets close, the system's `useModelRendering` hook can promote the entity to a full 3D glTF model.
 
@@ -74,10 +74,10 @@ To distribute your plugin globally:
    ```bash
    npm publish --access public
    ```
-2. **Submit:** Navigate to `https://marketplace.worldwideview.dev/submit`.
-3. **Register:** Enter your NPM package name. The marketplace automatically scrapes your `package.json` for the required `"worldwideview"` object block (containing your `id`, `icon`, and `category`).
-4. **Review:** Once approved, your plugin's ES Module bundle will be served via CDN to all WorldWideView instances worldwide.
+2. **Submit:** Navigate to `https://marketplace.Sarvakshan.dev/submit`.
+3. **Register:** Enter your NPM package name. The marketplace automatically scrapes your `package.json` for the required `"Sarvakshan"` object block (containing your `id`, `icon`, and `category`).
+4. **Review:** Once approved, your plugin's ES Module bundle will be served via CDN to all Sarvakshan instances worldwide.
 
 ### Debugging Marketplace Submissions
-- **"Invalid Manifest" Error:** Ensure you are using `@worldwideview/wwv-plugin-sdk` as a `peerDependency` (not a direct dependency) so the host application injects the context correctly.
+- **"Invalid Manifest" Error:** Ensure you are using `@Sarvakshan/wwv-plugin-sdk` as a `peerDependency` (not a direct dependency) so the host application injects the context correctly.
 - **Icon Not Showing:** Icons must be valid Lucide icon strings (e.g., `"Plane"`, `"Anchor"`).

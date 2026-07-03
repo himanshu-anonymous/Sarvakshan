@@ -11,7 +11,7 @@ const REGISTRY_PUBLIC_KEY =
 
 /** Default marketplace registry URL (configurable via env). */
 const REGISTRY_URL =
-  process.env.WWV_REGISTRY_URL ?? "https://marketplace.worldwideview.dev/api/registry";
+  process.env.WWV_REGISTRY_URL ?? "https://marketplace.Sarvakshan.dev/api/registry";
 
 interface RegistryPayload {
   plugins: string[];

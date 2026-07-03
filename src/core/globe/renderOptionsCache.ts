@@ -14,7 +14,7 @@
  * Dynamic entities (aviation with heading/altitude changes) use a
  * content-sensitive key so the cache invalidates when relevant fields change.
  */
-import type { WorldPlugin, GeoEntity, CesiumEntityOptions } from "@worldwideview/wwv-plugin-sdk";
+import type { WorldPlugin, GeoEntity, CesiumEntityOptions } from "@Sarvakshan/wwv-plugin-sdk";
 
 /** Composite cache key → rendered options */
 const cache = new Map<string, CesiumEntityOptions>();

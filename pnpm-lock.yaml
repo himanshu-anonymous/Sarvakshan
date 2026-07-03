@@ -38,7 +38,7 @@ importers:
       '@vercel/analytics':
         specifier: ^1.6.1
         version: 1.6.1(next@16.2.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6)
-      '@worldwideview/wwv-plugin-sdk':
+      '@Sarvakshan/wwv-plugin-sdk':
         specifier: workspace:*
         version: link:packages/wwv-plugin-sdk
       bcryptjs:
@@ -174,13 +174,13 @@ importers:
 
   packages/wwv-lib-aviation:
     dependencies:
-      '@worldwideview/wwv-plugin-sdk':
+      '@Sarvakshan/wwv-plugin-sdk':
         specifier: ^1.4.10
         version: 1.5.0(react@19.2.6)
 
   packages/wwv-lib-incidents:
     dependencies:
-      '@worldwideview/wwv-plugin-sdk':
+      '@Sarvakshan/wwv-plugin-sdk':
         specifier: ^1.4.10
         version: 1.5.0(react@19.2.6)
 
@@ -1994,7 +1994,7 @@ packages:
   '@webassemblyjs/wast-printer@1.14.1':
     resolution: {integrity: sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw==}
 
-  '@worldwideview/wwv-plugin-sdk@1.5.0':
+  '@Sarvakshan/wwv-plugin-sdk@1.5.0':
     resolution: {integrity: sha512-0EFCdl55H5Wl1BcVJkbMEA0+iZfnHMVY27xmsyZzfBtHOfx6zgtgXO3re8UjVaQGVZT0akyIdbghF6qlx5GPRQ==}
     peerDependencies:
       react: '>=18'
@@ -5903,7 +5903,7 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@worldwideview/wwv-plugin-sdk@1.5.0(react@19.2.6)':
+  '@Sarvakshan/wwv-plugin-sdk@1.5.0(react@19.2.6)':
     dependencies:
       react: 19.2.6
 

@@ -89,10 +89,10 @@ In the `headers()` function, modify the `script-src` and `frame-src` directives 
 
 ```ts
 // Change this line (line 39):
-"script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://analytics.worldwideview.dev https://va.vercel-scripts.com",
+"script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://analytics.Sarvakshan.dev https://va.vercel-scripts.com",
 
 // To this:
-"script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://analytics.worldwideview.dev https://va.vercel-scripts.com https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com",
+"script-src 'self' 'unsafe-eval' 'unsafe-inline' blob: https://analytics.Sarvakshan.dev https://va.vercel-scripts.com https://pagead2.googlesyndication.com https://adservice.google.com https://www.googletagservices.com",
 ```
 
 ```ts
@@ -131,7 +131,7 @@ Add the AdSense `<Script>` tag inside `<head>`, using the `NEXT_PUBLIC_` env var
   {children}
   <Analytics />
   <Script
-    src="https://analytics.worldwideview.dev/script.js"
+    src="https://analytics.Sarvakshan.dev/script.js"
     data-website-id="2c8f6c09-2651-4a2a-af99-b8cee1612b9a"
     strategy="afterInteractive"
   />

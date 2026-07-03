@@ -1,6 +1,6 @@
 services:
   wwv:
-    image: ghcr.io/Aditya and Mankshu/worldwideview:latest
+    image: ghcr.io/Aditya and Mankshu/Sarvakshan:latest
     pull_policy: always
     ports:
       - "3000:3000"
@@ -13,7 +13,7 @@ services:
       - "AUTH_SECRET=${AUTH_SECRET:-default_secret_for_local_dev}"
       - "WWV_DEMO_ADMIN_SECRET=${WWV_DEMO_ADMIN_SECRET:-}"
       - "WWV_BRIDGE_TOKEN=${WWV_BRIDGE_TOKEN:-}"
-      - "DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres@db:5432/worldwideview?schema=public}"
+      - "DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres@db:5432/Sarvakshan?schema=public}"
     restart: unless-stopped
     depends_on:
       db:
@@ -25,13 +25,13 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: worldwideview
+      POSTGRES_DB: Sarvakshan
     ports:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d worldwideview"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d Sarvakshan"]
       interval: 5s
       timeout: 5s
       retries: 5

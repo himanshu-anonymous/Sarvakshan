@@ -12,7 +12,7 @@ import { getVerifiedPluginIds } from "./registryClient";
 
 const MARKETPLACE_URL =
     process.env.NEXT_PUBLIC_MARKETPLACE_URL ||
-    "https://marketplace.worldwideview.dev";
+    "https://marketplace.Sarvakshan.dev";
 
 /**
  * Seed default marketplace plugins on a fresh install.

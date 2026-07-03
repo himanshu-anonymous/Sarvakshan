@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Transform WorldWideView from a local-only SQLite app into a multi-tenant cloud platform with `[user].app.worldwideview.dev` subdomains, PostgreSQL RLS isolation, Supabase Auth, cryptographic license keys, and Stripe billing.
+**Goal:** Transform Sarvakshan from a local-only SQLite app into a multi-tenant cloud platform with `[user].app.Sarvakshan.dev` subdomains, PostgreSQL RLS isolation, Supabase Auth, cryptographic license keys, and Stripe billing.
 
-**Architecture:** Single Docker container serves all tenants. nginx wildcard routes `*.app.worldwideview.dev` → Next.js. Middleware reads subdomain → sets `tenant_id` → PostgreSQL RLS scopes all queries. Same codebase, three editions (`local`/`cloud`/`demo`), adapter pattern for DB/auth/storage/tenant.
+**Architecture:** Single Docker container serves all tenants. nginx wildcard routes `*.app.Sarvakshan.dev` → Next.js. Middleware reads subdomain → sets `tenant_id` → PostgreSQL RLS scopes all queries. Same codebase, three editions (`local`/`cloud`/`demo`), adapter pattern for DB/auth/storage/tenant.
 
 **Tech Stack:** Next.js 16, Prisma (multi-provider), PostgreSQL + RLS, Supabase Auth, Supabase Storage, RSA-signed JWTs (license keys), Stripe Checkout + Webhooks, nginx wildcard SSL.
 
@@ -37,7 +37,7 @@ Each phase is a self-contained deliverable. Phases 1–3 are foundational. Phase
 | 2 | [02-tenant-system.md](./02-tenant-system.md) | RLS isolation, middleware, tenant context | Phase 1 |
 | 3 | [03-auth-upgrade.md](./03-auth-upgrade.md) | Supabase Auth provider for cloud edition | Phase 1 |
 | 4 | [04-license-keys.md](./04-license-keys.md) | RSA-signed JWT license keys, tier gating | Phase 1 |
-| 5 | [05-cloud-deployment.md](./05-cloud-deployment.md) | `worldwideview-cloud` repo, nginx, Docker Compose | Phases 1–3 |
+| 5 | [05-cloud-deployment.md](./05-cloud-deployment.md) | `Sarvakshan-cloud` repo, nginx, Docker Compose | Phases 1–3 |
 | 6 | [06-stripe-billing.md](./06-stripe-billing.md) | Stripe Checkout, webhooks, subscription management | Phases 3–4 |
 
 ---

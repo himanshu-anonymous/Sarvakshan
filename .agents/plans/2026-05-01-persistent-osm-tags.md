@@ -13,7 +13,7 @@
 ### Task 1: Add Custom Tag State and Persistence
 
 **Files:**
-- Modify: `c:\dev\worldwideview-plugins\packages\wwv-plugin-osm-search\src\components\OSMSidebar.tsx`
+- Modify: `c:\dev\Sarvakshan-plugins\packages\wwv-plugin-osm-search\src\components\OSMSidebar.tsx`
 
 - [ ] **Step 1: Add customTags state and persistence effects**
 

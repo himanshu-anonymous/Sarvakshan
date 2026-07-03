@@ -56,7 +56,7 @@ export async function fetchCaltransCameras(): Promise<GdotCameraFeature[]> {
     const results = await Promise.allSettled(
         DISTRICTS.map(async (d) => {
             const res = await fetch(districtUrl(d), {
-                headers: { "User-Agent": "WorldWideView/1.0" },
+                headers: { "User-Agent": "Sarvakshan/1.0" },
             });
             if (!res.ok) return [];
             const json = await res.json();

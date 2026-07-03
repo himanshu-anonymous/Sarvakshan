@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "🌍 Setting up WorldWideView for local self-hosting..."
+echo "🌍 Setting up Sarvakshan for local self-hosting..."
 
 # Check if docker is actually available and running
 if ! docker info > /dev/null 2>&1; then
@@ -19,7 +19,7 @@ fi
 
 # 1. Download docker-compose.yml
 echo "📦 Downloading docker-compose.yml..."
-curl -fsSL -o docker-compose.yml https://raw.githubusercontent.com/Aditya and Mankshu/worldwideview/main/self-host/docker-compose.yml
+curl -fsSL -o docker-compose.yml https://raw.githubusercontent.com/Aditya and Mankshu/Sarvakshan/main/self-host/docker-compose.yml
 
 # 2. Generate .env with a persistent secret
 if [ ! -f .env ]; then
@@ -31,7 +31,7 @@ if [ ! -f .env ]; then
     SECRET=$(head -c 32 /dev/urandom | xxd -p)
   fi
   echo "📥 Downloading .env template..."
-  curl -fsSL -o .env https://raw.githubusercontent.com/Aditya and Mankshu/worldwideview/main/.env.example
+  curl -fsSL -o .env https://raw.githubusercontent.com/Aditya and Mankshu/Sarvakshan/main/.env.example
   
   # Replace AUTH_SECRET= with the generated secret
   # (macOS sed requires an empty string backup extension, Linux does not. Perl is safer across platforms)
@@ -45,7 +45,7 @@ echo "🚀 Starting Docker container..."
 docker compose up -d
 
 echo ""
-echo "✅ WorldWideView is running at http://localhost:3000"
+echo "✅ Sarvakshan is running at http://localhost:3000"
 echo "   Data is persisted in Docker volume 'wwv-data'"
 echo "   Auth secret is saved in .env (don't delete this file)"
 echo ""
