@@ -1,0 +1,10 @@
+{
+  "name": "embassies",
+  "displayName": "Embassies & Consulates",
+  "description": "Global embassies, consulates, and diplomatic missions from OpenStreetMap",
+  "osmTag": "amenity=embassy",
+  "icon": "🏛️",
+  "lucideIcon": "Landmark",
+  "color": "#a855f7",
+  "category": "Custom"
+}

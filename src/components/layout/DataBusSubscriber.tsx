@@ -1,0 +1,72 @@
+/*
+ * Copyright (c) 2026 Aditya and Mankshu. All rights reserved.
+ * This code is the exclusive property of Aditya and Mankshu.
+ */
+
+"use client";
+
+import { useEffect } from "react";
+import { useStore } from "@/core/state/store";
+import { dataBus } from "@/core/data/DataBus";
+import { pluginManager } from "@/core/plugins/PluginManager";
+import { wsClient } from "@/core/data/WsClient";
+import { resolveEngineUrl } from "@/core/data/resolveEngineUrl";
+import { fetchLocalEngineManifest } from "@/core/data/engineManifest";
+
+/**
+ * Subscribes to DataBus events and syncs state.
+ * Renders nothing — purely a side-effect component.
+ */
+export function DataBusSubscriber() {
+    const setPollingInterval = useStore((s) => s.setPollingInterval);
+    const setEntities = useStore((s) => s.setEntities);
+    const setEntityCount = useStore((s) => s.setEntityCount);
+    const cacheMaxAge = useStore((s) => s.dataConfig.cacheMaxAge);
+
+    useEffect(() => {
+        // Detect local engine before subscribing to plugins
+        fetchLocalEngineManifest();
+        pluginManager.setCacheMaxAge(cacheMaxAge);
+    }, [cacheMaxAge]);
+
+    useEffect(() => {
+        const unsubReg = dataBus.on("pluginRegistered", ({ pluginId, defaultInterval }) => {
+            setTimeout(() => {
+                const currentIntervals = useStore.getState().dataConfig.pollingIntervals;
+                if (!currentIntervals[pluginId]) {
+                    setPollingInterval(pluginId, defaultInterval);
+                }
+            }, 0);
+        });
+
+        const unsubData = dataBus.on("dataUpdated", ({ pluginId, entities }) => {
+            // Defer the state updates by one tick to prevent React "Maximum update depth exceeded"
+            // errors during massive synchronous plugin loads (e.g. at boot).
+            setTimeout(() => {
+                setEntities(pluginId, entities);
+                setEntityCount(pluginId, entities.length);
+            }, 0);
+        });
+
+        const unsubToggle = dataBus.on("layerToggled", ({ pluginId, enabled }) => {
+            console.log(`[DataBusSubscriber] layerToggled event received for ${pluginId}, enabled: ${enabled}`);
+            const engineUrl = resolveEngineUrl(pluginId);
+            console.log(`[DataBusSubscriber] Resolved engine URL for ${pluginId} to ${engineUrl}`);
+            if (enabled) {
+                console.log(`[DataBusSubscriber] Calling wsClient.subscribe(${pluginId}, ${engineUrl})`);
+                wsClient.subscribe(pluginId, engineUrl);
+            } else {
+                console.log(`[DataBusSubscriber] Calling wsClient.unsubscribe(${pluginId}, ${engineUrl})`);
+                wsClient.unsubscribe(pluginId, engineUrl);
+            }
+        });
+
+        return () => {
+            unsubReg();
+            unsubData();
+            unsubToggle();
+        };
+    }, [setPollingInterval, setEntities, setEntityCount]);
+
+    return null;
+}

@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: npx prisma generate
+      - run: pnpm exec tsc --noEmit
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: npx prisma generate
+      - run: pnpm test
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [typecheck, test]
+    env:
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      AUTH_SECRET: ci-placeholder-secret-not-used-in-tests
+      NEXT_PUBLIC_WWV_EDITION: local
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: npx prisma generate
+      - run: pnpm build

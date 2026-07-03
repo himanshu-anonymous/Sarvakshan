@@ -1,0 +1,10 @@
+
+services:
+  app:
+    image: alpine
+    command: echo "app running"
+  db:
+    image: alpine
+    command: echo "db running"
+    profiles: ["${DB_PROFILE:-}"]
+
