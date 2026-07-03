@@ -1,0 +1,21 @@
+{
+  "name": "@Sarvakshan/wwv-lib-aviation",
+  "version": "1.0.1",
+  "description": "Shared abstract base classes for Sarvakshan aviation plugins (commercial, military, specialized)",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "Sarvakshan",
+    "aviation",
+    "aircraft",
+    "base-plugin"
+  ],
+  "author": "Sarvakshan",
+  "license": "ISC",
+  "peerDependencies": {
+    "@Sarvakshan/wwv-plugin-sdk": "^1.4.10"
+  }
+}

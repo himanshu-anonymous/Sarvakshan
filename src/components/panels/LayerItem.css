@@ -1,0 +1,170 @@
+/*
+ * Copyright (c) 2026 Aditya and Mankshu. All rights reserved.
+ * This code is the exclusive property of Aditya and Mankshu.
+ */
+
+/* ─── Layer Item ──────────────────────────────────────────── */
+.layer-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all var(--duration-normal) var(--ease-spring);
+  margin-bottom: var(--space-xs);
+}
+
+.layer-item:hover {
+  background: var(--bg-glass-hover);
+  border-color: var(--glass-border-inner);
+  box-shadow: var(--glass-shadow-inner);
+  transform: scale(0.99);
+}
+
+.layer-item--selected {
+  background: var(--bg-glass-active);
+  border-color: rgba(var(--accent-rgb), 0.3);
+  box-shadow: inset 2px 0 0 0 var(--accent-cyan), var(--glass-shadow-inner);
+}
+
+.layer-item__icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+.layer-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.layer-item__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 1px;
+}
+
+.layer-item__name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.layer-item__desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.layer-item__footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+/* ─── Unverified Icon ────────────────────────────── */
+.layer-item__unverified-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.layer-item__unverified-icon {
+  color: #f59e0b;
+  flex-shrink: 0;
+  cursor: help;
+}
+
+/* ─── Category Badge ─────────────────────────────────────── */
+.layer-item__category-badge {
+  font-size: 9px;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(var(--accent-rgb), 0.08);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  white-space: nowrap;
+}
+
+/* ─── Toggle ─────────────────────────────────────────────── */
+.layer-item__toggle {
+  width: 36px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  box-shadow: var(--glass-shadow-inner);
+  transition: all var(--duration-normal) var(--ease-spring);
+}
+
+.layer-item__toggle::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  top: 2px;
+  left: 2px;
+  box-shadow: var(--glass-shadow);
+  transition: all var(--duration-normal) var(--ease-spring);
+}
+
+.layer-item__toggle--on {
+  background: rgba(var(--accent-rgb), 0.2);
+  border-color: var(--accent-cyan);
+}
+
+.layer-item__toggle--on::after {
+  transform: translateX(16px);
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.5), var(--glass-shadow);
+}
+
+/* ─── Count ──────────────────────────────────────────────── */
+.layer-item__count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-cyan);
+  background: rgba(var(--accent-rgb), 0.1);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Loading Spinner ────────────────────────────────────── */
+.layer-item__spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(var(--accent-rgb), 0.2);
+  border-top-color: var(--accent-cyan);
+  flex-shrink: 0;
+  animation: layer-spin 0.75s linear infinite;
+  box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.25);
+}
+
+@keyframes layer-spin {
+  to { transform: rotate(360deg); }
+}

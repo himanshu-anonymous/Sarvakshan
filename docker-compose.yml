@@ -1,0 +1,75 @@
+services:
+  wwv:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - wwv-data:/app/data
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - "AUTH_SECRET=${AUTH_SECRET:-default_secret_for_local_dev}"
+      - "WWV_DEMO_ADMIN_SECRET=${WWV_DEMO_ADMIN_SECRET:-}"
+      - "WWV_BRIDGE_TOKEN=${WWV_BRIDGE_TOKEN:-}"
+      - "DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres@db:5432/Sarvakshan?schema=public}"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: Sarvakshan
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d Sarvakshan"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  wwv-data-engine:
+    build: ../wwv-data-engine
+    ports:
+      - '5000:5000'
+    environment:
+      - PORT=5000
+      - REDIS_URL=redis://wwv-redis:6379
+      - SEEDERS_DIR=/mnt/host/c/dev/Sarvakshan/local-seeders
+      - SKIP_SEEDER_DOWNLOAD=true
+      - DB_PATH=/app/data/engine.db
+    depends_on:
+      wwv-redis:
+        condition: service_healthy
+    volumes:
+      - ./local-seeders:/mnt/host/c/dev/Sarvakshan/local-seeders
+    restart: unless-stopped
+
+  wwv-redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  wwv-data:
+  postgres-data:
+
+networks:
+  coolify:
+    external: true

@@ -1,0 +1,153 @@
+/*
+ * Copyright (c) 2026 Aditya and Mankshu. All rights reserved.
+ * This code is the exclusive property of Aditya and Mankshu.
+ */
+
+/* ─── Graphics Settings ───────────────────────────────────── */
+.gfx-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.gfx-settings__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.gfx-settings__label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ── Dropdown select ──────────────────────────────────────── */
+.gfx-settings__select {
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 90px;
+  padding: 5px 28px 5px 10px;
+  background: var(--bg-glass);
+  border: 1px solid var(--glass-border-inner);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: var(--glass-shadow-inner);
+  transition: all var(--duration-normal) var(--ease-spring);
+  /* inline chevron via data-uri */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6' fill='%23888'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.gfx-settings__select:hover {
+  background: var(--bg-glass-hover);
+  border-color: var(--border-medium);
+}
+
+.gfx-settings__select:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.2), var(--glass-shadow-inner);
+}
+
+/* ── Toggle switch ────────────────────────────────────────── */
+.gfx-toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+  background: var(--bg-glass);
+  border: 1px solid var(--glass-border-inner);
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: var(--glass-shadow-inner);
+  transition: all var(--duration-normal) var(--ease-spring);
+}
+
+.gfx-toggle::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  box-shadow: var(--glass-shadow);
+  transition: all var(--duration-normal) var(--ease-spring);
+}
+
+.gfx-toggle--on {
+  background: rgba(var(--accent-rgb), 0.2);
+  border-color: var(--accent-cyan);
+}
+
+.gfx-toggle--on::after {
+  left: 18px;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 6px rgba(var(--accent-rgb), 0.5), var(--glass-shadow);
+}
+
+/* ── Slider ───────────────────────────────────────────────── */
+.gfx-settings__slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: 0;
+  flex: 1;
+  max-width: 140px;
+}
+
+.gfx-settings__slider {
+  flex: 1;
+  height: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--bg-glass);
+  border-radius: 2px;
+  box-shadow: var(--glass-shadow-inner);
+  outline: none;
+  cursor: pointer;
+}
+
+.gfx-settings__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  border: 2px solid var(--bg-primary);
+  box-shadow: var(--glass-shadow);
+  cursor: pointer;
+  transition: transform var(--duration-normal) var(--ease-spring),
+              box-shadow var(--duration-normal) var(--ease-spring);
+}
+
+.gfx-settings__slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: var(--glow-cyan), var(--glass-shadow);
+}
+
+.gfx-settings__slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.gfx-settings__slider-value {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  min-width: 22px;
+  text-align: right;
+}

@@ -1,0 +1,13 @@
+{
+  "id": "geojson",
+  "name": "GeoJSON Importer",
+  "version": "1.0.0",
+  "description": "Import and visualize user-provided GeoJSON datasets",
+  "type": "data-layer",
+  "format": "bundle",
+  "trust": "built-in",
+  "capabilities": ["data:own"],
+  "category": "custom",
+  "icon": "file-json",
+  "entry": "index.ts"
+}

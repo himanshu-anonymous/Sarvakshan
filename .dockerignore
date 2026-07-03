@@ -1,0 +1,25 @@
+node_modules
+**/node_modules
+**/dist
+**/.next
+.git
+
+# Database files at ANY depth
+/data
+packages/*/data
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/*-journal
+**/*.db-wal
+**/*.db-shm
+
+# Environment files
+.env*
+!*.env.example
+
+# Non-build directories
+artifacts/
+performance/
+tmp/
+*.geojson

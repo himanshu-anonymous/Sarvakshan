@@ -1,0 +1,162 @@
+/*
+ * Copyright (c) 2026 Aditya and Mankshu. All rights reserved.
+ * This code is the exclusive property of Aditya and Mankshu.
+ */
+
+"use client";
+
+import React, { useEffect } from "react";
+import { useStore } from "@/core/state/store";
+import { trackEvent } from "@/lib/analytics";
+import "./graphics-settings.css";
+
+const DEFAULT_GRAPHICS = {
+    resolutionScale: 1.0,
+    enableFxaa: false,
+    msaaSamples: 1,
+    maxScreenSpaceError: 16,
+    shadowsEnabled: false,
+    enableLighting: false,
+    showFps: false,
+};
+
+const RESOLUTION_OPTIONS = [
+    { label: "0.5×", value: 0.5 },
+    { label: "0.75×", value: 0.75 },
+    { label: "1× (Native)", value: 1.0 },
+    { label: "1.25×", value: 1.25 },
+    { label: "1.5×", value: 1.5 },
+    { label: "2× (Super)", value: 2.0 },
+];
+
+const AA_OPTIONS = [
+    { label: "None (Fastest)", value: "none" },
+    { label: "FXAA (Fast)", value: "fxaa" },
+    { label: "MSAA 2× (Balanced)", value: "msaa2x" },
+    { label: "MSAA 4× (Quality)", value: "msaa4x" },
+    { label: "MSAA 8× (Ultra)", value: "msaa8x" },
+];
+
+export function GraphicsSettings() {
+    const mapConfig = useStore((s) => s.mapConfig);
+    const update = useStore((s) => s.updateMapConfig);
+
+    // Save to cookie on change
+    useEffect(() => {
+        const { resolutionScale, antiAliasing, maxScreenSpaceError, shadowsEnabled, enableLighting, showFps } = mapConfig;
+        const graphicsToSave = { resolutionScale, antiAliasing, maxScreenSpaceError, shadowsEnabled, enableLighting, showFps };
+        document.cookie = `wwv_graphics=${encodeURIComponent(JSON.stringify(graphicsToSave))}; path=/; max-age=31536000`; // 1 year
+    }, [mapConfig.resolutionScale, mapConfig.antiAliasing, mapConfig.maxScreenSpaceError, mapConfig.shadowsEnabled, mapConfig.enableLighting, mapConfig.showFps]);
+
+    const toggle = (key: string, current: boolean) => {
+        update({ [key]: !current });
+        trackEvent("graphics-setting", { key, value: !current });
+    };
+
+    return (
+        <div className="gfx-settings">
+            {/* Resolution Scale */}
+            <div className="gfx-settings__row">
+                <span className="gfx-settings__label">Resolution</span>
+                <select
+                    className="gfx-settings__select"
+                    value={mapConfig.resolutionScale}
+                    onChange={(e) => {
+                        const v = parseFloat(e.target.value);
+                        update({ resolutionScale: v });
+                        trackEvent("graphics-setting", { key: "resolutionScale", value: v });
+                    }}
+                >
+                    {RESOLUTION_OPTIONS.map((o) => (
+                        <option key={o.value} value={o.value}>{o.label}</option>
+                    ))}
+                </select>
+            </div>
+
+            {/* Anti-Aliasing Algorithm */}
+            <div className="gfx-settings__row">
+                <span className="gfx-settings__label">Anti-Aliasing</span>
+                <select
+                    className="gfx-settings__select"
+                    value={mapConfig.antiAliasing}
+                    onChange={(e) => {
+                        const v = e.target.value as any;
+                        update({ antiAliasing: v });
+                        trackEvent("graphics-setting", { key: "antiAliasing", value: v });
+                    }}
+                >
+                    {AA_OPTIONS.map((o) => (
+                        <option key={o.value} value={o.value}>{o.label}</option>
+                    ))}
+                </select>
+            </div>
+
+            {/* Tile Detail (LOD) */}
+            <div className="gfx-settings__row">
+                <span className="gfx-settings__label">Tile Detail</span>
+                <div className="gfx-settings__slider-wrap">
+                    <input
+                        type="range"
+                        className="gfx-settings__slider"
+                        min={1}
+                        max={64}
+                        step={1}
+                        value={mapConfig.maxScreenSpaceError}
+                        onChange={(e) => {
+                            const v = parseInt(e.target.value, 10);
+                            update({ maxScreenSpaceError: v });
+                        }}
+                        onPointerUp={() => trackEvent("graphics-setting", {
+                            key: "maxScreenSpaceError",
+                            value: mapConfig.maxScreenSpaceError,
+                        })}
+                    />
+                    <span className="gfx-settings__slider-value">{mapConfig.maxScreenSpaceError}</span>
+                </div>
+            </div>
+
+            {/* Shadows */}
+            <div className="gfx-settings__row">
+                <span className="gfx-settings__label">Shadows</span>
+                <button
+                    className={`gfx-toggle ${mapConfig.shadowsEnabled ? "gfx-toggle--on" : ""}`}
+                    onClick={() => toggle("shadowsEnabled", mapConfig.shadowsEnabled)}
+                    aria-label="Toggle Shadows"
+                />
+            </div>
+
+            {/* Lighting */}
+            <div className="gfx-settings__row">
+                <span className="gfx-settings__label">Globe Lighting</span>
+                <button
+                    className={`gfx-toggle ${mapConfig.enableLighting ? "gfx-toggle--on" : ""}`}
+                    onClick={() => toggle("enableLighting", mapConfig.enableLighting)}
+                    aria-label="Toggle Globe Lighting"
+                />
+            </div>
+
+            {/* Show FPS */}
+            <div className="gfx-settings__row">
+                <span className="gfx-settings__label">Show FPS</span>
+                <button
+                    className={`gfx-toggle ${mapConfig.showFps ? "gfx-toggle--on" : ""}`}
+                    onClick={() => toggle("showFps", mapConfig.showFps)}
+                    aria-label="Toggle FPS Counter"
+                />
+            </div>
+            {/* Reset Defaults */}
+            <div className="gfx-settings__row" style={{ marginTop: "var(--space-md)" }}>
+                <button
+                    className="btn"
+                    style={{ width: "100%", height: 32 }}
+                    onClick={() => {
+                        update({ ...DEFAULT_GRAPHICS });
+                        trackEvent("graphics-setting-reset");
+                    }}
+                >
+                    Reset to Defaults
+                </button>
+            </div>
+        </div>
+    );
+}

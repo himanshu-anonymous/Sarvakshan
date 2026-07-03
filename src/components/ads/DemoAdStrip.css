@@ -1,0 +1,142 @@
+/*
+ * Copyright (c) 2026 Aditya and Mankshu. All rights reserved.
+ * This code is the exclusive property of Aditya and Mankshu.
+ */
+
+/* src/components/ads/DemoAdStrip.css */
+
+/* The ad strip is a flex child sibling of .app-shell inside .page-root */
+.demo-ad-strip {
+    position: relative;
+    z-index: 1; /* renders above app-shell's isolated stacking context */
+    width: 160px;
+    flex-shrink: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    background: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-left: 1px solid var(--glass-border);
+    padding: var(--space-md);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.demo-ad-strip__ad {
+    width: 140px;
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    display: block;
+}
+
+
+
+.demo-ad-strip__banner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-glass);
+    border: 1px solid var(--glass-border-inner);
+    border-radius: var(--radius-md);
+    max-width: 140px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: var(--glass-shadow-inner);
+    transition: all var(--duration-normal) var(--ease-spring);
+}
+
+.demo-ad-strip__banner:hover {
+    background: var(--bg-glass-hover);
+    border-color: rgba(var(--accent-rgb), 0.3);
+    box-shadow: var(--glass-shadow-inner), 0 0 15px rgba(var(--accent-rgb), 0.15);
+    transform: scale(0.98);
+}
+
+.demo-ad-strip__banner-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.demo-ad-strip__banner-text {
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
+.demo-ad-strip__close {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--bg-glass);
+    border: 1px solid var(--glass-border-inner);
+    color: var(--text-muted);
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--glass-shadow);
+    transition: all var(--duration-normal) var(--ease-spring);
+}
+
+.demo-ad-strip__close:hover {
+    color: var(--text-primary);
+    background: var(--bg-glass-hover);
+    transform: scale(1.1);
+}
+
+/* Hide on mobile — ads shouldn't show on small screens */
+@media (max-width: 768px) {
+    .demo-ad-strip {
+        display: none;
+    }
+}
+
+/* Fallback for when Google AdSense refuses to fill the ad (e.g. localhost, Cloudflare tunnels) */
+ins.adsbygoogle[data-ad-status="unfilled"] {
+    display: block !important;
+    position: relative !important;
+    background: var(--bg-secondary);
+    border: 1px dashed var(--border-subtle);
+    border-radius: var(--radius-md);
+    height: 100%;
+    width: 100%;
+    text-decoration: none !important;
+    overflow: hidden;
+}
+
+/* Hide any invisible tracker pixels or frames Google injects so they don't break our box model */
+ins.adsbygoogle[data-ad-status="unfilled"] > * {
+    display: none !important;
+}
+
+ins.adsbygoogle[data-ad-status="unfilled"]::after {
+    content: "Ad Blocked\A(Unverified)";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: pre-wrap;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+    opacity: 0.5;
+}

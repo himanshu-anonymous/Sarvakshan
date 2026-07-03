@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Simple top-down airplane silhouette pointing UP (north) -->
+  <!-- White fill so Cesium can tint it with billboard color -->
+  <g fill="#ffffff">
+    <!-- Fuselage -->
+    <path d="M32 4 C30 4, 28 8, 28 16 L28 26 L10 36 L10 40 L28 34 L28 48 L22 54 L22 58 L32 54 L42 58 L42 54 L36 48 L36 34 L54 40 L54 36 L36 26 L36 16 C36 8, 34 4, 32 4Z"/>
+  </g>
+</svg>

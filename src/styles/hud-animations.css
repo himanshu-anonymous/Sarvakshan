@@ -1,0 +1,144 @@
+/*
+ * Copyright (c) 2026 Aditya and Mankshu. All rights reserved.
+ * This code is the exclusive property of Aditya and Mankshu.
+ */
+
+/* ─── Sci-Fi HUD Entrance Animations ─────────────────────── */
+/* Boot state classes on .app-shell drive animations on      */
+/* the actual fixed-position child elements.                 */
+
+/* ── Keyframes ────────────────────────────────────────────── */
+@keyframes hudSlideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hudSweepLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes hudSweepRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes hudRiseUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hudSlideUpFade {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hudTextFlicker {
+    0%   { opacity: 0; }
+    10%  { opacity: 0.6; }
+    20%  { opacity: 0.1; }
+    40%  { opacity: 0.8; }
+    55%  { opacity: 0.3; }
+    70%  { opacity: 0.9; }
+    100% { opacity: 1; }
+}
+
+/* ── Pre-boot: hide everything (only before boot completes) ── */
+.app-shell:not(.boot-done) .header,
+.app-shell:not(.boot-done) .sidebar,
+.app-shell:not(.boot-done) .timeline,
+.app-shell:not(.boot-done) .panel-toggle-btn,
+.app-shell:not(.boot-done) .camera-stats,
+.app-shell:not(.boot-done) .entity-info-card,
+.app-shell:not(.boot-done) .floating-video-manager {
+    opacity: 0;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.app-shell.boot-header .header {
+    animation: hudSlideDown 600ms var(--ease-smooth) both;
+}
+
+/* Brand text flickers in */
+.app-shell.boot-header .header__logo {
+    animation: hudTextFlicker 0.8s var(--ease-smooth) 0.1s both;
+}
+
+.app-shell.boot-header .header__subtitle {
+    animation: hudTextFlicker 0.8s var(--ease-smooth) 0.3s both;
+}
+
+/* ── Sidebars ─────────────────────────────────────────────── */
+.app-shell.boot-sidebar .sidebar--left {
+    animation: hudSweepLeft 700ms var(--ease-smooth) both;
+}
+
+.app-shell.boot-sidebar .sidebar--right {
+    animation: hudSweepRight 700ms var(--ease-smooth) both;
+}
+
+/* On mobile, skip sidebar boot animations — they start off-screen */
+@media (max-width: 768px) {
+    .app-shell.boot-sidebar .sidebar--left,
+    .app-shell.boot-sidebar .sidebar--right {
+        animation: none !important;
+        opacity: 0;
+    }
+
+    .app-shell:not(.boot-done) .sidebar {
+        opacity: 0 !important;
+    }
+}
+
+/* Sidebar title text flicker */
+.app-shell.boot-sidebar .sidebar__title {
+    animation: hudTextFlicker 0.8s var(--ease-smooth) 0.2s both;
+}
+
+/* ── Timeline ─────────────────────────────────────────────── */
+.app-shell.boot-timeline .timeline {
+    animation: hudRiseUp 600ms var(--ease-smooth) both;
+}
+
+/* Timeline label text flicker */
+.app-shell.boot-timeline .timeline__time {
+    animation: hudTextFlicker 0.6s var(--ease-smooth) 0.15s both;
+}
+
+/* ── Minor controls ───────────────────────────────────────── */
+.app-shell.boot-controls .panel-toggle-btn {
+    animation: hudFadeIn 500ms var(--ease-smooth) both;
+}
+
+/* Pure fade for elements that have complex dynamic transforms (like panel toggles) */
+@keyframes hudFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.app-shell.boot-controls .camera-stats {
+    animation: hudCameraStatsIn 500ms var(--ease-smooth) both;
+}
+
+.app-shell.boot-controls .entity-info-card {
+    animation: hudSlideUpFade 500ms var(--ease-smooth) both;
+}
+
+/* Camera stats uses translateX(-50%) for centering — must compose */
+@keyframes hudCameraStatsIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.app-shell.boot-controls .entity-info-card {
+    animation: hudSlideUpFade 500ms var(--ease-smooth) both;
+}
+
+.app-shell.boot-controls .floating-video-manager {
+    animation: hudSlideUpFade 500ms var(--ease-smooth) both;
+}
+
+/* ── Status badge dot ─────────────────────────────────────── */
+.app-shell.boot-header .status-badge__dot {
+    animation: hudSlideUpFade 400ms var(--ease-smooth) 0.4s both;
+}
