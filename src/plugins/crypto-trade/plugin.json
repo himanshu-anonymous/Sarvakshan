@@ -1,0 +1,27 @@
+{
+  "id": "crypto-trade",
+  "name": "World Crypto Trades",
+  "version": "1.0.0",
+  "description": "Tracks the entire crypto market in real-time, mapping live Binance trades via CoinCap to major global exchange hubs on the 3D globe.",
+  "type": "data-layer",
+  "format": "bundle",
+  "trust": "built-in",
+  "capabilities": ["data:own", "network:fetch"],
+  "category": "economic",
+  "icon": "bitcoin",
+  "entry": "index.ts",
+  "dataSource": {
+    "url": "https://ws.coincap.io/trades/binance",
+    "method": "GET",
+    "pollInterval": 0,
+    "format": "json",
+    "streamUrl": "wss://ws.coincap.io/trades/binance"
+  },
+  "rendering": {
+    "entityType": "billboard",
+    "color": "#f59e0b",
+    "clusterEnabled": true,
+    "clusterDistance": 60,
+    "maxEntities": 2000
+  }
+}
