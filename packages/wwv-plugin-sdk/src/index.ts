@@ -283,3 +283,4 @@ export type DataBusEvents = {
 };
 
 export * from "./viteGlobals";
+export * from "./auth-contracts";

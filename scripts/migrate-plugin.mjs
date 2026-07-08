@@ -4,7 +4,7 @@ import { execSync } from "node:child_process";
 
 const pluginName = process.argv[2];
 if (!pluginName) {
-    console.error("❌ Usage: node scripts/migrate-plugin.mjs <plugin-name>");
+    console.error("âŒ Usage: node scripts/migrate-plugin.mjs <plugin-name>");
     console.error("   Example: node scripts/migrate-plugin.mjs gps-jamming");
     process.exit(1);
 }
@@ -12,7 +12,7 @@ if (!pluginName) {
 const CWD = process.cwd();
 const LOCAL_PLUGINS_DIR = path.join(CWD, "local-plugins");
 const PACKAGES_DIR = path.join(CWD, "packages");
-const EXTERNAL_PLUGINS_DIR = path.resolve(CWD, "../worldwideview-plugins/packages");
+const EXTERNAL_PLUGINS_DIR = path.resolve(CWD, "../Sarvakshan-plugins/packages");
 
 const pluginDirName = `wwv-plugin-${pluginName}`;
 const destPluginPath = path.join(LOCAL_PLUGINS_DIR, pluginDirName);
@@ -27,7 +27,7 @@ async function exists(p) {
 }
 
 async function run() {
-    console.log(`🚀 Starting migration for plugin: ${pluginName}`);
+    console.log(`ðŸš€ Starting migration for plugin: ${pluginName}`);
 
     // 1. Find and copy the frontend plugin
     let sourcePluginPath = null;
@@ -38,29 +38,29 @@ async function run() {
     }
 
     if (!sourcePluginPath) {
-        console.warn(`⚠️ Could not find frontend plugin ${pluginDirName} in packages/ or ../worldwideview-plugins/packages/. Skipping frontend copy.`);
+        console.warn(`âš ï¸ Could not find frontend plugin ${pluginDirName} in packages/ or ../Sarvakshan-plugins/packages/. Skipping frontend copy.`);
     } else {
         if (!(await exists(destPluginPath))) {
-            console.log(`📁 Copying frontend plugin from ${sourcePluginPath} to ${destPluginPath}...`);
+            console.log(`ðŸ“ Copying frontend plugin from ${sourcePluginPath} to ${destPluginPath}...`);
             await fs.cp(sourcePluginPath, destPluginPath, { 
                 recursive: true, 
                 filter: (src) => !src.includes('node_modules') && !src.includes('dist')
             });
         } else {
-            console.log(`📁 Frontend plugin already exists at ${destPluginPath}. Proceeding with modifications...`);
+            console.log(`ðŸ“ Frontend plugin already exists at ${destPluginPath}. Proceeding with modifications...`);
         }
 
         // Clean up node_modules
         const nmPath = path.join(destPluginPath, "node_modules");
         if (await exists(nmPath)) {
-            console.log(`🗑️ Removing node_modules in ${destPluginPath}...`);
+            console.log(`ðŸ—‘ï¸ Removing node_modules in ${destPluginPath}...`);
             await fs.rm(nmPath, { recursive: true, force: true });
         }
 
         // 2. Update package.json
         const pkgPath = path.join(destPluginPath, "package.json");
         if (await exists(pkgPath)) {
-            console.log(`📝 Updating package.json for frontend plugin...`);
+            console.log(`ðŸ“ Updating package.json for frontend plugin...`);
             const pkgRaw = await fs.readFile(pkgPath, "utf-8");
             const pkg = JSON.parse(pkgRaw);
 
@@ -69,7 +69,7 @@ async function run() {
             pkg.module = "dist/frontend.mjs";
 
             if (!pkg.peerDependencies) pkg.peerDependencies = {};
-            pkg.peerDependencies["@worldwideview/wwv-plugin-sdk"] = "workspace:*";
+            pkg.peerDependencies["@Sarvakshan/wwv-plugin-sdk"] = "workspace:*";
 
             // Add scripts if missing
             if (!pkg.scripts) pkg.scripts = {};
@@ -81,9 +81,9 @@ async function run() {
         // 3. Ensure vite.config.ts
         const vitePath = path.join(destPluginPath, "vite.config.ts");
         if (!(await exists(vitePath))) {
-            console.log(`📝 Creating vite.config.ts...`);
+            console.log(`ðŸ“ Creating vite.config.ts...`);
             await fs.writeFile(vitePath, `import { defineConfig } from "vite";
-import { wwvPluginGlobals } from "@worldwideview/wwv-plugin-sdk";
+import { wwvPluginGlobals } from "@Sarvakshan/wwv-plugin-sdk";
 
 export default defineConfig({
   plugins: [wwvPluginGlobals()],
@@ -104,17 +104,17 @@ export default defineConfig({
         for (const ext of ["ts", "tsx"]) {
             const indexPath = path.join(destPluginPath, "src", `index.${ext}`);
             if (await exists(indexPath)) {
-                console.log(`🔧 Refactoring frontend routing in src/index.${ext}...`);
+                console.log(`ðŸ”§ Refactoring frontend routing in src/index.${ext}...`);
                 let content = await fs.readFile(indexPath, "utf-8");
                 
                 // Replace hardcoded engine base block (various patterns)
-                const legacyPattern1 = /let engineBase = 'https:\/\/dataengine\.worldwideview\.dev';[\s\S]*?(?=const res = await globalThis\.fetch)/m;
+                const legacyPattern1 = /let engineBase = 'https:\/\/dataengine\.Sarvakshan\.dev';[\s\S]*?(?=const res = await globalThis\.fetch)/m;
                 if (legacyPattern1.test(content)) {
                     content = content.replace(legacyPattern1, `if (!this.context) throw new Error("Plugin context not initialized");\n            const engineUrl = this.context.getEngineUrl();\n            const engineBase = engineUrl.replace(/\\/stream$/, '').replace(/^ws/, "http");\n            `);
                 }
 
-                // Replace `const baseUrl = this.context?.apiBaseUrl || "https://dataengine.worldwideview.dev";`
-                const legacyPattern2 = /const baseUrl = this\.context\?\.apiBaseUrl \|\| ["']https:\/\/dataengine\.worldwideview\.dev["'];/g;
+                // Replace `const baseUrl = this.context?.apiBaseUrl || "https://dataengine.Sarvakshan.dev";`
+                const legacyPattern2 = /const baseUrl = this\.context\?\.apiBaseUrl \|\| ["']https:\/\/dataengine\.Sarvakshan\.dev["'];/g;
                 if (legacyPattern2.test(content)) {
                     content = content.replace(legacyPattern2, `if (!this.context) throw new Error("Plugin context not initialized");\n        const baseUrl = this.context.getEngineUrl().replace(/\\/stream$/, '').replace(/^ws/, "http");`);
                 }
@@ -147,7 +147,7 @@ export default defineConfig({
     }
 
     if (seederPath) {
-        console.log(`📁 Found backend seeder at ${seederPath}. Updating...`);
+        console.log(`ðŸ“ Found backend seeder at ${seederPath}. Updating...`);
         const pkgPath = path.join(seederPath, "package.json");
         if (await exists(pkgPath)) {
             const pkgRaw = await fs.readFile(pkgPath, "utf-8");
@@ -166,7 +166,7 @@ export default defineConfig({
             
             // Fix fileURLToPath usage
             if (content.includes("fileURLToPath(import.meta.url)")) {
-                console.log(`🔧 Refactoring fileURLToPath to use SEEDERS_DIR...`);
+                console.log(`ðŸ”§ Refactoring fileURLToPath to use SEEDERS_DIR...`);
                 // This is a naive replacement, but works for most standard cases
                 content = content.replace(
                     /const __dirname = path\.dirname\(fileURLToPath\(import\.meta\.url\)\);\n\s*const (\w+) = path\.join\(__dirname, (.*?)\);/g,
@@ -176,7 +176,7 @@ export default defineConfig({
             }
         }
     } else {
-        console.warn(`⚠️ Could not find backend seeder for ${pluginName}. Skipping seeder update.`);
+        console.warn(`âš ï¸ Could not find backend seeder for ${pluginName}. Skipping seeder update.`);
     }
 
     // 6. Register in defaultPlugins.ts
@@ -184,16 +184,16 @@ export default defineConfig({
     if (await exists(defaultsPath)) {
         let content = await fs.readFile(defaultsPath, "utf-8");
         if (!content.includes(`"${pluginName}"`)) {
-            console.log(`📝 Adding ${pluginName} to defaultPlugins.ts...`);
+            console.log(`ðŸ“ Adding ${pluginName} to defaultPlugins.ts...`);
             content = content.replace(/\] as const;/, `    "${pluginName}",\n] as const;`);
             await fs.writeFile(defaultsPath, content);
         } else {
-            console.log(`✅ ${pluginName} is already in defaultPlugins.ts.`);
+            console.log(`âœ… ${pluginName} is already in defaultPlugins.ts.`);
         }
     }
 
-    console.log(`✅ Migration automated script finished for ${pluginName}.`);
-    console.log(`💡 Remember to run 'pnpm install' and 'pnpm build' in the plugin directories to verify.`);
+    console.log(`âœ… Migration automated script finished for ${pluginName}.`);
+    console.log(`ðŸ’¡ Remember to run 'pnpm install' and 'pnpm build' in the plugin directories to verify.`);
 }
 
 run().catch(console.error);

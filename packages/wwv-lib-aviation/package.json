@@ -16,6 +16,6 @@
   "author": "Sarvakshan",
   "license": "ISC",
   "peerDependencies": {
-    "@Sarvakshan/wwv-plugin-sdk": "^1.4.10"
+    "@Sarvakshan/wwv-plugin-sdk": "workspace:*"
   }
 }

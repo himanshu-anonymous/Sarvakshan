@@ -11,7 +11,7 @@ for (const dir of dirs) {
         const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
         
         // Skip backend or utility packages without a plugin UI
-        if (!pkg.worldwideview) continue;
+        if (!pkg.Sarvakshan) continue;
 
         let entryFile = "src/index.ts";
         if (fs.existsSync(path.join(packagesDir, dir, "src/index.tsx"))) {
@@ -29,13 +29,13 @@ export default defineConfig({
       fileName: () => "frontend.mjs",
     },
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime", "@worldwideview/wwv-plugin-sdk", "cesium", "resium"],
+      external: ["react", "react-dom", "react/jsx-runtime", "@Sarvakshan/wwv-plugin-sdk", "cesium", "resium"],
       plugins: [
         externalGlobals({
           "react": "globalThis.__WWV_HOST__.React",
           "react-dom": "globalThis.__WWV_HOST__.ReactDOM",
           "react/jsx-runtime": "globalThis.__WWV_HOST__.jsxRuntime",
-          "@worldwideview/wwv-plugin-sdk": "globalThis.__WWV_HOST__.WWVPluginSDK",
+          "@Sarvakshan/wwv-plugin-sdk": "globalThis.__WWV_HOST__.WWVPluginSDK",
           "cesium": "globalThis.__WWV_HOST__.Cesium",
           "resium": "globalThis.__WWV_HOST__.Resium",
         }),

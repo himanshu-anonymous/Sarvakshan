@@ -11,12 +11,12 @@ const ROOT = path.resolve(__dirname, "..");
 const LOCAL_PLUGINS_DIR = path.join(ROOT, "local-plugins");
 const OUTPUT_DIR = path.join(ROOT, "public", "plugins-local");
 
-// External globals — must match extract-plugins.mjs pattern
+// External globals â€” must match extract-plugins.mjs pattern
 const EXTERNAL_GLOBALS = {
     "react": "globalThis.__WWV_HOST__.React",
     "react-dom": "globalThis.__WWV_HOST__.ReactDOM",
     "react/jsx-runtime": "globalThis.__WWV_HOST__.jsxRuntime",
-    "@worldwideview/wwv-plugin-sdk": "globalThis.__WWV_HOST__.WWVPluginSDK",
+    "@Sarvakshan/wwv-plugin-sdk": "globalThis.__WWV_HOST__.WWVPluginSDK",
     "cesium": "globalThis.__WWV_HOST__.Cesium",
     "resium": "globalThis.__WWV_HOST__.Resium",
 };
@@ -30,12 +30,12 @@ export function discoverLocalPlugins() {
             const pkgPath = path.join(LOCAL_PLUGINS_DIR, dir, "package.json");
             if (!fs.existsSync(pkgPath)) return false;
             const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-            return !!pkg.worldwideview;
+            return !!pkg.Sarvakshan;
         })
         .map(dir => {
             const pkgPath = path.join(LOCAL_PLUGINS_DIR, dir, "package.json");
             const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-            const manifest = pkg.worldwideview;
+            const manifest = pkg.Sarvakshan;
             manifest.version = pkg.version;
             manifest.name = pkg.name;
             manifest.description = pkg.description;
@@ -52,7 +52,7 @@ export async function buildPlugin({ dir, manifest, pluginDir }) {
         const tsxEntry = devEntry.replace(".ts", ".tsx");
         entryFile = path.join(pluginDir, tsxEntry);
         if (!fs.existsSync(entryFile)) {
-            console.warn(`[sync] ⚠ No entry file found for ${dir}, skipping`);
+            console.warn(`[sync] âš  No entry file found for ${dir}, skipping`);
             return false;
         }
     }
@@ -83,7 +83,7 @@ export async function buildPlugin({ dir, manifest, pluginDir }) {
         });
         return true;
     } catch (err) {
-        console.error(`[sync] ❌ Build failed for ${dir}:`, err.message);
+        console.error(`[sync] âŒ Build failed for ${dir}:`, err.message);
         return false;
     }
 }
@@ -95,7 +95,7 @@ export function syncToPublic({ dir, manifest, pluginDir }) {
     const distMap = path.join(pluginDir, "dist", "frontend.mjs.map");
 
     if (!fs.existsSync(distFile)) {
-        console.warn(`[sync] ⚠ No dist for ${dir}, skipping sync`);
+        console.warn(`[sync] âš  No dist for ${dir}, skipping sync`);
         return;
     }
 
@@ -125,7 +125,7 @@ export function syncToPublic({ dir, manifest, pluginDir }) {
         JSON.stringify(pluginJson, null, 2)
     );
 
-    console.log(`[sync] ✅ ${publicName} → public/plugins-local/${publicName}/`);
+    console.log(`[sync] âœ… ${publicName} â†’ public/plugins-local/${publicName}/`);
 }
 
 // Clean stale plugins from public/plugins-local/ that no longer exist in local-plugins/
@@ -135,7 +135,7 @@ function cleanStale(activeIds) {
     for (const dir of fs.readdirSync(OUTPUT_DIR)) {
         if (!activeSet.has(dir)) {
             fs.rmSync(path.join(OUTPUT_DIR, dir), { recursive: true, force: true });
-            console.log(`[sync] 🗑  Removed stale plugin: ${dir}`);
+            console.log(`[sync] ðŸ—‘  Removed stale plugin: ${dir}`);
         }
     }
 }

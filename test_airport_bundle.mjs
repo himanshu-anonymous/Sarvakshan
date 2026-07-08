@@ -87,7 +87,7 @@ var e = (...e) => e.filter((e, t, n) => !!e && e.trim() !== "" && n.indexOf(e) =
 	}
 	async fetch(e) {
 		try {
-			let e = await fetch("https://cdn.jsdelivr.net/npm/@worldwideview/wwv-plugin-airports@latest/data/airports.geojson");
+			let e = await fetch("https://cdn.jsdelivr.net/npm/@Sarvakshan/wwv-plugin-airports@latest/data/airports.geojson");
 			if (!e.ok) throw Error("Failed to load geojson");
 			let t = await e.json();
 			return !t || !t.features ? [] : t.features.map((e, t) => {

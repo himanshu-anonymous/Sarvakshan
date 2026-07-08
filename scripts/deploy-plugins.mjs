@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const packagesDir = path.resolve(process.cwd(), "..", "worldwideview-plugins", "packages");
+const packagesDir = path.resolve(process.cwd(), "..", "Sarvakshan-plugins", "packages");
 const publicPluginsDir = path.resolve(process.cwd(), "public", "plugins");
 
 if (!fs.existsSync(publicPluginsDir)) {
@@ -18,8 +18,8 @@ for (const dir of dirs) {
     if (fs.existsSync(distPath) && fs.existsSync(pkgPath)) {
         const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
         
-        if (!pkg.worldwideview) {
-            console.log(`Skipped ${dir} - No worldwideview metadata in package.json`);
+        if (!pkg.Sarvakshan) {
+            console.log(`Skipped ${dir} - No Sarvakshan metadata in package.json`);
             continue;
         }
 
@@ -31,13 +31,13 @@ for (const dir of dirs) {
         }
         
         const manifest = {
-            id: pkg.worldwideview.id || publicName,
-            name: pkg.worldwideview.name || publicName,
+            id: pkg.Sarvakshan.id || publicName,
+            name: pkg.Sarvakshan.name || publicName,
             version: pkg.version,
             description: pkg.description || "",
-            capabilities: pkg.worldwideview.capabilities || [],
-            category: pkg.worldwideview.category || "custom",
-            icon: pkg.worldwideview.icon || "Plugin",
+            capabilities: pkg.Sarvakshan.capabilities || [],
+            category: pkg.Sarvakshan.category || "custom",
+            icon: pkg.Sarvakshan.icon || "Plugin",
             entry: `/plugins/${publicName}/frontend.mjs`,
             format: "bundle",
             trust: "unverified"

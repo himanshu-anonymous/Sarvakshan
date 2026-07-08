@@ -9,7 +9,7 @@
     "setup": "node scripts/setup.mjs",
     "test-worktree": "node scripts/test-worktree.mjs",
     "clean": "node -e \"const fs=require('fs');fs.rmSync('.next',{recursive:true,force:true})\"",
-    "dev": "concurrently \"pnpm run dev:plugins\" \"next dev\"",
+    "dev": "concurrently \"pnpm run dev:plugins\" \"next dev --webpack\"",
     "dev:all": "concurrently -n \"dev,backends\" -c \"magenta,blue\" \"pnpm dev\" \"pnpm dev:backends\"",
     "dev:backends": "docker compose up wwv-data-engine wwv-redis",
     "dev:plugins": "node scripts/watch-local-plugins.mjs",
