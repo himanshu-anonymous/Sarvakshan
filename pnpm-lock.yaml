@@ -11,6 +11,9 @@ importers:
 
   .:
     dependencies:
+      '@Sarvakshan/wwv-plugin-sdk':
+        specifier: workspace:*
+        version: link:packages/wwv-plugin-sdk
       '@auth/prisma-adapter':
         specifier: ^2.11.2
         version: 2.11.2(@prisma/client@7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(better-sqlite3@12.8.0)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@5.9.3))(typescript@5.9.3))
@@ -38,9 +41,6 @@ importers:
       '@vercel/analytics':
         specifier: ^1.6.1
         version: 1.6.1(next@16.2.6(@babel/core@7.29.0)(@opentelemetry/api@1.9.1)(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react@19.2.6)
-      '@Sarvakshan/wwv-plugin-sdk':
-        specifier: workspace:*
-        version: link:packages/wwv-plugin-sdk
       bcryptjs:
         specifier: ^3.0.3
         version: 3.0.3
@@ -175,14 +175,14 @@ importers:
   packages/wwv-lib-aviation:
     dependencies:
       '@Sarvakshan/wwv-plugin-sdk':
-        specifier: ^1.4.10
-        version: 1.5.0(react@19.2.6)
+        specifier: workspace:*
+        version: link:../wwv-plugin-sdk
 
   packages/wwv-lib-incidents:
     dependencies:
       '@Sarvakshan/wwv-plugin-sdk':
-        specifier: ^1.4.10
-        version: 1.5.0(react@19.2.6)
+        specifier: workspace:*
+        version: link:../wwv-plugin-sdk
 
   packages/wwv-plugin-sdk:
     dependencies:
@@ -1993,11 +1993,6 @@ packages:
 
   '@webassemblyjs/wast-printer@1.14.1':
     resolution: {integrity: sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw==}
-
-  '@Sarvakshan/wwv-plugin-sdk@1.5.0':
-    resolution: {integrity: sha512-0EFCdl55H5Wl1BcVJkbMEA0+iZfnHMVY27xmsyZzfBtHOfx6zgtgXO3re8UjVaQGVZT0akyIdbghF6qlx5GPRQ==}
-    peerDependencies:
-      react: '>=18'
 
   '@xtuc/ieee754@1.2.0':
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -5902,10 +5897,6 @@ snapshots:
     dependencies:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
-
-  '@Sarvakshan/wwv-plugin-sdk@1.5.0(react@19.2.6)':
-    dependencies:
-      react: 19.2.6
 
   '@xtuc/ieee754@1.2.0': {}
 
