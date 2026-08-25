@@ -13,6 +13,7 @@
     "dev:all": "concurrently -n \"dev,backends\" -c \"magenta,blue\" \"pnpm dev\" \"pnpm dev:backends\"",
     "dev:backends": "docker compose up wwv-data-engine wwv-redis",
     "dev:plugins": "node scripts/watch-local-plugins.mjs",
+    "terminal": "node packages/sarvakshan-cli/index.js",
     "predev": "node scripts/boot-db.mjs && npx dotenv-cli -e .env.local -c -- npx prisma db push --accept-data-loss && npx prisma generate && node scripts/copy-cesium.mjs && node scripts/sync-local-plugins.mjs",
     "copy-cesium": "node scripts/copy-cesium.mjs",
     "prebuild": "node scripts/check-build-env.mjs",

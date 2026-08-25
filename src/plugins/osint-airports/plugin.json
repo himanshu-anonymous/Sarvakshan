@@ -1,0 +1,15 @@
+{
+  "id": "osint-airports",
+  "name": "AIRPORTS",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Global airport infrastructure and metadata.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

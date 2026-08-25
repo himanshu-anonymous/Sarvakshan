@@ -1,1 +1,0 @@
-C:/dev/Sarvakshan/agents.md

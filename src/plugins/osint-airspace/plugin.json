@@ -1,0 +1,15 @@
+{
+  "id": "osint-airspace",
+  "name": "AIRSPACE",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "No-fly/restricted airspace overlays.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

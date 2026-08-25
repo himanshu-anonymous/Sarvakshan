@@ -1,0 +1,24 @@
+{
+  "name": "sarvakshan-cli",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@inquirer/prompts": "^8.6.0",
+    "axios": "^1.19.0",
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.11.0",
+    "boxen": "^8.0.1",
+    "chalk": "^4.1.2",
+    "cli-table3": "^0.6.5",
+    "picture-tube": "^1.0.0",
+    "terminal-image": "^5.0.1"
+  }
+}

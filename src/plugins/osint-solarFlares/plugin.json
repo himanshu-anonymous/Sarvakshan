@@ -1,0 +1,15 @@
+{
+  "id": "osint-solarFlares",
+  "name": "SOLAR FLARES",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Recent solar flare activity from SWPC feeds.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

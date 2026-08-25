@@ -1,0 +1,15 @@
+{
+  "id": "osint-maritime",
+  "name": "MARITIME",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Global port network + live AIS vessel tracking.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

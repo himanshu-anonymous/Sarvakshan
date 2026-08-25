@@ -1,0 +1,15 @@
+{
+  "id": "osint-forbiddenZones",
+  "name": "NO-GO ZONES",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Restricted/forbidden areas and access-limited zones.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

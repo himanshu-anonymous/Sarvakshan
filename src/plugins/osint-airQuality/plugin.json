@@ -1,0 +1,15 @@
+{
+  "id": "osint-airQuality",
+  "name": "AIR QUALITY",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Air quality indicators (AQI, PM2.5, ozone).",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "osint-disasters",
+  "name": "DISASTERS",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Global disaster incidents and alerts.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

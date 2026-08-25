@@ -1,0 +1,15 @@
+{
+  "id": "osint-conflicts",
+  "name": "CONFLICTS",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Open-source conflict and unrest event signals.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

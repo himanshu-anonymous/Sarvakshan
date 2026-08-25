@@ -1,0 +1,15 @@
+{
+  "id": "osint-powerGrid",
+  "name": "POWER GRID",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Real-time outage intelligence + global power infrastructure.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

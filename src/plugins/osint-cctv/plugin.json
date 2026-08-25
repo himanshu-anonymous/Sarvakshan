@@ -1,0 +1,15 @@
+{
+  "id": "osint-cctv",
+  "name": "CCTV",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Public live camera feeds and refresh streams.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

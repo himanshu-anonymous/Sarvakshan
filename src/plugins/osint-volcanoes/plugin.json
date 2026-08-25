@@ -1,0 +1,15 @@
+{
+  "id": "osint-volcanoes",
+  "name": "VOLCANOES",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Volcanic activity and monitoring notices.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

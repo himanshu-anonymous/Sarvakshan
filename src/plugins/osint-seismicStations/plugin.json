@@ -1,0 +1,15 @@
+{
+  "id": "osint-seismicStations",
+  "name": "SEIS STATIONS",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Seismometer station network locations.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

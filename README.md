@@ -1,12 +1,15 @@
-<div align="center">
+# Sarvakshan OSINT Command Center
 
-<!-- Generated: 2026-04-23 06:11:00 UTC -->
-# Sarvakshan
+Sarvakshan is an advanced, terminal-based visual dashboard for gathering and displaying live Open-Source Intelligence (OSINT). It processes external data sources, normalizes them, and renders them directly inside your CLI.
 
-**The Open-Source, Plugin-Driven Geospatial Intelligence Engine**
-*Founders & Developers: Aditya and Mankshu | Project Started: 16 May*
+## Features
 
-*A modular situational awareness platform designed to ingest live data streams and render them as interactive, cinematic layers on a high-fidelity CesiumJS 3D globe.*
+- **Global Intel Map**: Real-time plotting of data points (events, aircraft, cameras) on an interactive ASCII world map.
+- **Coordinate Scatter**: Real-time geospatial mathematical distribution plotting.
+- **Media Feed Processor**: The terminal engine integrates `terminal-image` to download CCTV or photographic intelligence and renders it inline inside the CLI as high-resolution ANSI pixels.
+- **Aircraft Tracking & Parsing**: Dedicated parsers for ADS-B Live and OpenSky Network APIs to plot live, dynamic flight coordinates.
+- **Dynamic Logging System**: An integrated error-tracking system for all background API health-check operations.
+- **Human-Readable Formats**: All APIs are normalized from JSON/CSV blobs to simple table headers.
 
 [![CI Build](https://github.com/Aditya and Mankshu/Sarvakshan/actions/workflows/ci.yml/badge.svg)](https://github.com/Aditya and Mankshu/Sarvakshan/actions/workflows/ci.yml)
 [![Codecov](https://img.shields.io/codecov/c/github/Aditya and Mankshu/Sarvakshan.svg)](https://codecov.io/gh/Aditya and Mankshu/Sarvakshan)
@@ -20,156 +23,37 @@
 [![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?logo=docker)](https://www.docker.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
-</div>
 
----
+## Installation & Setup
 
-Sarvakshan is a real-time geospatial engine visualizing live global data on an interactive 3D globe. Utilizing a dynamic "All-Bundle" plugin architecture, independent data sources—like live aircraft, maritime vessels, or conflict events—are ingested and rendered decoupled from the core 3D viewer.
+1. Install all dependencies across the monorepo:
+   ```bash
+   pnpm install
+   ```
 
-## Key Features
+2. Boot the API backend server:
+   ```bash
+   pnpm run dev
+   ```
 
-- **"All-Bundle" Plugin Architecture**: Ingest any data source dynamically without touching the core platform.
-- **High-Fidelity 3D Rendering**: Google Photorealistic 3D Tiles and LOD modeling powered by CesiumJS.
-- **Real-Time Data Pipeline**: High-frequency WebSocket updates managed by a custom `DataBus`.
-- **Advanced Entity Management**: Automatic horizon culling, chunked primitive rendering, and 3D stacking/spiderification.
-- **Marketplace Integration**: Download and sync new plugins directly from the UI.
+3. Open a second terminal window and boot the Command Center:
+   ```bash
+   pnpm run terminal
+   ```
 
-## Core Technologies
+## Key Bindings (Dashboard)
 
-- **Frontend:** Next.js 16 (App Router), React 19, TypeScript 5
-- **3D Engine:** CesiumJS + Resium (Google Photorealistic 3D Tiles)
-- **State Management:** Zustand
-- **Event Bus:** Custom typed `DataBus` for high-frequency WebSocket updates
-- **Database:** PostgreSQL via Prisma 7
-- **Deployment:** Docker multi-stage build, Coolify
+- **[d]** - Select active OSINT Dataset
+- **[T]** - Focus Main Data Table (use Up/Down arrows and Enter)
+- **[e]** - Toggle detailed Error Logs Modal
+- **[r]** - Force refresh current dataset
+- **[Enter]** - (When focused on Data Table) Executes row action:
+  - If CCTV/Image: Fetches media and renders to Media Processor.
+  - If Aviation/Military: Triggers vector projection simulation.
+- **[q] / [Esc]** - Quit or close open modal.
 
-## Project Architecture
+## Architecture
 
-Sarvakshan separates the data acquisition layer from the frontend rendering loop, using a real-time event bus to bridge them.
+The stack relies on a **Next.js 15+ App Router** as an API proxy (`src/app/api/osint/[feed]/route.ts`) to avoid CORS, enforce caching, and parse disparate data formats (CSV, GeoJSON, standard JSON arrays, OpenSky Arrays).
 
-```mermaid
-flowchart TD
-    subgraph Data Sources
-    A[Public APIs] -->|Poll| B[Data Engine Seeders]
-    C[Microservices] -->|Stream| B
-    end
-
-    subgraph Frontend Pipeline
-    B -->|WebSocket /stream| D[DataBus & WsClient]
-    D -->|Hydrate| E[Zustand Store]
-    E -->|Memoized Entities| F[Entity Renderer]
-    F -->|Primitives| G[CesiumJS Globe]
-    end
-
-    subgraph Plugins
-    H[Plugin Registry] -->|Load| I[Dynamic Import CDNs]
-    end
-    
-    H -.-> D
-```
-
-## Prerequisites
-
-Before running the application, ensure you have the following installed:
-- [Node.js](https://nodejs.org/) (v18+)
-- [pnpm](https://pnpm.io/) (v9+)
-- [Docker](https://www.docker.com/) (for self-hosting or full local dev)
-- PostgreSQL (or rely on the `coolify-db` / local compose container)
-
-## Quick Start (Self-Hosting)
-
-Sarvakshan uses a multi-stage Dockerfile designed for standalone output. To deploy instantly on your own server:
-
-**Mac/Linux:**
-```bash
-mkdir Sarvakshan && cd Sarvakshan
-curl -fsSL https://raw.githubusercontent.com/Aditya and Mankshu/Sarvakshan/main/setup.sh | bash
-```
-
-**Windows (PowerShell):**
-```powershell
-mkdir Sarvakshan; cd Sarvakshan
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/Aditya and Mankshu/Sarvakshan/main/setup.ps1 -UseBasicParsing | Invoke-Expression
-```
-
-> [!NOTE]
-> Ensure you connect a PostgreSQL database via the `DATABASE_URL` environment variable for production deployments.
-
-## Quick Start (Local Development)
-
-To run the source code locally for contributing or developing:
-
-```bash
-git clone https://github.com/Aditya and Mankshu/Sarvakshan.git
-cd Sarvakshan
-pnpm install
-pnpm run setup   # generates .env.local with AUTH_SECRET
-pnpm run dev:all # boots the UI, cache layers, and the data engine
-```
-Visit `http://localhost:3000` to see the live globe.
-
-## Project Structure
-
-The codebase utilizes a `pnpm` monorepo configuration:
-
-```text
-Sarvakshan/
-├── src/                  # Core frontend app
-│   ├── app/              # Next.js App Router (pages, API routes)
-│   ├── components/       # Shared UI, Globe panels, and 3D layouts
-│   ├── core/             # DataBus, Polling, PluginManager, Store
-│   └── plugins/          # Built-in plugins and registry logic
-├── packages/             # Monorepo packages
-│   ├── wwv-plugin-sdk/   # SDK interfaces and manifest schemas
-│   └── wwv-plugin-*/     # Individual plugins & their backends
-├── prisma/               # Database schemas & migrations
-└── .agents/              # Agent rules, workflows, and documentation
-```
-
-## Plugin Ecosystem
-
-Sarvakshan operates on an open-core philosophy. The platform itself is data-agnostic; all data sources are dynamically imported as plugins at runtime.
-
-- **[Plugin Quickstart Guide](docs/plugin-quickstart.md)**: Learn how to scaffold and link your first plugin using the `@Sarvakshan/cli`.
-- **[Advanced Plugin Guide](docs/plugin-advanced.md)**: Deep dive into microservice data seeders, WebSockets, complex 3D rendering, and Marketplace publishing.
-
-## Repository Ecosystem
-
-Sarvakshan is distributed across several specialized repositories:
-
-1. **`Sarvakshan`** (This Repo): Main frontend, CesiumJS rendering engine, and core plugin framework.
-2. **`wwv-data-engine`**: Open-source community data backend for polling public APIs.
-3. **`Sarvakshan-plugins`**: First-party maintained plugins.
-4. **`Sarvakshan-marketplace`**: The web application driving the plugin directory.
-5. **`Sarvakshan-web`**: Marketing and landing site.
-
-## Development & Workflow
-
-- **Branching & Commits:** We strictly enforce [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `refactor:`). Every commit should utilize our semantic versioning `[/commit]` workflow.
-- **Coding Standards:** We emphasize vanilla CSS (no Tailwind), strict TypeScript 5, and file modularity (max 150 lines per file).
-- **Testing:** We use Vitest with `jsdom`. All new core logic should be accompanied by tests, running via `pnpm test`.
-
-See [Docs: Development](docs/development.md) and [Docs: Testing](docs/testing.md) for more details.
-
-## Contributing
-
-We welcome community contributions! Please review our coding standards and PR processes before submitting code. For detailed instructions on local development and setting up your environment, see our [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Documentation Index
-
-Explore our comprehensive documentation suite for detailed engineering insights:
-
-- **[Project Overview](docs/project-overview.md)**: High-level value proposition and technology stack.
-- **[Architecture](docs/architecture.md)**: DataBus event stream and Zustand state management.
-- **[Build System](docs/build-system.md)**: Monorepo structure, Next.js standalone output, and Docker builds.
-- **[Development](docs/development.md)**: Coding conventions and common implementation patterns.
-- **[Testing](docs/testing.md)**: Vitest setup and coverage targets.
-- **[Deployment](docs/deployment.md)**: Coolify integration and persistent volumes.
-- **[Files Catalog](docs/files.md)**: Comprehensive mapping of core source files.
-
-> [!IMPORTANT]
-> **Fair-Use Notice:** This application may contain copyrighted material the use of which has not always been specifically authorized by the copyright owner. Such material is made available for educational purposes, situational awareness, and to advance understanding of global events under "fair use" (Section 107 of the US Copyright Law).
+The front-end Terminal UI (`packages/sarvakshan-cli/index.js`) is constructed using `blessed`, `blessed-contrib`, and `terminal-image`.

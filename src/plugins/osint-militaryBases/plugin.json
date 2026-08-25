@@ -1,0 +1,15 @@
+{
+  "id": "osint-militaryBases",
+  "name": "MIL BASES",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Public military installation locations.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "osint-weather",
+  "name": "WEATHER",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Global sampled weather field with alert merge.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

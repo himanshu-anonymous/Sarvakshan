@@ -1,0 +1,15 @@
+{
+  "id": "osint-seismic",
+  "name": "SEISMIC",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "Recent earthquake events with magnitude/depth.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}

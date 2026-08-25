@@ -1,0 +1,15 @@
+{
+  "id": "osint-aviationHazards",
+  "name": "AIR HAZARDS",
+  "version": "1.0.0",
+  "publisher": "sarvakshan",
+  "description": "AIRMET/SIGMET polygons and aviation weather hazards.",
+  "category": "intelligence",
+  "format": "static",
+  "capabilities": [
+    "data-source"
+  ],
+  "requires": {
+    "envVars": []
+  }
+}
