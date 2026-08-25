@@ -2,58 +2,104 @@
 
 Sarvakshan is an advanced, terminal-based visual dashboard for gathering and displaying live Open-Source Intelligence (OSINT). It processes external data sources, normalizes them, and renders them directly inside your CLI.
 
-## Features
+<div align="center">
+  <h1>🌐 Sarvakshan OSINT Command Center</h1>
+  <p>An advanced, high-performance terminal dashboard for gathering, visualizing, and analyzing live Open-Source Intelligence.</p>
+</div>
 
-- **Global Intel Map**: Real-time plotting of data points (events, aircraft, cameras) on an interactive ASCII world map.
-- **Coordinate Scatter**: Real-time geospatial mathematical distribution plotting.
-- **Media Feed Processor**: The terminal engine integrates `terminal-image` to download CCTV or photographic intelligence and renders it inline inside the CLI as high-resolution ANSI pixels.
-- **Aircraft Tracking & Parsing**: Dedicated parsers for ADS-B Live and OpenSky Network APIs to plot live, dynamic flight coordinates.
-- **Dynamic Logging System**: An integrated error-tracking system for all background API health-check operations.
-- **Human-Readable Formats**: All APIs are normalized from JSON/CSV blobs to simple table headers.
+![Dashboard Overview](docs/assets/dashboard_overview.png)
+*(Placeholder: Add a screenshot of the main CLI dashboard here)*
 
-[![CI Build](https://github.com/Aditya and Mankshu/Sarvakshan/actions/workflows/ci.yml/badge.svg)](https://github.com/Aditya and Mankshu/Sarvakshan/actions/workflows/ci.yml)
-[![Codecov](https://img.shields.io/codecov/c/github/Aditya and Mankshu/Sarvakshan.svg)](https://codecov.io/gh/Aditya and Mankshu/Sarvakshan)
-[![NPM Version](https://img.shields.io/npm/v/@Sarvakshan/wwv-plugin-sdk.svg)](https://www.npmjs.com/package/@Sarvakshan/wwv-plugin-sdk)
-[![GitHub Release](https://img.shields.io/github/v/release/Aditya and Mankshu/Sarvakshan?sort=semver)](https://github.com/Aditya and Mankshu/Sarvakshan/releases)
-[![Contributors](https://img.shields.io/github/contributors/Aditya and Mankshu/Sarvakshan.svg)](https://github.com/Aditya and Mankshu/Sarvakshan/graphs/contributors)
-<br>
-[![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
-[![CesiumJS](https://img.shields.io/badge/Cesium-JS-4272D0)](https://cesium.com/)
-[![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-[![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?logo=docker)](https://www.docker.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
+---
 
-## Installation & Setup
+## 📖 Table of Contents
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [Installation & Quickstart](#-installation--quickstart)
+- [Dashboard Controls](#-dashboard-controls)
+- [Data Sources & APIs](#-data-sources--apis)
+- [Architecture](#-architecture)
 
-1. Install all dependencies across the monorepo:
-   ```bash
-   pnpm install
-   ```
+---
 
-2. Boot the API backend server:
-   ```bash
-   pnpm run dev
-   ```
+## 🎯 Overview
 
-3. Open a second terminal window and boot the Command Center:
-   ```bash
-   pnpm run terminal
-   ```
+Sarvakshan bypasses standard web interfaces, dropping you directly into a hacker-style Terminal User Interface (TUI). It acts as a massive data aggregator, pulling in live intelligence from dozens of global APIs including NASA, USGS, aviation networks, and international traffic camera systems.
 
-## Key Bindings (Dashboard)
+---
 
-- **[d]** - Select active OSINT Dataset
-- **[T]** - Focus Main Data Table (use Up/Down arrows and Enter)
-- **[e]** - Toggle detailed Error Logs Modal
-- **[r]** - Force refresh current dataset
-- **[Enter]** - (When focused on Data Table) Executes row action:
-  - If CCTV/Image: Fetches media and renders to Media Processor.
-  - If Aviation/Military: Triggers vector projection simulation.
-- **[q] / [Esc]** - Quit or close open modal.
+## ✨ Key Features
 
-## Architecture
+1. **Global Intel Map (ASCII Geo-Spatial Projection)**
+   - Real-time plotting of earthquakes, military bases, and aircraft directly onto an interactive ASCII terminal map.
+   
+2. **Terminal Media Processor**
+   - Integrates `terminal-image` to download CCTV traffic feeds or photographic intelligence and mathematically converts the pixel buffers into high-resolution ANSI blocks rendered inline.
+   
+   ![Media Processor Example](docs/assets/media_processor.png)
+   *(Placeholder: Add a screenshot of an ANSI image rendering in the terminal)*
 
-The stack relies on a **Next.js 15+ App Router** as an API proxy (`src/app/api/osint/[feed]/route.ts`) to avoid CORS, enforce caching, and parse disparate data formats (CSV, GeoJSON, standard JSON arrays, OpenSky Arrays).
+3. **Coordinate Scatter Analytics**
+   - Plots the geographical dispersion (Longitude vs Latitude) of active data points using an integrated `blessed-contrib` line chart engine.
+   
+4. **Dedicated Aviation Parsing**
+   - Advanced nested-array parsers capable of unpacking live `ADS-B Exchange` and `OpenSky Network` flight vectors on the fly.
 
-The front-end Terminal UI (`packages/sarvakshan-cli/index.js`) is constructed using `blessed`, `blessed-contrib`, and `terminal-image`.
+5. **Integrated Background Diagnostics**
+   - An isolated system log viewer (`Puffin Log Viewer`) that intercepts `console` output to report real-time API health checks, rendering errors, and polling events.
+
+---
+
+## 🚀 Installation & Quickstart
+
+Sarvakshan is designed as a monorepo. The backend operates on Next.js, while the frontend CLI runs purely on Node.js.
+
+```bash
+# 1. Install all monorepo dependencies
+pnpm install
+
+# 2. Boot the API Proxy Server (Required to bypass CORS and normalize payloads)
+pnpm run dev
+
+# 3. Open a second terminal window and launch the OSINT Command Center
+pnpm run terminal
+```
+
+---
+
+## 🎮 Dashboard Controls
+
+The dashboard is completely keyboard-driven:
+
+| Key Binding | Action |
+|-------------|--------|
+| **`d`** | Opens the **Dataset Selection Modal** to switch OSINT feeds. |
+| **`T`** | Forces focus onto the **Main Data Table** (use Up/Down arrows to navigate). |
+| **`Enter`** | Executes the selected row. Automatically triggers CCTV image rendering or plots flight path vector simulations. |
+| **`e`** | Opens the **Detailed Error Logs** modal. Press `Enter` on any log to view the full stack trace. |
+| **`r`** | Forces an immediate manual refresh/polling of the active feed. |
+| **`q`** / **`Esc`** | Safely exits the active modal or shuts down the Command Center. |
+
+---
+
+## 📡 Data Sources & APIs
+
+The system automatically scans `src/lib/godseye/constants/dataSources.ts` on boot to dynamically load supported APIs. Feed examples include:
+- **USGS Earthquakes (24h)**
+- **NASA FIRMS Fire Hotspots**
+- **Global Airplanes (ADS-B)**
+- **OpenSky Network Flights**
+- **London TfL & Ontario 511 Cameras**
+- **Smithsonian Volcanoes**
+
+---
+
+## 🏗 Architecture
+
+The stack is composed of two primary layers:
+
+1. **The API Proxy Layer (`src/app/api/osint/[feed]/route.ts`)**
+   - Next.js 15+ App Router endpoints that safely fetch payloads on behalf of the CLI. Prevents terminal blocking and resolves external API timeout issues via rapid `HEAD` checks.
+
+2. **The Terminal Engine (`packages/sarvakshan-cli/index.js`)**
+   - Built on `blessed` and `blessed-contrib`. Dynamically switches parsing algorithms (CSV vs GeoJSON vs OpenSky Arrays) based on the payload signature.
