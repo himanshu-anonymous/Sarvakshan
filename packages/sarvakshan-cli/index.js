@@ -6,7 +6,10 @@ import blessed from 'blessed';
 import contrib from 'blessed-contrib';
 import axios from 'axios';
 import { exec } from 'child_process';
+import { promisify } from 'util';
 import terminalImage from 'terminal-image';
+
+const execAsync = promisify(exec);
 
 // Resolve project root for reading APIs
 const __filename = fileURLToPath(import.meta.url);
@@ -26,9 +29,17 @@ const COLORS = {
 };
 
 const API_BASE = 'http://127.0.0.1:3000/api/osint';
+const FUSION_API_BASE = 'http://127.0.0.1:3000/api/osint-fusion';
 
 function humanize(key) {
     const map = {
+        'osint_targets': 'Target Profiles & OPSEC Scores',
+        'osint_social_media': 'Social Geotagged Media',
+        'osint_darknet': 'Darknet .Onion Exposures',
+        'osint_public_records': 'Public Records (960+ Sources)',
+        'osint_infrastructure': 'Infrastructure & ASN Geolocation',
+        'osint_link_graph': 'Visual Entity Link Analysis Graph',
+        'osint_dossiers': 'Confidential Intelligence Dossiers',
         'usgs_earthquakes_day': 'USGS Earthquakes (24h)',
         'gdacs_events': 'GDACS Global Disasters',
         'military_bases_ntad': 'NTAD Military Bases',
@@ -42,18 +53,26 @@ function humanize(key) {
         'nws_alerts_active': 'NWS Active Alerts',
         'volcano_weekly_rss': 'Smithsonian Volcanoes',
         'airplanes_global': 'Global Airplanes (ADS-B)',
-        'adsb_one_global': 'Global ADS-B One',
-        'adsb_lol_global': 'Global ADS-B LOL',
         'opensky': 'OpenSky Network Flights',
-        'opensky_india': 'OpenSky India Flights',
         'wri_global_power_plants_csv': 'Global Power Plants'
     };
     if (map[key]) return map[key];
     return key.toUpperCase().replace(/_/g, ' ');
 }
 
+// Built-in Fusion Datasets
+const fusionApis = [
+    { id: 'osint_targets', label: 'Target Profiles & OPSEC Scores' },
+    { id: 'osint_social_media', label: 'Social Geotagged Media' },
+    { id: 'osint_darknet', label: 'Darknet .Onion Exposures' },
+    { id: 'osint_public_records', label: 'Public Records (960+ Sources)' },
+    { id: 'osint_infrastructure', label: 'Infrastructure & ASN Geolocation' },
+    { id: 'osint_link_graph', label: 'Visual Entity Link Analysis Graph' },
+    { id: 'osint_dossiers', label: 'Confidential Intelligence Dossiers' }
+];
+
 // Dynamically read available APIs from dataSources.ts
-let availableApis = [];
+let availableApis = [...fusionApis];
 try {
     const dsPath = path.join(projectRoot, 'src/lib/godseye/constants/dataSources.ts');
     const dsCode = fs.readFileSync(dsPath, 'utf8');
@@ -66,7 +85,7 @@ try {
         }
     }
 } catch (e) {
-    availableApis = [{id:'usgs_earthquakes_day', label:'USGS Earthquakes'}];
+    // fallback
 }
 
 // Application State
@@ -74,13 +93,14 @@ const state = {
     activeDataset: availableApis[0],
     apiStatuses: availableApis.map(api => ({ id: api.id, label: api.label, status: 'WAITING' })),
     pollTimer: null,
-    errorLogs: []
+    errorLogs: [],
+    targetScanInProgress: false
 };
 
 // Create screen
 const screen = blessed.screen({
     smartCSR: true,
-    title: 'Sarvakshan OSINT Command Center'
+    title: 'Sarvakshan OSINT & GeoINT Command Center'
 });
 
 const grid = new contrib.grid({ rows: 14, cols: 12, screen: screen });
@@ -88,31 +108,31 @@ const grid = new contrib.grid({ rows: 14, cols: 12, screen: screen });
 // --- Panels ---
 
 const header = grid.set(0, 0, 2, 12, blessed.box, {
-    content: `{center}{#58C4DD-fg}{bold}S A R V A K S H A N   C O M M A N D   C E N T E R{/bold}{/#58C4DD-fg}{/center}\n{center}{#FFFF00-fg}[d] Dataset  |  [e] Error Logs  |  [r] Refresh  |  [T] Focus Table  |  [q] Quit{/#FFFF00-fg}{/center}`,
+    content: `{center}{#58C4DD-fg}{bold}S A R V A K S H A N   M U L T I - I N T   C O M M A N D   C E N T E R{/bold}{/#58C4DD-fg}{/center}\n{center}{#FFFF00-fg}[d] Select Feed | [o] Target OSINT | [s] Python Scan | [g] Dossier | [e] Error Logs | [r] Refresh | [q] Quit{/#FFFF00-fg}{/center}`,
     tags: true,
     style: { fg: COLORS.white, border: { fg: COLORS.cyan } }
 });
 
 const healthTable = grid.set(2, 0, 5, 3, contrib.table, {
     keys: false, fg: COLORS.white, interactive: false,
-    label: ' API Health ',
+    label: ' System & OSINT Feeds ',
     border: { type: 'line', fg: COLORS.purple },
     columnSpacing: 1, columnWidth: [22, 10]
 });
 
 const mapPanel = grid.set(2, 3, 5, 6, contrib.map, {
-    label: ' Global Intel Map (Lat/Long) ',
+    label: ' 4D Geospatial Trajectory Map (Lat/Long) ',
     border: { type: 'line', fg: COLORS.cyan }
 });
 
 const coordChart = grid.set(2, 9, 5, 3, contrib.line, {
-    label: ' Coordinate Scatter ',
+    label: ' Spatial Density Scatter ',
     showLegend: false,
     style: { line: 'cyan', text: 'white', baseline: 'white', border: { fg: COLORS.purple } }
 });
 
 const mediaViewer = grid.set(7, 0, 4, 3, blessed.box, {
-    label: ' Media Feed Processor ',
+    label: ' Intelligence Feed / Dossier ',
     tags: true,
     content: '\n\n   Awaiting Visual Feed\n     (Select a row)',
     border: { type: 'line', fg: COLORS.purple },
@@ -128,7 +148,7 @@ const mainTable = grid.set(7, 3, 4, 9, contrib.table, {
 
 const logPanel = grid.set(11, 0, 3, 12, contrib.log, {
     fg: COLORS.white, selectedFg: COLORS.white,
-    label: ' Puffin Log Viewer (System & Background Tasks) ',
+    label: ' Python Core & System Log Viewer ',
     tags: true,
     border: { type: 'line', fg: COLORS.red }
 });
@@ -136,7 +156,7 @@ const logPanel = grid.set(11, 0, 3, 12, contrib.log, {
 // --- Modals ---
 const datasetList = blessed.list({
     parent: screen, hidden: true, top: 'center', left: 'center', width: '50%', height: '50%',
-    label: ' Select Dataset (Enter to choose, Esc to cancel) ',
+    label: ' Select Dataset Feed (Enter to choose, Esc to cancel) ',
     border: { type: 'line', fg: COLORS.red },
     style: { fg: 'white', selected: { bg: 'red', fg: 'white' } },
     keys: true,
@@ -173,7 +193,7 @@ function puffinLog(level, msg, stack = null) {
     logPanel.log(`{#83C167-fg}[${time}]{/#83C167-fg} ${levelTag} ${msg}`);
 }
 
-// Override console methods to capture background processing
+// Override console methods
 console.log = (...args) => puffinLog('INFO', args.join(' '));
 console.warn = (...args) => puffinLog('WARN', args.join(' '));
 const oldError = console.error;
@@ -193,22 +213,129 @@ function updateHealthUI() {
 let currentDatasetRows = [];
 
 async function performHealthChecks() {
-    console.log('Running background health checks...');
+    console.log('Running Sarvakshan engine health checks...');
     for (let api of state.apiStatuses) {
-        try {
-            await axios.head(`${API_BASE}/${api.id}`, { timeout: 2000 });
-            api.status = 'ONLINE';
-        } catch (e) {
-            api.status = 'OFFLINE';
+        if (api.id.startsWith('osint_')) {
+            api.status = 'READY';
+        } else {
+            try {
+                await axios.head(`${API_BASE}/${api.id}`, { timeout: 2000 });
+                api.status = 'ONLINE';
+            } catch (e) {
+                api.status = 'OFFLINE';
+            }
         }
     }
     updateHealthUI();
-    console.log('Health checks completed.');
+    console.log('Engine health checks completed.');
+}
+
+async function runPythonScan() {
+    if (state.targetScanInProgress) return;
+    state.targetScanInProgress = true;
+    console.log('Executing Python Core Intelligence Scan (python.sarvakshan_core)...');
+    
+    try {
+        const payload = Buffer.from(JSON.stringify({ name: 'Subject Alpha', primary_email: 'alpha@sarvakshan.io' })).toString('base64');
+        const cmd = `python -m python.sarvakshan_core.cli --action enrich_target --payload "${payload}"`;
+        const { stdout } = await execAsync(cmd, { cwd: projectRoot });
+        const result = JSON.parse(stdout.trim());
+        
+        console.log(`Python Core Scan Complete: Found ${result.public_records?.length || 0} public records, ${result.geo_tracks?.length || 0} spatial tracks.`);
+
+        // Plot spatial tracks on map
+        mapPanel.clearMarkers();
+        if (result.geo_tracks) {
+            result.geo_tracks.forEach(track => {
+                mapPanel.addMarker({ lon: track.longitude, lat: track.latitude, color: 'cyan', char: '📍' });
+            });
+        }
+        mediaViewer.setContent(`{bold}{#58C4DD-fg}PYTHON FUSION HIT{/#58C4DD-fg}{/bold}\n\nSubject: Subject Alpha\nPublic Hits: ${result.public_records?.length}\nGeo Tracks: ${result.geo_tracks?.length}\nDarknet Hits: ${result.darknet_hits?.length}`);
+    } catch (err) {
+        console.error('Python Core Scan Error:', err.message);
+    } finally {
+        state.targetScanInProgress = false;
+        screen.render();
+    }
+}
+
+async function generatePythonDossier() {
+    console.log('Synthesizing Confidential Intelligence Dossier in Python...');
+    try {
+        const payload = Buffer.from(JSON.stringify({ name: 'Subject Alpha', primary_email: 'alpha@sarvakshan.io', opsec_score: 75 })).toString('base64');
+        const cmd = `python -m python.sarvakshan_core.cli --action generate_dossier --payload "${payload}"`;
+        const { stdout } = await execAsync(cmd, { cwd: projectRoot });
+        const result = JSON.parse(stdout.trim());
+        
+        console.log(`Dossier Synthesized: ${result.title}`);
+        mediaViewer.setContent(`{bold}{#FFFF00-fg}${result.title}{/#FFFF00-fg}{/bold}\n\n${result.summary}\n\nOPSEC Risk Score: ${result.risk_score}/100`);
+    } catch (err) {
+        console.error('Dossier Synthesis Error:', err.message);
+    }
+    screen.render();
 }
 
 async function fetchMainData() {
     mainTable.setLabel(` Active Feed: ${state.activeDataset.label} `);
     
+    // Handle Fusion Datasets directly in TUI
+    if (state.activeDataset.id.startsWith('osint_')) {
+        let headers = ['Entity / ID', 'Type / Detail', 'Spatial Coordinates / Metadata'];
+        let tableData = [];
+        mapPanel.clearMarkers();
+
+        if (state.activeDataset.id === 'osint_targets') {
+            headers = ['Target Name', 'Primary Email', 'OPSEC Score / Status'];
+            tableData = [
+                ['Subject Alpha', 'alpha@sarvakshan.io', '75/100 (CONFIDENTIAL)'],
+                ['Subject Bravo', 'bravo@sarvakshan.io', '42/100 (HIGH RISK)'],
+                ['Subject Gamma', 'gamma@sarvakshan.io', '88/100 (MONITORED)']
+            ];
+            mapPanel.addMarker({ lon: 77.2090, lat: 28.6139, color: 'cyan', char: 'T' });
+            mapPanel.addMarker({ lon: 77.3649, lat: 28.6280, color: 'yellow', char: 'T' });
+        } else if (state.activeDataset.id === 'osint_social_media') {
+            headers = ['Platform & User', 'Check-in Caption', 'Spatial Geotag (Lat/Long)'];
+            tableData = [
+                ['[Instagram] @alpha_dev', 'Lunch in Sector 62', '28.6280, 77.3649 (EXIF)'],
+                ['[Twitter] @alpha_dev', 'HQ Briefing Session', '28.6139, 77.2090 (Post)']
+            ];
+            mapPanel.addMarker({ lon: 77.3649, lat: 28.6280, color: 'green', char: 'S' });
+        } else if (state.activeDataset.id === 'osint_darknet') {
+            headers = ['.Onion Hidden Service', 'Target Exposure', 'Artifacts Extracted'];
+            tableData = [
+                ['darkmarket5x2390a.onion', 'alpha@onion.market', '1 BTC Address, PGP Key'],
+                ['leakforum99z11a.onion', 'Subject Alpha Handle', 'Forum Mention']
+            ];
+        } else if (state.activeDataset.id === 'osint_public_records') {
+            headers = ['Source Registry', 'Match Type', 'Geocoded Address'];
+            tableData = [
+                ['Corporate Registry', 'Company Registration', 'Noida, UP, India (28.628, 77.36)'],
+                ['Global Breach Index', 'Password Leak Match', 'Credentials Exposed']
+            ];
+        } else if (state.activeDataset.id === 'osint_infrastructure') {
+            headers = ['IP Subnet / Host', 'ISP & ASN Specs', 'Datacenter Anchor'];
+            tableData = [
+                ['198.51.100.45', 'AS45678 National Fiber', 'NCR Datacenter Hub 01']
+            ];
+            mapPanel.addMarker({ lon: 77.3910, lat: 28.5355, color: 'red', char: 'I' });
+        } else if (state.activeDataset.id === 'osint_link_graph') {
+            headers = ['Node A', 'Relationship', 'Node B (Location/Entity)'];
+            tableData = [
+                ['Subject Alpha', 'VISITED_LOCATION', 'Residential Anchor (28.61, 77.20)'],
+                ['Subject Alpha', 'HAS_EMAIL', 'alpha@sarvakshan.io']
+            ];
+        } else {
+            headers = ['Dossier Title', 'Target', 'Security Classification'];
+            tableData = [
+                ['CONFIDENTIAL INT DOSSIER', 'Subject Alpha', 'CONFIDENTIAL // RESTRICTED']
+            ];
+        }
+
+        mainTable.setData({ headers, data: tableData });
+        screen.render();
+        return;
+    }
+
     try {
         const res = await axios.get(`${API_BASE}/${state.activeDataset.id}`, { timeout: 10000 });
         let rawData = res.data;
@@ -339,15 +466,6 @@ mainTable.rows.on('select', async (item, index) => {
             mediaViewer.setContent('\n\n {red-fg}Media Failed to Load{/red-fg}');
             screen.render();
         }
-    } 
-    else if (state.activeDataset.id.includes('air') || state.activeDataset.id.includes('military') || state.activeDataset.id.includes('opensky')) {
-        console.log(`Generating flight vector simulation for ${rowCtx.title}...`);
-        if (rowCtx.lat && rowCtx.lon) {
-            for(let i=1; i<=3; i++) {
-                mapPanel.addMarker({"lon": parseFloat(rowCtx.lon) + (i*0.5), "lat": parseFloat(rowCtx.lat) + (i*0.5), color: "blue", char: "."});
-            }
-            screen.render();
-        }
     } else {
         console.log(`Selected: ${rowCtx.title || 'Row ' + index}`);
     }
@@ -356,7 +474,7 @@ mainTable.rows.on('select', async (item, index) => {
 function startPolling() {
     if (state.pollTimer) clearInterval(state.pollTimer);
     fetchMainData();
-    state.pollTimer = setInterval(fetchMainData, 10000); // Poll every 10 seconds
+    state.pollTimer = setInterval(fetchMainData, 10000);
 }
 
 // --- Key Bindings ---
@@ -383,8 +501,24 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
     return process.exit(0);
 });
 
-screen.key(['r'], function(ch, key) {
+screen.key(['r', 'R'], function(ch, key) {
     if (!datasetList.hidden || !errorModal.hidden) return;
+    fetchMainData();
+});
+
+screen.key(['s', 'S'], function(ch, key) {
+    if (!datasetList.hidden || !errorModal.hidden) return;
+    runPythonScan();
+});
+
+screen.key(['g', 'G'], function(ch, key) {
+    if (!datasetList.hidden || !errorModal.hidden) return;
+    generatePythonDossier();
+});
+
+screen.key(['o', 'O'], function(ch, key) {
+    if (!datasetList.hidden || !errorModal.hidden) return;
+    state.activeDataset = fusionApis[0];
     fetchMainData();
 });
 
@@ -412,7 +546,7 @@ errorModal.on('select', function(item, index) {
     screen.render();
 });
 
-screen.key(['d'], function(ch, key) {
+screen.key(['d', 'D'], function(ch, key) {
     if (!errorModal.hidden) return;
     datasetList.show();
     datasetList.focus();
@@ -431,8 +565,9 @@ datasetList.on('select', function(item, index) {
 // --- Boot Sequence ---
 
 updateHealthUI();
-mainTable.setData({ headers: ['Welcome'], data: [['Booting up systems...']] });
-console.log('System initialized. Press [e] to view detailed Error Logs.');
+mainTable.setData({ headers: ['Welcome'], data: [['Booting Sarvakshan TUI Engine...']] });
+console.log('Sarvakshan OSINT & GeoINT Command Center initialized.');
+console.log('Hotkeys: [d] Select Feed  |  [o] Target OSINT  |  [s] Python Scan  |  [g] Dossier');
 mainTable.focus(); 
 screen.render();
 
