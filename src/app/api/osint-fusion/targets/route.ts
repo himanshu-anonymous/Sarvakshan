@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { runPythonCoreAction } from "@/lib/osint-fusion/pythonBridge";
+import { runApiAndFunctionPreflightCheck } from "@/lib/osint-fusion/preflightCheck";
 
 export async function GET() {
+  // Execute Pre-Flight Verification Event
+  const preflight = await runApiAndFunctionPreflightCheck("GET /api/osint-fusion/targets");
+
   try {
     const targets = await db.osintTarget.findMany({
       include: {
@@ -14,14 +18,20 @@ export async function GET() {
       },
       orderBy: { createdAt: "desc" }
     });
-    return NextResponse.json({ success: true, targets });
+    return NextResponse.json({ success: true, preflight, targets });
   } catch (error: any) {
     console.error("GET /api/osint-fusion/targets error:", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, preflight, error: error.message }, { status: 500 });
   }
 }
 
 export async function POST(req: Request) {
+  // Execute Pre-Flight Verification Event
+  const preflight = await runApiAndFunctionPreflightCheck("POST /api/osint-fusion/targets");
+  if (!preflight.checksPassed) {
+    return NextResponse.json({ success: false, preflight, error: "Pre-flight API & DB check failed" }, { status: 503 });
+  }
+
   try {
     const body = await req.json();
     const { name, aliases, primaryEmail, primaryPhone } = body;
@@ -80,9 +90,9 @@ export async function POST(req: Request) {
       }
     }
 
-    return NextResponse.json({ success: true, target, enrichment });
+    return NextResponse.json({ success: true, preflight, target, enrichment });
   } catch (error: any) {
     console.error("POST /api/osint-fusion/targets error:", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, preflight, error: error.message }, { status: 500 });
   }
 }

@@ -1,12 +1,13 @@
 """
 Sarvakshan Core Python CLI Engine
-Command line interface for executing OSINT, GeoINT, Darknet, and Dossier modules from Next.js API routes.
+Command line interface for executing OSINT, GeoINT, Darknet, and Dossier modules with Pre-flight verification.
 """
 
 import sys
 import json
 import base64
 import argparse
+from .preflight_check import verify_python_function_environment
 from .social_media_harvester import SocialMediaHarvester
 from .darknet_crawler import DarknetCrawler
 from .public_records_harvester import PublicRecordsHarvester
@@ -18,10 +19,20 @@ from .dossier_generator import DossierGenerator
 
 def main():
     parser = argparse.ArgumentParser(description="Sarvakshan Core Intelligence Engine CLI")
-    parser.add_argument("--action", required=True, choices=["enrich_target", "generate_dossier", "build_graph"])
-    parser.add_argument("--payload", required=True, help="JSON payload string or base64 encoded string")
+    parser.add_argument("--action", required=True, choices=["enrich_target", "generate_dossier", "build_graph", "preflight_check"])
+    parser.add_argument("--payload", required=False, default="{}", help="JSON payload string or base64 encoded string")
 
     args = parser.parse_args()
+
+    # Pre-Flight Function Verification Check Event
+    preflight_status = verify_python_function_environment()
+    if preflight_status["overall_status"] == "UNHEALTHY":
+        print(json.dumps({"error": "Pre-flight function verification failed", "details": preflight_status}))
+        sys.exit(1)
+
+    if args.action == "preflight_check":
+        print(json.dumps(preflight_status))
+        return
     
     payload_str = args.payload
     try:
@@ -50,6 +61,7 @@ def main():
         darknet_hit = darknet.extract_artifacts("Contact target at target@onion.market PGP key block included", "http://darknet.onion")
 
         output = {
+            "preflight_check": preflight_status,
             "public_records": records,
             "social_posts": [p.__dict__ for p in posts],
             "geo_tracks": [t.__dict__ for t in tracks],
@@ -60,11 +72,13 @@ def main():
     elif args.action == "build_graph":
         graph_engine = LinkGraphEngine()
         graph_res = graph_engine.build_target_graph(data.get("target_id", "target_01"), data)
+        graph_res["preflight_check"] = preflight_status
         print(json.dumps(graph_res))
 
     elif args.action == "generate_dossier":
         dossier_gen = DossierGenerator()
         res = dossier_gen.generate_dossier(data, {"public_records_hits": 4, "geotagged_posts": 8, "darknet_hits": 2, "datacenter_hits": 1})
+        res["preflight_check"] = preflight_status
         print(json.dumps(res))
 
 if __name__ == "__main__":

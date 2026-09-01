@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { runPythonCoreAction } from "@/lib/osint-fusion/pythonBridge";
+import { runApiAndFunctionPreflightCheck } from "@/lib/osint-fusion/preflightCheck";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  try {
-    const { id } = await params;
+  const { id } = await params;
+  const preflight = await runApiAndFunctionPreflightCheck(`GET /api/osint-fusion/targets/${id}`);
 
+  try {
     const target = await db.osintTarget.findUnique({
       where: { id },
       include: {
@@ -18,7 +20,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     });
 
     if (!target) {
-      return NextResponse.json({ success: false, error: "Target not found" }, { status: 404 });
+      return NextResponse.json({ success: false, preflight, error: "Target not found" }, { status: 404 });
     }
 
     // Generate link graph from Python engine
@@ -28,9 +30,9 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       primary_email: target.primaryEmail
     });
 
-    return NextResponse.json({ success: true, target, graph: graphData });
+    return NextResponse.json({ success: true, preflight, target, graph: graphData });
   } catch (error: any) {
     console.error("GET /api/osint-fusion/targets/[id] error:", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, preflight, error: error.message }, { status: 500 });
   }
 }
