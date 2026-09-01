@@ -115,3 +115,119 @@ model WorkspaceMember {
   @@unique([userId, workspaceId])
   @@map("workspace_members")
 }
+
+// OSINT & GeoINT Target Profiling Models
+model OsintTarget {
+  id              String                @id @default(uuid())
+  tenantId        String?
+  name            String
+  aliases         String[]              @default([])
+  primaryEmail    String?
+  primaryPhone    String?
+  opsecScore      Int                   @default(100)
+  classification  String                @default("CONFIDENTIAL")
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  records         OsintRecord[]
+  socialRecords   SocialMediaRecord[]
+  darknetRecords  DarknetOnionRecord[]
+  tracks          GeospatialTrack[]
+  linksFrom       EntityLink[]          @relation("LinkSource")
+  linksTo         EntityLink[]          @relation("LinkTarget")
+  dossiers        ConfidentialDossier[]
+
+  @@map("osint_targets")
+}
+
+model OsintRecord {
+  id          String      @id @default(uuid())
+  targetId    String
+  sourceType  String
+  sourceName  String
+  payload     String
+  confidence  Float       @default(1.0)
+  createdAt   DateTime    @default(now())
+
+  target      OsintTarget @relation(fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@map("osint_records")
+}
+
+model SocialMediaRecord {
+  id          String      @id @default(uuid())
+  targetId    String
+  platform    String
+  username    String
+  profileUrl  String?
+  postText    String?
+  mediaUrl    String?
+  latitude    Float?
+  longitude   Float?
+  exifData    String?
+  createdAt   DateTime    @default(now())
+
+  target      OsintTarget @relation(fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@map("social_media_records")
+}
+
+model DarknetOnionRecord {
+  id            String      @id @default(uuid())
+  targetId      String
+  onionUrl      String
+  pageTitle     String?
+  extractedMeta String?
+  pgpKeys       String[]    @default([])
+  cryptoAddrs   String[]    @default([])
+  createdAt     DateTime    @default(now())
+
+  target        OsintTarget @relation(fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@map("darknet_onion_records")
+}
+
+model GeospatialTrack {
+  id           String      @id @default(uuid())
+  targetId     String
+  latitude     Float
+  longitude    Float
+  altitude     Float?
+  speed        Float?
+  locationType String      @default("POINT")
+  source       String
+  timestamp    DateTime    @default(now())
+
+  target       OsintTarget @relation(fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@map("geospatial_tracks")
+}
+
+model EntityLink {
+  id           String      @id @default(uuid())
+  sourceId     String
+  targetId     String
+  relationship String
+  weight       Float       @default(1.0)
+  createdAt    DateTime    @default(now())
+
+  sourceTarget OsintTarget @relation("LinkSource", fields: [sourceId], references: [id], onDelete: Cascade)
+  destTarget   OsintTarget @relation("LinkTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@map("entity_links")
+}
+
+model ConfidentialDossier {
+  id           String      @id @default(uuid())
+  targetId     String
+  title        String
+  summary      String
+  riskScore    Int         @default(0)
+  markdown     String
+  createdAt    DateTime    @default(now())
+
+  target       OsintTarget @relation(fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@map("confidential_dossiers")
+}
+
