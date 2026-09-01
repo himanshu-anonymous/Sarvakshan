@@ -29,7 +29,7 @@ const COLORS = {
 };
 
 const API_BASE = 'http://127.0.0.1:3000/api/osint';
-const FUSION_API_BASE = 'http://127.0.0.1:3000/api/osint-fusion';
+const FUSION_WEB_BASE = 'http://localhost:3000/osint-fusion';
 
 function humanize(key) {
     const map = {
@@ -94,7 +94,9 @@ const state = {
     apiStatuses: availableApis.map(api => ({ id: api.id, label: api.label, status: 'WAITING' })),
     pollTimer: null,
     errorLogs: [],
-    targetScanInProgress: false
+    targetScanInProgress: false,
+    activeTargetId: 'target_01',
+    activeIp: '198.51.100.45'
 };
 
 // Create screen
@@ -108,7 +110,7 @@ const grid = new contrib.grid({ rows: 14, cols: 12, screen: screen });
 // --- Panels ---
 
 const header = grid.set(0, 0, 2, 12, blessed.box, {
-    content: `{center}{#58C4DD-fg}{bold}S A R V A K S H A N   M U L T I - I N T   C O M M A N D   C E N T E R{/bold}{/#58C4DD-fg}{/center}\n{center}{#FFFF00-fg}[d] Select Feed | [o] Target OSINT | [s] Python Scan | [g] Dossier | [e] Error Logs | [r] Refresh | [q] Quit{/#FFFF00-fg}{/center}`,
+    content: `{center}{#58C4DD-fg}{bold}S A R V A K S H A N   M U L T I - I N T   C O M M A N D   C E N T E R{/bold}{/#58C4DD-fg}{/center}\n{center}{#FFFF00-fg}[d] Feeds | [o] OSINT | [s] Python Scan | [w] Open Web Visual Format | [g] Dossier | [e] Logs | [q] Quit{/#FFFF00-fg}{/center}`,
     tags: true,
     style: { fg: COLORS.white, border: { fg: COLORS.cyan } }
 });
@@ -230,6 +232,23 @@ async function performHealthChecks() {
     console.log('Engine health checks completed.');
 }
 
+async function redirectToWebVisualWorkspace() {
+    const url = `${FUSION_WEB_BASE}?target=${state.activeTargetId}&ip=${state.activeIp}`;
+    console.log(`Redirecting TUI session to Web Visual Workspace: ${url}...`);
+    mediaViewer.setContent(`{bold}{#58C4DD-fg}WEB VISUAL REDIRECT{/#58C4DD-fg}{/bold}\n\nURL: ${url}\nTarget IP: ${state.activeIp}\nTarget ID: ${state.activeTargetId}\n\nOpening browser...`);
+    
+    // Command to launch browser on Windows
+    const startCmd = process.platform === 'win32' ? `start "" "${url}"` : `open "${url}"`;
+    exec(startCmd, (err) => {
+        if (err) {
+            console.error('Failed to open web browser automatically:', err.message);
+        } else {
+            console.log('Web browser launched successfully.');
+        }
+    });
+    screen.render();
+}
+
 async function runPythonScan() {
     if (state.targetScanInProgress) return;
     state.targetScanInProgress = true;
@@ -250,7 +269,7 @@ async function runPythonScan() {
                 mapPanel.addMarker({ lon: track.longitude, lat: track.latitude, color: 'cyan', char: '📍' });
             });
         }
-        mediaViewer.setContent(`{bold}{#58C4DD-fg}PYTHON FUSION HIT{/#58C4DD-fg}{/bold}\n\nSubject: Subject Alpha\nPublic Hits: ${result.public_records?.length}\nGeo Tracks: ${result.geo_tracks?.length}\nDarknet Hits: ${result.darknet_hits?.length}`);
+        mediaViewer.setContent(`{bold}{#58C4DD-fg}PYTHON FUSION HIT{/#58C4DD-fg}{/bold}\n\nSubject: Subject Alpha\nFetched IP: ${state.activeIp}\nPublic Hits: ${result.public_records?.length}\nGeo Tracks: ${result.geo_tracks?.length}\n\nPress [w] to open Web Visual Format`);
     } catch (err) {
         console.error('Python Core Scan Error:', err.message);
     } finally {
@@ -268,7 +287,7 @@ async function generatePythonDossier() {
         const result = JSON.parse(stdout.trim());
         
         console.log(`Dossier Synthesized: ${result.title}`);
-        mediaViewer.setContent(`{bold}{#FFFF00-fg}${result.title}{/#FFFF00-fg}{/bold}\n\n${result.summary}\n\nOPSEC Risk Score: ${result.risk_score}/100`);
+        mediaViewer.setContent(`{bold}{#FFFF00-fg}${result.title}{/#FFFF00-fg}{/bold}\n\n${result.summary}\n\nOPSEC Risk Score: ${result.risk_score}/100\n\nPress [w] for Web Format`);
     } catch (err) {
         console.error('Dossier Synthesis Error:', err.message);
     }
@@ -511,6 +530,11 @@ screen.key(['s', 'S'], function(ch, key) {
     runPythonScan();
 });
 
+screen.key(['w', 'W'], function(ch, key) {
+    if (!datasetList.hidden || !errorModal.hidden) return;
+    redirectToWebVisualWorkspace();
+});
+
 screen.key(['g', 'G'], function(ch, key) {
     if (!datasetList.hidden || !errorModal.hidden) return;
     generatePythonDossier();
@@ -567,7 +591,7 @@ datasetList.on('select', function(item, index) {
 updateHealthUI();
 mainTable.setData({ headers: ['Welcome'], data: [['Booting Sarvakshan TUI Engine...']] });
 console.log('Sarvakshan OSINT & GeoINT Command Center initialized.');
-console.log('Hotkeys: [d] Select Feed  |  [o] Target OSINT  |  [s] Python Scan  |  [g] Dossier');
+console.log('Hotkeys: [d] Feeds  |  [o] OSINT  |  [s] Python Scan  |  [w] Open Web Visual Format  |  [g] Dossier');
 mainTable.focus(); 
 screen.render();
 
