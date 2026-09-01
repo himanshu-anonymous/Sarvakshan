@@ -9,62 +9,91 @@
 
 Sarvakshan is evolving from a standalone analytics workspace into an **All-Inclusive OSINT & GeoINT Intelligence Fusion Platform**.
 
-By combining **Person OSINT** (digital identity resolution, social graphs, breach exposure, public records) with **Geospatial & Temporal Parameters** (EXIF metadata, IP geolocations, BSSID access point triangulation, 4D trajectory modeling), Sarvakshan enables researchers to track every multi-dimensional parameter of a specific research target and synthesize automated **Confidential Intelligence Analysis Dossiers**.
+By unifying the gold-standard paradigms of modern OSINT—**Visual Link Analysis** (Maltego), **Automated Reconnaissance** (SpiderFoot & Recon-ng), **Asset & Infrastructure Discovery** (Shodan & Censys), **People & Email Intelligence** (Max Intel & 960+ public sources), and **Modular OSINT Taxonomy** (OSINT Framework)—with **Geospatial & Temporal Parameters**, Sarvakshan maps every digital trace directly onto a 4D Spatial-Temporal Canvas (X, Y, Z + Time) to synthesize automated **Confidential Intelligence Analysis Dossiers**.
 
 ---
 
-## 🏗️ Core Platform Architecture & Pillars
+## 🏗️ Core Architecture: OSINT Tool Paradigm & Geospatial Alignment
 
 ```
-                               ┌────────────────────────────────┐
-                               │   SARVAKSHAN FUSION ENGINE     │
-                               └───────────────┬────────────────┘
-                                               │
-               ┌───────────────────────────────┴───────────────────────────────┐
-               ▼                                                               ▼
-   ┌───────────────────────┐                                       ┌───────────────────────┐
-   │    PERSON OSINT       │                                       │     GEOINT ENGINE     │
-   │  - Cross-Platform ID  │                                       │  - EXIF Metadata      │
-   │  - Social Graph       │                                       │  - IP / BSSID Triang. │
-   │  - Breach Exposure    │                                       │  - Pattern of Life    │
-   └───────────┬───────────┘                                       └───────────┬───────────┘
-               │                                                               │
-               └───────────────────────────────┬───────────────────────────────┘
-                                               ▼
-                               ┌────────────────────────────────┐
-                               │  UNIFIED ENTITY & TIMELINE MAP │
-                               └───────────────┬────────────────┘
-                                               ▼
-                               ┌────────────────────────────────┐
-                               │  CONFIDENTIAL DOSSIER GENERATOR│
-                               └────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                              SARVAKSHAN OSINT + GEOINT FUSION ARCHITECTURE              │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+   │
+   ├─► 1. VISUAL LINK ANALYSIS (Maltego Paradigm)
+   │   └─► Entity Node Graph ──► Geospatial Node Coordinates & Co-location Edges
+   │
+   ├─► 2. AUTOMATED RECONNAISSANCE (SpiderFoot & Recon-ng Paradigm)
+   │   └─► Modular Scrapers ──► Scraped EXIF Media, Registrant Addr & Regional Leaks
+   │
+   ├─► 3. ASSET & INFRASTRUCTURE DISCOVERY (Shodan & Censys Paradigm)
+   │   └─► IoT / IP / Server Banners ──► Physical Datacenter Points & ISP Infrastructure
+   │
+   ├─► 4. PEOPLE & EMAIL SEARCH (Max Intel & 960+ Public Sources Paradigm)
+   │   └─► 960+ Source Deep Search ──► Geocoded Public Records & Social Location Tags
+   │
+   └─► 5. TOOL DIRECTORY & TAXONOMY (OSINT Framework Paradigm)
+       └─► Transform Pipeline Tree ──► Spatial Transform Taxonomy & 4D Geo Projection
 ```
+
+---
+
+## 🔬 Detailed Tool Paradigm & Geospatial Parameter Alignment
+
+### 1. Visual Link Analysis Paradigm (*Maltego Alignment*)
+* **Core Function**: Interactive entity and connection graph mapping (Person, Email, Phone, IP, Domain, Alias, Location).
+* **Geospatial Parameter Alignment**:
+  - **Geo-Node Coordinate Mapping**: Convert location and asset nodes directly into interactive Mapbox/Leaflet geographic layers (Lat/Long, GeoJSON Polygons).
+  - **Spatial Proximity & Co-Location Edges**: Calculate edge weights based on physical distance between entities and simultaneous spatial-temporal presence.
+  - **Graph-to-Map Sync**: Selecting an entity cluster in the link graph automatically filters and highlights its physical spatial footprint on the 4D map canvas.
+
+### 2. Automated Reconnaissance Paradigm (*SpiderFoot & Recon-ng Alignment*)
+* **Core Function**: Modular automated data collection, passive/active web reconnaissance, and leak monitoring.
+* **Geospatial Parameter Alignment**:
+  - **Scraped EXIF & Geotag Harvester**: Automatically extract GPS coordinates, timestamps, and altitude from scraped web images/media.
+  - **Registrant & WHOIS Spatial Geocoding**: Geocode physical addresses from WHOIS records, domain filings, and corporate registries.
+  - **Regional Sentiment & Exposure Mapping**: Map physical locations mentioned in scraped pastes, forums, and darknet leaks.
+
+### 3. Asset & Infrastructure Discovery Paradigm (*Shodan & Censys Alignment*)
+* **Core Function**: Scanning internet-connected devices, open ports, IoT assets, server banners, and SSL certificates.
+* **Geospatial Parameter Alignment**:
+  - **Physical Device & Datacenter Pinpointing**: Map IP subnets, BGP Autonomous System Numbers (ASNs), and exposed IoT devices to exact physical GPS coordinates and datacenter facilities.
+  - **Infrastructure Heatmap Overlay**: Render density maps of target-controlled servers, routers, cameras, and industrial control systems across global regions.
+  - **ISP & Cell Tower Triangulation**: Correlate server/device connections with regional internet service provider infrastructure and ground stations.
+
+### 4. People & Email Search Paradigm (*Max Intel & 960+ Public Sources Alignment*)
+* **Core Function**: Comprehensive browser-based lookup across 960+ public sources (emails, usernames, public records, court filings, gravatars, social profiles).
+* **Geospatial Parameter Alignment**:
+  - **Public Record Address Parser**: Extract and geocode physical residential/commercial addresses from public records, voter registries, and court filings.
+  - **Social Profile Geo-Normalization**: Normalize unstructured location strings (e.g., *"San Francisco, CA"* -> `[37.7749, -122.4194]`) across 960+ profile sources.
+  - **Cross-Source Co-Location Indexing**: Flag target appearance across multiple geographic regions based on email/username hits in regional databases.
+
+### 5. Tool Directory & Modular Taxonomy Paradigm (*OSINT Framework Alignment*)
+* **Core Function**: Structured taxonomy of OSINT input types (Domain, IP, Email, Person, Phone, Image, Network) and transform pipelines.
+* **Geospatial Parameter Alignment**:
+  - **Spatial Transform Taxonomy**: Ensure every branch in the OSINT Framework taxonomy terminates in a **Geospatial Projection Output** (e.g., `Person` -> `Social Profile` -> `Location Tag` -> `Pattern-of-Life Cluster`).
+  - **Modular Geo-Pipeline Orchestrator**: Enable analysts to chain OSINT transforms (e.g., `Email` -> `Username` -> `Breach Data` -> `IP` -> `Physical Coordinates`) with real-time spatial projection.
 
 ---
 
 ## 🚀 Module Breakdown & Contributor Tasks
 
-### Pillar 1: Person OSINT Ingestion Engine ("Identity Resolver")
-* [ ] **Digital Footprint Harvester**: Cross-platform handle lookup across 500+ web platforms, forums, and developer networks.
-* [ ] **Email & Phone Intelligence**: Reverse email/phone resolution, WHOIS record association, and data breach index correlation.
-* [ ] **Social Graph & Entity Extractor**: Map connections (followers, mentions, tagged media) and extract named entities using NLP.
+### Pillar 1: Person OSINT & Public Source Engine ("Max Intel & OSINT Framework")
+* [ ] **960+ Source Harvester**: Cross-platform handle/email lookup modules integrating open public record lookup logic.
+* [ ] **Public Record Address Parser**: Automated NLP address extraction and geocoding pipeline.
+* [ ] **OSINT Framework Taxonomy Integration**: Modular pipeline orchestrator mapping input types to geospatial outputs.
 
-### Pillar 2: Geospatial & Temporal Parameter Engine ("GeoINT Tracker")
-* [ ] **Spatial Parameter Collector**: Extract EXIF Lat/Long, altitude, timestamp, and device fingerprints from images/media.
-* [ ] **IP & BSSID Triangulation**: Convert target IP addresses and Wi-Fi access point logs into physical spatial bounds.
-* [ ] **Pattern of Life (PoL) Analytics**:
-  - Implement **DBSCAN spatial clustering** for Primary Residence Anchor, Workplace HQ, and Frequent Transit Locations.
-  - **Velocity & Transit Vector Verification**: Calculate velocity vectors between spatial coordinates to detect transit modes and filter invalid jumps.
-* [ ] **Geofence Correlator**: Trigger alerts when target trajectories enter predefined interest zones or cross paths with secondary entities.
+### Pillar 2: Infrastructure & Recon Engine ("Shodan, Censys & SpiderFoot")
+* [ ] **Asset Geo-Locator**: Shodan & Censys API integrations to pinpoint target IP/IoT physical infrastructure coordinates.
+* [ ] **Automated Recon Scraper**: Modular SpiderFoot/Recon-ng style passive web scanner with automated EXIF media geotag extraction.
 
-### Pillar 3: Unified Fusion Canvas & Interactive Dashboard
-* [ ] **4D Trajectory Map Workspace**: Time-slider playback of physical location movements synced with digital activity timeline.
-* [ ] **Interactive Link Graph**: Node-edge visualizer mapping `Target` <-> `Identifiers` <-> `Geolocations` <-> `Associates`.
-* [ ] **Multi-Parameter Data Matrix**: Filterable grid detailing raw payload, confidence scores, sources, and timestamps.
+### Pillar 3: Visual Link Analysis & Geospatial Map ("Maltego & GeoINT Canvas")
+* [ ] **Link Graph Visualizer**: Interactive Cytoscape/Vis.js node-edge visualizer bi-directionally synced with 4D Mapbox map.
+* [ ] **Pattern of Life (PoL) Analytics**: **DBSCAN spatial clustering** for Primary Residence Anchor, Workplace HQ, and Transit Hubs.
+* [ ] **Velocity & Transit Vector Verification**: Calculate velocity vectors between consecutive spatial points to detect travel modes and filter invalid data jumps.
 
 ### Pillar 4: Confidential Analysis & Intelligence Dossier Builder
-* [ ] **OPSEC Scorer**: Rating operational security awareness based on exposed metadata and leak frequency.
-* [ ] **Anomaly Detection**: Trigger alerts on departures from baseline spatial-temporal behavior.
+* [ ] **OPSEC & Threat Scorer**: Rate operational security awareness based on public metadata leakage and infrastructure exposure.
 * [ ] **Automated Dossier Generator**: One-click generation of executive intelligence dossiers (`CONFIDENTIAL // RESTRICTED RESEARCH`) downloadable as Markdown/PDF.
 
 ---
@@ -73,10 +102,10 @@ By combining **Person OSINT** (digital identity resolution, social graphs, breac
 
 | Component | Responsibility | Primary Lead | Priority | Status |
 |---|---|---|---|---|
-| **OSINT Collectors** | Handle, email, and social graph ingestion | Aditya / Contributor | P0 | Planned |
-| **GeoINT & Clustering** | EXIF parser, spatial DBSCAN, & transit velocity algorithm | Aditya / Contributor | P0 | Planned |
-| **Workspace UI** | Mapbox/Leaflet time-slider & link graph canvas | Core Team | P1 | Planned |
-| **Intel Synthesis** | OPSEC scoring, anomaly alerts, & PDF dossier engine | Core Team | P1 | Planned |
+| **OSINT Collectors & Max Intel** | Handle, email, public record address parser, & 960+ source lookup | Aditya / Contributor | P0 | Planned |
+| **Asset & Recon (Shodan/SpiderFoot)** | IP/IoT physical geolocator, EXIF media harvester, & infrastructure scanner | Aditya / Contributor | P0 | Planned |
+| **Maltego-Style Graph & 4D Map** | Synced link graph canvas + Mapbox time-slider trajectory workspace | Core Team | P1 | Planned |
+| **Intel Synthesis & Dossiers** | OPSEC scoring, anomaly alerts, & PDF dossier engine | Core Team | P1 | Planned |
 
 ---
 
