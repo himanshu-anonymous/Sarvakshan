@@ -1,0 +1,11 @@
+# 🛡️ SARVAKSHAN — Confidential Dossiers & Reports Directory
+# ====================================================================
+# Project: Sarvakshan OSINT & GeoINT Intelligence Fusion Platform
+# Note for Aditya & Contributors:
+# This directory is designated for storing locally generated target
+# intelligence dossiers, vulnerability matrices, and exported PDFs.
+# 
+# Security Notice:
+# All files generated in this directory contain confidential research
+# data and must remain gitignored locally.
+# ====================================================================

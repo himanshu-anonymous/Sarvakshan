@@ -1,0 +1,11 @@
+# 🛡️ SARVAKSHAN — Raw OSINT & GeoINT Ingestion Data Cache
+# ====================================================================
+# Project: Sarvakshan OSINT & GeoINT Intelligence Fusion Platform
+# Note for Aditya & Contributors:
+# This directory holds raw scraped target payloads, EXIF geotag media
+# caches, 960+ public record query hits, and TorBot darknet logs.
+# 
+# Usage:
+# Python core engines (python.sarvakshan_core) read and write temporary
+# spatial tracks and entity graph JSON caches in this directory.
+# ====================================================================
